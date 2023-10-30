@@ -84,14 +84,6 @@ class Database:
                     FOREIGN KEY (Status_id) REFERENCES Work_statuses (ID)
                 )
             ''')
-    def getStaff():
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT Name FROM Employees ')
-            rows = cursor.fetchall()
-            rows = [row[0] for row in rows]
-            if rows:
-                return rows
-            return None
 
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS Rents (
@@ -107,6 +99,17 @@ class Database:
                     FOREIGN KEY (Client) REFERENCES Clients (ID)
                 )
             ''')
+            
+    def getStaff():
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT Name FROM Employees ')
+            rows = cursor.fetchall()
+            rows = [row[0] for row in rows]
+            if rows:
+                return rows
+            return None
+
+            
 
 Database.StartDataBase()
 
