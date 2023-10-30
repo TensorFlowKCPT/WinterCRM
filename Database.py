@@ -63,6 +63,14 @@ class Database:
                     Status TEXT NOT NULL
                 )
             ''')
+            data_to_insert = [
+                ('Работает',),
+                ('Больничный',),
+                ('Отпуск',)
+            ]
+
+            for item in data_to_insert:
+                conn.execute('INSERT OR IGNORE INTO Work_status (Status) VALUES (?)', item)
 
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS Employee_schedule (
