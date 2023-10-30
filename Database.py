@@ -16,6 +16,7 @@ class Database:
                         Name TEXT NOT NULL
                      )
                  ''')
+            
             data_to_insert = [
                 ('Сноуборд',),
                 ('Ботинки',),
@@ -26,6 +27,7 @@ class Database:
                 ('Маски',),
                 ('Палки',)
             ]
+
             for item in data_to_insert:
                 conn.execute('INSERT OR IGNORE INTO WinterInventoryTypes (Name) VALUES (?)', item)
 
@@ -80,6 +82,21 @@ class Database:
                     Status_id INTEGER,
                     FOREIGN KEY (Employee_id) REFERENCES Employees (ID),
                     FOREIGN KEY (Status_id) REFERENCES Work_statuses (ID)
+                )
+            ''')
+
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS Rents (
+                    ID INTEGER PRIMARY KEY,
+                    Start_Date DATE NOT NULL,
+                    Return_Date DATE,
+                    StartItemsJSON TEXT NOT NULL,
+                    ReturnedItemsJSON TEXT,
+                    Client INT NOT NULL,
+                    Deposit TEXT NOT NULL,
+                    COST INT NOT NULL,
+                    IsPayed BOOLEAN NOT NULL,
+                    FOREIGN KEY (Client) REFERENCES Clients (ID)
                 )
             ''')
 
