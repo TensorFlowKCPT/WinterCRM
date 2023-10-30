@@ -9,5 +9,27 @@ app = Sanic("WinterCRM")
 async def index(request):
     return response.text('Hello')
 
+@app.route("/shop")
+async def index(request):
+    return response.text('Hello')
+
+@app.route("/tasks")
+async def index(request):
+    return response.text('Hello')
+
+@app.route("/service")
+async def index(request):
+    return response.text('Hello')
+
+@app.route("/schedule")
+async def index(request):
+    return response.text('Hello')
+
+@app.route("/inventory")
+async def index(request):
+    return response.text('Hello')
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
+
