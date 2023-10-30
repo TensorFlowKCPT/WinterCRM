@@ -6,8 +6,16 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="" method="post">
-        
+    <div>
+        {% for emp in data %}
+        <button>{{ emp }}</button>
+        {% endfor %}
+    </div>
+    <form method="POST" action="/schedule">
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <input type="submit" value="Отправить">
     </form>
 </body>
 </html>
