@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 class Database:
     def StartDataBase():
@@ -47,6 +48,16 @@ class Database:
                     Name TEXT NOT NULL
                 )
             ''')
+            data_to_employees = [
+                ('Александр',),
+                ('Валерий',),
+                ('Никита',),
+                ('Егор',),
+                ('Люба',)
+            ]
+
+            for item in data_to_employees:
+                conn.execute('INSERT OR IGNORE INTO Employees (Name) VALUES (?)', item)
             
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS Tasks (
@@ -81,7 +92,7 @@ class Database:
                     Date DATE NOT NULL,
                     Status_id INTEGER,
                     FOREIGN KEY (Employee_id) REFERENCES Employees (ID),
-                    FOREIGN KEY (Status_id) REFERENCES Work_statuses (ID)
+                    FOREIGN KEY (Status_id) REFERENCES Work_status (ID)
                 )
             ''')
 
@@ -104,10 +115,33 @@ class Database:
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('SELECT Name FROM Employees ')
             rows = cursor.fetchall()
-            rows = [row[0] for row in rows]
             if rows:
+                rows = [row[0] for row in rows]
                 return rows
             return None
+    
+    def putSchedule(idEmployee: int, date: datetime, idStatus: int):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('INSERT INTO Employee_schedule (Employee_id, Date, Status_id) VALUES (?, ?, ?)', (idEmployee, date, idStatus))
+
+    def getIdEployee(name: str):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT ID FROM Employees WHERE Name = ?', (name,))
+            row = cursor.fetchone()
+            if row:
+                return row[0]
+            return None
+        
+    def getIdWorkStatus(status: str):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT ID FROM Work_status WHERE Status = ?', (status,))
+            row = cursor.fetchone()
+            if row:
+                return row[0]
+            return None
+        
+
+
 
             
 
