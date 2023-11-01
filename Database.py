@@ -120,9 +120,20 @@ class Database:
                 return rows
             return None
     
-    def putSchedule(idEmployee: int, date: datetime, idStatus: int):
+    def putSchedule(idEmployee: int, date: str, idStatus: int):
         with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('INSERT INTO Employee_schedule (Employee_id, Date, Status_id) VALUES (?, ?, ?)', (idEmployee, date, idStatus))
+            cursor = conn.cursor()
+
+            # Проверяем, существует ли запись с заданными значениями Employee_id и Date
+            cursor.execute('SELECT Employee_id FROM Employee_schedule WHERE Employee_id = ? AND Date = ?;', (idEmployee, date))
+            existing_record = cursor.fetchone()
+
+            if existing_record:
+                # Если запись существует, обновляем ее
+                cursor.execute('UPDATE Employee_schedule SET Status_id = ? WHERE Employee_id = ? AND Date = ?;', (idStatus, idEmployee, date))
+            else:
+                # Если запись не существует, вставляем новую
+                cursor.execute('INSERT INTO Employee_schedule (Employee_id, Date, Status_id) VALUES (?, ?, ?);', (idEmployee, date, idStatus))
 
     def getIdEployee(name: str):
         with sqlite3.connect('database.db') as conn:
@@ -139,6 +150,7 @@ class Database:
             if row:
                 return row[0]
             return None
+        
         
 
 
