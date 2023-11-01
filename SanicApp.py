@@ -62,7 +62,6 @@ async def save(request):
     idEployees = Database.getIdEployee(nameEmployees.text)
     nameMonth = xmlpars.findall(".//h2")
     monthObject = xmlpars.findall(".//table")
-<<<<<<< HEAD
 
     for i in monthObject:
         for j in i.findall(".//td"):
@@ -74,20 +73,9 @@ async def save(request):
                 Database.putSchedule(idEployees, f"{i.get("id").split('_')[1]}-{listdate[i.get("id").split('_')[0]]}-{j.text}", 3)
     return response.text("успех")
 @app.route('/schedule', methods=['POST'])
-async def schedule_post(request):
-    return text('POST метод')
-=======
->>>>>>> origin/main
 
-    for i in monthObject:
-        for j in i.findall(".//td"):
-            if j.get("style") != None and "red" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get("id").split('_')[1]}-{listdate[i.get("id").split('_')[0]]}-{j.text}", 2)
-            if j.get("style") != None and "blue" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get("id").split('_')[1]}-{listdate[i.get("id").split('_')[0]]}-{j.text}", 1)
-            if j.get("style") != None and "green" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get("id").split('_')[1]}-{listdate[i.get("id").split('_')[0]]}-{j.text}", 3)
-    return response.text("успех")
+async def schedule_post(request):
+    pass
 
 @app.get('/inventory')
 async def inventoryPage(request):

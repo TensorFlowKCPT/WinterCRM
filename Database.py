@@ -59,7 +59,9 @@ class Database:
             ]
 
             for item in data_to_employees:
-                conn.execute('INSERT OR IGNORE INTO Employees (Name) VALUES (?)', item)
+                cursor = conn.execute('SELECT ID FROM Employees WHERE Name = ?', item).fetchone()
+                if not cursor:
+                    conn.execute('INSERT OR IGNORE INTO Employees (Name) VALUES (?)', item)
             
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS Tasks (
@@ -164,7 +166,7 @@ class Database:
                 'PhoneNumber' : rows[0][3]
             }
             return client
-    def addRent(Start_Date:datetime.datetime, Return_Date:datetime.datetime, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:str, IsPayed:bool):
+    def addRent(Start_Date:datetime, Return_Date:datetime, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:str, IsPayed:bool):
         return
     def getRents():
          with sqlite3.connect('database.db') as conn:
@@ -177,8 +179,8 @@ class Database:
             for row in rows:
                 output.append({
                     'ID' : row[0],
-                    'Start_Date' : datetime.datetime.strptime(row[1], "%Y-%m-%d"),
-                    'Return_Date' : datetime.datetime.strptime(row[2], "%Y-%m-%d"),
+                    'Start_Date' : datetime.strptime(row[1], "%Y-%m-%d"),
+                    'Return_Date' : datetime.strptime(row[2], "%Y-%m-%d"),
                     'StartItemsJSON' : row[3],
                     'ReturnedItemsJSON' : row[4],
                     'Client' : Database.GetClientById(row[5]),
