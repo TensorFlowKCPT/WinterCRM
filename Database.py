@@ -229,6 +229,22 @@ class Database:
                 return row[0]
             return None
         
+    def getScheduleForEmployees(id: int):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT * FROM Employee_schedule WHERE Employee_id = ?', (id,))
+            rows = cursor.fetchall()
+            if rows:
+                result = []
+                for row in rows:
+                    schedule_id, employee_id, date, status_id = row
+                    # Получите имя сотрудника и значение статуса по их id из соответствующих таблиц
+                    cursor.execute('SELECT name FROM Employees WHERE id = ?', (employee_id,))
+                    employee_name = cursor.fetchone()[0]
+                    cursor.execute('SELECT status FROM Work_status WHERE id = ?', (status_id,))
+                    status_value = cursor.fetchone()[0]
+                    result.append((schedule_id, employee_name, date, status_value))
+                return result
+            return None
         
 
 

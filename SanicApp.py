@@ -72,6 +72,192 @@ async def save(request):
             if j.get("style") != None and "green" in j.get("style"):
                 Database.putSchedule(idEployees, f"{i.get("id").split('_')[1]}-{listdate[i.get("id").split('_')[0]]}-{j.text}", 3)
     return response.text("успех")
+
+@app.route('/get_schedule', methods=['POST'])
+async def get_schedule(request):
+    scheduleForEmployees = Database.getScheduleForEmployees(Database.getIdEployee(request.json.get('employee_id')))
+    result = None
+    if scheduleForEmployees != None:
+        pass
+    else:
+        result = f'''
+        <h1>{request.json.get('employee_id')}</h1>
+        <h2>Ноябрь</h2>
+        <table id="november_2023">
+            <tr>
+                <td class="cell">1</td>
+                <td class="cell">2</td>
+                <td class="cell">3</td>
+                <td class="cell">4</td>
+                <td class="cell">5</td>
+                <td class="cell">6</td>
+                <td class="cell">7</td>
+            </tr>
+            <tr>
+                <td class="cell">8</td>
+                <td class="cell">9</td>
+                <td class="cell">10</td>
+                <td class="cell">11</td>
+                <td class="cell">12</td>
+                <td class="cell">13</td>
+                <td class="cell">14</td>
+            </tr>
+            <tr>
+                <td class="cell">15</td>
+                <td class="cell">16</td>
+                <td class="cell">17</td>
+                <td class="cell">18</td>
+                <td class="cell">19</td>
+                <td class="cell">20</td>
+                <td class="cell">21</td>
+            </tr>
+            <tr>
+                <td class="cell">22</td>
+                <td class="cell">23</td>
+                <td class="cell">24</td>
+                <td class="cell">25</td>
+                <td class="cell">26</td>
+                <td class="cell">27</td>
+                <td class="cell">28</td>
+            </tr>
+            <tr>
+                <td class="cell">29</td>
+                <td class="cell">30</td>
+            </tr>
+        </table>
+        <h2>Декабрь</h2>
+        <table id="december_2023">
+            <tr>
+                <td class="cell">1</td>
+                <td class="cell">2</td>
+                <td class="cell">3</td>
+                <td class="cell">4</td>
+                <td class="cell">5</td>
+                <td class="cell">6</td>
+                <td class="cell">7</td>
+            </tr>
+            <tr>
+                <td class="cell">8</td>
+                <td class="cell">9</td>
+                <td class="cell">10</td>
+                <td class="cell">11</td>
+                <td class="cell">12</td>
+                <td class="cell">13</td>
+                <td class="cell">14</td>
+            </tr>
+            <tr>
+                <td class="cell">15</td>
+                <td class="cell">16</td>
+                <td class="cell">17</td>
+                <td class="cell">18</td>
+                <td class="cell">19</td>
+                <td class="cell">20</td>
+                <td class="cell">21</td>
+            </tr>
+            <tr>
+                <td class="cell">22</td>
+                <td class="cell">23</td>
+                <td class="cell">24</td>
+                <td class="cell">25</td>
+                <td class="cell">26</td>
+                <td class="cell">27</td>
+                <td class="cell">28</td>
+            </tr>
+            <tr>
+                <td class="cell">29</td>
+                <td class="cell">30</td>
+                <td class="cell">31</td>
+            </tr>
+        </table>
+        <h2>Январь</h2>
+        <table id="january_2024">
+            <tr>
+                <td class="cell">1</td>
+                <td class="cell">2</td>
+                <td class="cell">3</td>
+                <td class="cell">4</td>
+                <td class="cell">5</td>
+                <td class="cell">6</td>
+                <td class="cell">7</td>
+            </tr>
+            <tr>
+                <td class="cell">8</td>
+                <td class="cell">9</td>
+                <td class="cell">10</td>
+                <td class="cell">11</td>
+                <td class="cell">12</td>
+                <td class="cell">13</td>
+                <td class="cell">14</td>
+            </tr>
+            <tr>
+                <td class="cell">15</td>
+                <td class="cell">16</td>
+                <td class="cell">17</td>
+                <td class="cell">18</td>
+                <td class="cell">19</td>
+                <td class="cell">20</td>
+                <td class="cell">21</td>
+            </tr>
+            <tr>
+                <td class="cell">22</td>
+                <td class="cell">23</td>
+                <td class="cell">24</td>
+                <td class="cell">25</td>
+                <td class="cell">26</td>
+                <td class="cell">27</td>
+                <td class="cell">28</td>
+            </tr>
+            <tr>
+                <td class="cell">29</td>
+                <td class="cell">30</td>
+                <td class="cell">31</td>
+            </tr>
+        </table>
+        <h2>Февраль</h2>
+        <table id="february_2023">
+            <tr>
+                <td class="cell">1</td>
+                <td class="cell">2</td>
+                <td class="cell">3</td>
+                <td class="cell">4</td>
+                <td class="cell">5</td>
+                <td class="cell">6</td>
+                <td class="cell">7</td>
+            </tr>
+            <tr>
+                <td class="cell">8</td>
+                <td class="cell">9</td>
+                <td class="cell">10</td>
+                <td class="cell">11</td>
+                <td class="cell">12</td>
+                <td class="cell">13</td>
+                <td class="cell">14</td>
+            </tr>
+            <tr>
+                <td class="cell">15</td>
+                <td class="cell">16</td>
+                <td class="cell">17</td>
+                <td class="cell">18</td>
+                <td class="cell">19</td>
+                <td class="cell">20</td>
+                <td class="cell">21</td>
+            </tr>
+            <tr>
+                <td class="cell">22</td>
+                <td class="cell">23</td>
+                <td class="cell">24</td>
+                <td class="cell">25</td>
+                <td class="cell">26</td>
+                <td class="cell">27</td>
+                <td class="cell">28</td>
+            </tr>
+            <tr>
+                <td class="cell">29</td>
+            </tr>
+        </table>
+    '''
+    return response.html(result)
+
 @app.route('/schedule', methods=['POST'])
 
 async def schedule_post(request):
