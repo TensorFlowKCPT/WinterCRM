@@ -33,16 +33,19 @@ async def service(request):
 
 @app.route("/schedule")
 async def schedule(request):
-    # Получите данные о сотрудниках из базы данных
     staff = Database.getStaff()
     print(staff)
-
-    # Создайте шаблон и передайте данные в него
     template = env.get_template('schedule.html')
     rendered_html = template.render(data=staff)
 
-    # Верните HTTP-ответ с рендеренным HTML
     return html(rendered_html)
+
+# Обработчик для сохранения HTML таблицы
+@app.route('/save', methods=['POST'])
+async def save(request):
+    html_table = request.form.get('table')  # Получаем данные таблицы из формы
+    print(html_table)
+    return text("кайф")
 
 @app.route('/schedule', methods=['POST'])
 async def schedule_post(request):
