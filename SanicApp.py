@@ -127,7 +127,7 @@ async def get_schedule(request):
                     tagTr = soup.new_tag('tr')
                     i.append(tagTr)
                 lastTr = i.find_all('tr')[-1]
-                date = f'{i.get('id').split("_")[1]}-{months[i.get('id').split("_")[0]][0]}-{j}'
+                date = f'{i.get("id").split("_")[1]}-{months[i.get("id").split("_")[0]][0]}-{j}'
                 if get_data_by_date(scheduleForEmployees, date) != False:
                     tagTd = soup.new_tag(name ='td')
                     tagTd['class'] = "cell"
