@@ -38,6 +38,25 @@ async def schedule(request):
 
     return html(rendered_html)
 
+@app.post('/clients')
+async def addclient(request):
+    Fio = request.form.get('FIO')
+    Passport = request.form.get('Passport')
+    PhoneNumber = request.form.get('PhoneNumber')
+    Database.addClient(Fio,Passport,PhoneNumber)
+    return response.json('OK', status=200)
+
+@app.get('/clients')
+async def clients(request):
+    clients = Database.getClients()
+    Data = {}
+    if clients:
+        Data['Clients'] = clients
+    template = env.get_template('clients.html')
+    rendered_html = template.render(data=Data)
+
+    return html(rendered_html)
+
 # Обработчик для сохранения HTML таблицы
 @app.route('/save', methods=['POST'])
 async def save(request):
@@ -280,6 +299,7 @@ async def add_inventory(request):
     rented = request.form.get('rented')
     size = request.form.get('size')
     Database.addInventory(name,type,rented,size)
+    return response.json('OK', status=200)
 
 
 if __name__ == "__main__":
