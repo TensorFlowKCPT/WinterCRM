@@ -59,7 +59,9 @@ class Database:
             ]
 
             for item in data_to_employees:
-                conn.execute('INSERT OR IGNORE INTO Employees (Name) VALUES (?)', item)
+                cursor = conn.execute('SELECT ID FROM Employees WHERE Name = ?', item).fetchone()
+                if not cursor:
+                    conn.execute('INSERT OR IGNORE INTO Employees (Name) VALUES (?)', item)
             
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS Tasks (
@@ -199,9 +201,20 @@ class Database:
                 return rows
             return None
     
-    def putSchedule(idEmployee: int, date: datetime, idStatus: int):
+    def putSchedule(idEmployee: int, date: str, idStatus: int):
         with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('INSERT INTO Employee_schedule (Employee_id, Date, Status_id) VALUES (?, ?, ?)', (idEmployee, date, idStatus))
+            cursor = conn.cursor()
+
+            # Проверяем, существует ли запись с заданными значениями Employee_id и Date
+            cursor.execute('SELECT Employee_id FROM Employee_schedule WHERE Employee_id = ? AND Date = ?;', (idEmployee, date))
+            existing_record = cursor.fetchone()
+
+            if existing_record:
+                # Если запись существует, обновляем ее
+                cursor.execute('UPDATE Employee_schedule SET Status_id = ? WHERE Employee_id = ? AND Date = ?;', (idStatus, idEmployee, date))
+            else:
+                # Если запись не существует, вставляем новую
+                cursor.execute('INSERT INTO Employee_schedule (Employee_id, Date, Status_id) VALUES (?, ?, ?);', (idEmployee, date, idStatus))
 
     def getIdEployee(name: str):
         with sqlite3.connect('database.db') as conn:
@@ -217,6 +230,23 @@ class Database:
             row = cursor.fetchone()
             if row:
                 return row[0]
+            return None
+        
+    def getScheduleForEmployees(id: int):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT * FROM Employee_schedule WHERE Employee_id = ?', (id,))
+            rows = cursor.fetchall()
+            if rows:
+                result = []
+                for row in rows:
+                    schedule_id, employee_id, date, status_id = row
+                    # Получите имя сотрудника и значение статуса по их id из соответствующих таблиц
+                    cursor.execute('SELECT name FROM Employees WHERE id = ?', (employee_id,))
+                    employee_name = cursor.fetchone()[0]
+                    cursor.execute('SELECT status FROM Work_status WHERE id = ?', (status_id,))
+                    status_value = cursor.fetchone()[0]
+                    result.append((schedule_id, employee_name, date, status_value))
+                return result
             return None
         
 
