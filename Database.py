@@ -135,6 +135,21 @@ class Database:
                     FOREIGN KEY (ID) REFERENCES Clients (Client)
                 )
             ''')
+
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS  (
+                    ID INTEGER PRIMARY KEY,
+                    Start_Date DATE NOT NULL,
+                    Return_Date DATE,
+                    StartItemsJSON TEXT NOT NULL,
+                    ReturnedItemsJSON TEXT,
+                    Client INT NOT NULL,
+                    Deposit TEXT NOT NULL,
+                    COST INT NOT NULL,
+                    IsPayed BOOLEAN NOT NULL,
+                    FOREIGN KEY (ID) REFERENCES Clients (Client)
+                )
+            ''')
             
     def getClientRents(id):
         with sqlite3.connect('database.db') as conn:
@@ -326,6 +341,30 @@ class Database:
                     result.append((schedule_id, employee_name, date, status_value))
                 return result
             return None
+        
+    def getTasks():
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT * FROM Tasks')
+            rows = cursor.fetchall()
+            if rows:
+                return rows
+            return None
+    
+    def getTasksForEmployees(idEmployee: int):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT * FROM Tasks WHERE Employee_id = ?', (idEmployee,))
+            rows = cursor.fetchall()
+            if rows:
+                return rows
+            return None
+    
+    def delTask(idTask: int):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('DELETE FROM Tasks WHERE ID = ?', (idTask,))
+
+    def createTask(task: str, idEployees: int, deadline: str, status: bool):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('INSERT INTO Tasks (Task, Performer, Deadline, Status)VALUES (?, ?, ?, ?)', (task, idEployees, deadline, status,))
         
 
 
