@@ -39,7 +39,8 @@
             <td>{{item['Type']}}</td>
             <td>{{item['Rented']}}</td>
             <td>{{item['Size']}}</td>
-            <td><button></button></td>
+            <td><button onclick="Sell({{ item['ID'] }})">Продать</button></td>
+            <td><button onclick="Delete({{ item['ID'] }})">Удалить</button></td>
             
         </tr>
         {%endfor%}
@@ -58,7 +59,7 @@
         <input type="submit" value="Добавить">
     </form>
 
-    <div class="modalWindow" style="display: none; position: absolute; left: 50%; top: 50%;">
+    <div class="modalWindow" id="Modal" style="display: none; position: absolute; left: 50%; top: 50%;">
         <label for="cost">Цена</label>
         <input type="text" name="cost" id="">
         <label for="comment">Комментарий</label>
@@ -66,6 +67,34 @@
     </div>
 
     <script>
+        function Sell(id){
+            const Modal = document.getElementById("Modal")
+            Modal.style.display="block"
+        }
+        function Delete(btnid) {
+            fetch("/del-inventory", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id: btnid })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Ошибка HTTP: " + response.status);
+                }
+            })
+            .then(data => {
+                // Обработка данных после успешного запроса
+                console.log("Успешно удалено", data);
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Ошибка при отправке запроса:", error);
+            });
+        }
         document.getElementById("addItemForm").addEventListener("submit", function (event) {
             event.preventDefault();
 
@@ -77,15 +106,22 @@
 
             const table = document.querySelector("table");
             const newRow = table.insertRow(table.rows.length);
-            const cells = [newRow.insertCell(0), newRow.insertCell(1), newRow.insertCell(2), newRow.insertCell(3), newRow.insertCell(4)];
+            const cells = [newRow.insertCell(0), newRow.insertCell(1), newRow.insertCell(2), newRow.insertCell(3), newRow.insertCell(4), newRow.insertCell(5)];
 
-            
+            const id = table.rows.length
             cells[0].innerText = name;
             cells[1].innerText = typetext;
             cells[2].innerText = rented;
             cells[3].innerText = size;
             var button = document.createElement("button");
+            button.textContent = "Продать"
+            
+            button.onclick = Sell(id)
             cells[4].appendChild(button)
+            var button = document.createElement("button");
+            button.textContent = "Удалить"
+            button.onclick = Delete(id)
+            cells[5].appendChild(button)
 
             const formData = new FormData();
             formData.append("name", name);

@@ -65,6 +65,14 @@ async def clients(request):
 
     return html(rendered_html)
 
+@app.post('/sell_inventory')
+async def sellInventory(request):
+   Cost = request.json.get('Cost')
+   Comment = request.json.get('Comment')
+   id = request.json.get('id')
+   Database.sellInventory(id,Cost,Comment)
+   return response.text('Ok', status=200)
+
 # Обработчик для сохранения HTML таблицы
 @app.route('/save', methods=['POST'])
 async def save(request):
@@ -101,6 +109,7 @@ async def save(request):
             if j.get("style") != None and "green" in j.get("style"):
                 Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 3)
     return response.text("успех")
+
 
 @app.route('/get_schedule', methods=['POST'])
 async def get_schedule(request):
@@ -332,6 +341,11 @@ async def get_password(request):
     password = "adminqwerty"
     return response.json({'result': request.form.get('password') == password})
 
+@app.post('/del-inventory')
+async def deleteInventory(request):
+    print(request.json.get('id'))
+    Database.delInventory(request.json.get('id'))
+    return response.json({'response':'OK'}, status = 200)
 
 @app.get('/inventory')
 async def inventoryPage(request):

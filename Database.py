@@ -224,6 +224,7 @@ class Database:
             for row in rows:
                 cursor = conn.execute('SELECT Name FROM WinterInventoryTypes WHERE ID = ?', (row[2],))
                 output.append({
+                    'ID' : row[0],
                     'Name' : row[1],
                     'Type' : cursor.fetchone()[0],
                     'Rented' : row[3],
