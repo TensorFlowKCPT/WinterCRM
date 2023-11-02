@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>FIO</th>
+            <th>Passport</th>
+            <th>PhoneNumber</th>
+        </tr>
+        <!-- Здесь нужно вставить данные из вашей базы данных -->
+        {% for item in data['Clients'] %}
+        <tr>
+            <td>{{item['FIO']}}</td>
+            <td>{{item['Passport']}}</td>
+            <td>{{item['PhoneNumber']}}</td>
+        </tr>
+        {%endfor%}
+        <!-- Добавьте другие строки с данными по мере необходимости -->
+    </table>
+    <h2>Добавить новую запись</h2>
+    <form id="addItemForm">
+        <input type="text" placeholder="FIO" name="FIO" required>
+        <input type="text" placeholder="Passport" name="Passport" required>
+        <input type="text" placeholder="PhoneNumber" name="PhoneNumber" required>
+        <input type="submit" value="Добавить">
+    </form>
+
+    <script>
+        document.getElementById("addItemForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const Fio = event.target.FIO.value;
+            const Passport = event.target.Passport.value;
+            const PhoneNumber = event.target.PhoneNumber.value;
+
+            const table = document.querySelector("table");
+            const newRow = table.insertRow(table.rows.length);
+            const cells = [newRow.insertCell(0), newRow.insertCell(1), newRow.insertCell(2)];
+
+            
+            cells[0].innerText = Fio;
+            cells[1].innerText = Passport;
+            cells[2].innerText = PhoneNumber;
+
+            const formData = new FormData();
+            formData.append("FIO", Fio);
+            formData.append("Passport", Passport);
+            formData.append("PhoneNumber", PhoneNumber);
+
+            fetch("/clients", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .catch(error => {
+                console.error("Ошибка при отправке запроса:", error);
+            });
+
+
+            event.target.reset();
+        });
+    </script>
+</body>
+</html>

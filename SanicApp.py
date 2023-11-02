@@ -46,6 +46,25 @@ async def schedule(request):
 
     return html(rendered_html)
 
+@app.post('/clients')
+async def addclient(request):
+    Fio = request.form.get('FIO')
+    Passport = request.form.get('Passport')
+    PhoneNumber = request.form.get('PhoneNumber')
+    Database.addClient(Fio,Passport,PhoneNumber)
+    return response.json('OK', status=200)
+
+@app.get('/clients')
+async def clients(request):
+    clients = Database.getClients()
+    Data = {}
+    if clients:
+        Data['Clients'] = clients
+    template = env.get_template('clients.html')
+    rendered_html = template.render(data=Data)
+
+    return html(rendered_html)
+
 # Обработчик для сохранения HTML таблицы
 @app.route('/save', methods=['POST'])
 async def save(request):
@@ -76,11 +95,11 @@ async def save(request):
     for i in monthObject:
         for j in i.findall(".//td"):
             if j.get("style") != None and "red" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get("id").split('_')[1]}-{listdate[i.get("id").split('_')[0]]}-{j.text.strip()}", 2)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 2)
             if j.get("style") != None and "blue" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get("id").split('_')[1]}-{listdate[i.get("id").split('_')[0]]}-{j.text.strip()}", 1)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 1)
             if j.get("style") != None and "green" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get("id").split('_')[1]}-{listdate[i.get("id").split('_')[0]]}-{j.text.strip()}", 3)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 3)
     return response.text("успех")
 
 @app.route('/get_schedule', methods=['POST'])
@@ -331,6 +350,7 @@ async def add_inventory(request):
     rented = request.form.get('rented')
     size = request.form.get('size')
     Database.addInventory(name,type,rented,size)
+    return response.json('OK', status=200)
 
 
 if __name__ == "__main__":

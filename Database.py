@@ -98,7 +98,7 @@ class Database:
                     Date DATE NOT NULL,
                     Status_id INTEGER NOT NULL,
                     FOREIGN KEY (ID) REFERENCES Employees (Employee_id),
-                    FOREIGN KEY (ID) REFERENCES Work_statuses (Status_id)
+                    FOREIGN KEY (ID) REFERENCES Work_status (Status_id)
                 )
             ''')
 
@@ -116,6 +116,53 @@ class Database:
                     FOREIGN KEY (ID) REFERENCES Clients (Client)
                 )
             ''')
+            
+    def getClientRents(id):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT * FROM Rents WHERE Client = ?',(id,))
+            rows = cursor.fetchall()
+            if not rows:
+                return None
+            rows = [row for row in rows]
+            output = []
+            for row in rows:
+                output.append({
+                    'ID' : row[0],
+                    'Start_Date' : datetime.strptime(row[1], "%Y-%m-%d"),
+                    'Return_Date' : datetime.strptime(row[2], "%Y-%m-%d"),
+                    'StartItemsJSON' : row[3],
+                    'ReturnedItemsJSON' : row[4],
+                    'Client' : Database.GetClientById(row[5]),
+                    'Deposit' : row[6],
+                    'Cost' : row[7],
+                    'IsPayed' : row[8]})
+            return output
+
+    def getClients():
+        with sqlite3.connect('database.db') as conn:
+           cursor = conn.execute('SELECT * FROM Clients')
+           rows = cursor.fetchall()
+           if not rows:
+               return None
+           rows = [row for row in rows]
+           output = []
+           for row in rows:
+               output.append({
+                   'ID' : row[0],
+                   'FIO' : row[1],
+                   'Passport' : row[2],
+                   'PhoneNumber' : row[3]})
+           return output
+
+    def delClientById(id):
+        with sqlite3.connect('database.db') as conn:
+            conn.execute('DELETE FROM Clients WHERE ID = ?', (id,))
+            conn.commit()
+
+    def addClient(fio, passport, phone_number):
+        with sqlite3.connect('database.db') as conn:
+            conn.execute('INSERT INTO Clients (FIO, Passport, PhoneNumber) VALUES (?,?,?)', (fio, passport, phone_number,))
+            conn.commit()
 
     def getInventoryTypes():
         with sqlite3.connect('database.db') as conn:
@@ -166,8 +213,13 @@ class Database:
                 'PhoneNumber' : rows[0][3]
             }
             return client
+        
     def addRent(Start_Date:datetime, Return_Date:datetime, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:str, IsPayed:bool):
+        
+        with sqlite3.connect('database.db') as conn:
+            conn.execute('INSERT INTO Rents (Start_Date, Return_Date, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed) VALUES (?,?,?,?,?,?,?,?)', ())
         return
+    
     def getRents():
          with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('SELECT * FROM Rents')
@@ -187,7 +239,6 @@ class Database:
                     'Deposit' : row[6],
                     'Cost' : row[7],
                     'IsPayed' : row[8]})
-            print(output)
             return output
     def getStaff():
         with sqlite3.connect('database.db') as conn:
