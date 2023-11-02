@@ -21,6 +21,7 @@
             background-color: #4CAF50;
             color: white;
         }
+
     </style>
 </head>
 <body>
@@ -38,6 +39,8 @@
             <td>{{item['Type']}}</td>
             <td>{{item['Rented']}}</td>
             <td>{{item['Size']}}</td>
+            <td><button></button></td>
+            
         </tr>
         {%endfor%}
         <!-- Добавьте другие строки с данными по мере необходимости -->
@@ -55,6 +58,13 @@
         <input type="submit" value="Добавить">
     </form>
 
+    <div class="modalWindow" style="display: none; position: absolute; left: 50%; top: 50%;">
+        <label for="cost">Цена</label>
+        <input type="text" name="cost" id="">
+        <label for="comment">Комментарий</label>
+        <input type="text" name="comment" id="">
+    </div>
+
     <script>
         document.getElementById("addItemForm").addEventListener("submit", function (event) {
             event.preventDefault();
@@ -67,13 +77,15 @@
 
             const table = document.querySelector("table");
             const newRow = table.insertRow(table.rows.length);
-            const cells = [newRow.insertCell(0), newRow.insertCell(1), newRow.insertCell(2), newRow.insertCell(3)];
+            const cells = [newRow.insertCell(0), newRow.insertCell(1), newRow.insertCell(2), newRow.insertCell(3), newRow.insertCell(4)];
 
             
             cells[0].innerText = name;
             cells[1].innerText = typetext;
             cells[2].innerText = rented;
             cells[3].innerText = size;
+            var button = document.createElement("button");
+            cells[4].appendChild(button)
 
             const formData = new FormData();
             formData.append("name", name);
