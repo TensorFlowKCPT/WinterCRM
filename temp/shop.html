@@ -1,11 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Rented</th>
+            <th>Size</th>
+        </tr>
+        <!-- Здесь нужно вставить данные из вашей базы данных -->
+        {% for item in data['Shop'] %}
+        <tr>
+            <td>{{item['Name']}}</td>
+            <td>{{item['Type']}}</td>
+            <td>{{item['Rented']}}</td>
+            <td>{{item['Size']}}</td>
+        </tr>
+        {%endfor%}
+        <!-- Добавьте другие строки с данными по мере необходимости -->
+    </table>
+    <h2>Добавить новую запись</h2>
+    <form id="addItemForm">
+        <input type="text" placeholder="Name" name="name" required>
+        <select name="type" required>
+            {% for type in data['InventoryTypes'] %}
+            <option value="{{ type['ID'] }}">{{type['Name']}}</option>
+            {%endfor%}
+        </select>
+        <input type="checkbox" name="rented" value="false">Rented
+        <input type="number" placeholder="Size" name="size">
+        <input type="submit" value="Добавить">
+    </form>
+
+    <script>
+        document.getElementById("addItemForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const name = event.target.name.value;
+            const type = event.target.type.value;
+            const typetext = event.target.type.options[event.target.type.selectedIndex].text;
+            const rented = event.target.rented.checked;
+            const size = event.target.size.value;
+
+            const table = document.querySelector("table");
+            const newRow = table.insertRow(table.rows.length);
+            const cells = [newRow.insertCell(0), newRow.insertCell(1), newRow.insertCell(2), newRow.insertCell(3)];
+
+            
+            cells[0].innerText = name;
+            cells[1].innerText = typetext;
+            cells[2].innerText = rented;
+            cells[3].innerText = size;
+
+            const formData = new FormData();
+            formData.append("name", name);
+            formData.append("type", type);
+            formData.append("rented", rented);
+            formData.append("size", size);
+
+            fetch("/inventory", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .catch(error => {
+                console.error("Ошибка при отправке запроса:", error);
+            });
+
+
+            event.target.reset();
+        });
+    </script>
 </body>
 </html>

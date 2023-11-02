@@ -40,7 +40,17 @@ class Database:
                         Type INTEGER NOT NULL,
                         Rented BOOLEAN NOT NULL,
                         Size INTEGER,
+                        Sold BOOLEAN,
                         FOREIGN KEY (ID) REFERENCES WinterInventoryTypes (Type)
+                     )
+                 ''')
+            
+            conn.execute('''CREATE TABLE IF NOT EXISTS SoldInventory (
+                        ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                        InventoryID INT NOT NULL,
+                        Cost INT NOT NULL,
+                        Comment TEXT,
+                        FOREIGN KEY (ID) REFERENCES WinterInventory (InventoryID)
                      )
                  ''')
             
@@ -62,7 +72,16 @@ class Database:
                 cursor = conn.execute('SELECT ID FROM Employees WHERE Name = ?', item).fetchone()
                 if not cursor:
                     conn.execute('INSERT OR IGNORE INTO Employees (Name) VALUES (?)', item)
-            
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS Shop (
+                    ID INTEGER PRIMARY KEY,
+                    Task TEXT NOT NULL,
+                    Performer INT NOT NULL,
+                    Deadline DATE,
+                    Status BOOLEAN NOT NULL,
+                    FOREIGN KEY (ID) REFERENCES Employees (Performer)
+                )
+            ''')
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS Tasks (
                     ID INTEGER PRIMARY KEY,
@@ -180,12 +199,23 @@ class Database:
         
     def addInventory(name:str, type: int, rented: bool, size: int):
         with sqlite3.connect('database.db') as conn:
-            conn.execute('INSERT INTO WinterInventory (Name, Type, Rented, Size) VALUES (?,?,?,?)', (name, type, rented, size,))
+            conn.execute('INSERT INTO WinterInventory (Name, Type, Rented, Size, Sold) VALUES (?,?,?,?,?)', (name, type, rented, size, False,))
+            conn.commit()
+
+    def sellInventory(id, Cost, Comment):
+        with sqlite3.connect('database.db') as conn:
+            conn.execute('INSERT INTO SoldInventory (InventoryID,Cost,Comment) VALUES (?,?,?)', (id, Cost, Comment,))
+            conn.execute('UPDATE WinterInventory SET Sold = True WHERE ID = ?', (id,))
+            conn.commit()
+
+    def delInventory(id):
+        with sqlite3.connect('database.db') as conn:
+            conn.execute('DELETE FROM WinterInventory WHERE ID = ?', (id,))
             conn.commit()
 
     def getInventory():
         with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM WinterInventory')
+            cursor = conn.execute('SELECT * FROM WinterInventory WHERE NOT Sold = True')
             rows = cursor.fetchall()
             if not rows:
                 return None
