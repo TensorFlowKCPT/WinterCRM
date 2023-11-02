@@ -4,12 +4,21 @@ from sanic.response import text, html
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from Database import Database
 import xml.etree.ElementTree as ET
+from bs4 import BeautifulSoup
 app = Sanic("WinterCRM")
 env = Environment(
     loader=FileSystemLoader('temp'),  # Папка с шаблонами
     autoescape=select_autoescape(['html', 'xml'])
 )
 app.static("/static/", "./st/")
+
+# Функция для получения значений по определенной дате
+def get_data_by_date(data_list, target_date):
+    for item in data_list:
+        _, _, date, value = item  # Распаковываем элемент кортежа
+        if date == target_date:
+            return value
+    return False  # Если данных на указанную дату нет
 
 @app.route("/")
 async def index(request):
@@ -32,7 +41,6 @@ async def service(request):
 @app.route("/schedule")
 async def schedule(request):
     staff = Database.getStaff()
-    print(staff)
     template = env.get_template('schedule.html')
     rendered_html = template.render(data=staff)
 
@@ -61,6 +69,7 @@ async def clients(request):
 @app.route('/save', methods=['POST'])
 async def save(request):
     html_table = request.form.get('table')  # Получаем данные таблицы из формы
+    print(html_table)
     listdate = {
     "january": "01",
     "february": "02",
@@ -78,7 +87,8 @@ async def save(request):
 
     xmlpars = ET.fromstring(html_table)
     nameEmployees = xmlpars.find(".//h1")
-    idEployees = Database.getIdEployee(nameEmployees.text)
+    idEployees = Database.getIdEployee(nameEmployees.text.strip())
+    print(nameEmployees.text.strip())
     nameMonth = xmlpars.findall(".//h2")
     monthObject = xmlpars.findall(".//table")
 
@@ -95,9 +105,49 @@ async def save(request):
 @app.route('/get_schedule', methods=['POST'])
 async def get_schedule(request):
     scheduleForEmployees = Database.getScheduleForEmployees(Database.getIdEployee(request.json.get('employee_id')))
-    result = None
     if scheduleForEmployees != None:
-        pass
+        months = {'november': ["11", 30], 'december': ["12", 31], 'january': ["01", 31], 'february': ["02", 29]}
+        result = f'''
+        <h1></h1>
+        <h2>Ноябрь</h2>
+        <table id="november_2023"></table>
+        <h2>Декабрь</h2>
+        <table id="december_2023"></table>
+        <h2>Январь</h2>
+        <table id="january_2024"></table>
+        <h2>Февраль</h2>
+        <table id="february_2023"></table>
+        ''' 
+        soup = BeautifulSoup(result, 'html.parser')
+        soup.find('h1').string = scheduleForEmployees[0][1]
+        tables = soup.find_all('table')
+        for i in tables:
+            for j in range(1, months[i.get('id').split("_")[0]][1]+1):
+                if j % 7 == 0 or j == 1:
+                    tagTr = soup.new_tag('tr')
+                    i.append(tagTr)
+                lastTr = i.find_all('tr')[-1]
+                date = f'{i.get('id').split("_")[1]}-{months[i.get('id').split("_")[0]][0]}-{j}'
+                if get_data_by_date(scheduleForEmployees, date) != False:
+                    tagTd = soup.new_tag(name ='td')
+                    tagTd['class'] = "cell"
+                    tagTd.string = str(j)
+                    data = get_data_by_date(scheduleForEmployees, date)
+                    if data == 'Больничный':
+                        tagTd['style'] = 'background-color: red'
+                    elif data == 'Работает':
+                        tagTd['style'] = 'background-color: blue'
+                    elif data == 'Отпуск':
+                        tagTd['style'] = 'background-color: green'
+                    lastTr.append(tagTd)
+                else:
+                    tagTd = soup.new_tag(name ='td')
+                    tagTd['class'] = "cell"
+                    tagTd.string = str(j)
+                    lastTr.append(tagTd)
+        result = soup.prettify().encode('utf-8').decode('utf-8')
+        return response.html(result)
+
     else:
         result = f'''
         <h1>{request.json.get('employee_id')}</h1>
@@ -277,10 +327,11 @@ async def get_schedule(request):
     '''
     return response.html(result)
 
-@app.route('/schedule', methods=['POST'])
+@app.route('/get_password', methods=['POST'])
+async def get_password(request):
+    password = "adminqwerty"
+    return response.json({'result': request.form.get('password') == password})
 
-async def schedule_post(request):
-    pass
 
 @app.get('/inventory')
 async def inventoryPage(request):
