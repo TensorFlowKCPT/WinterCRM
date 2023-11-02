@@ -94,9 +94,9 @@ class Database:
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS Employee_schedule (
                     ID INTEGER PRIMARY KEY,
-                    Employee_id INTEGER,
+                    Employee_id INTEGER NOT NULL,
                     Date DATE NOT NULL,
-                    Status_id INTEGER,
+                    Status_id INTEGER NOT NULL,
                     FOREIGN KEY (ID) REFERENCES Employees (Employee_id),
                     FOREIGN KEY (ID) REFERENCES Work_statuses (Status_id)
                 )
