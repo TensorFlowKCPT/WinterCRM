@@ -135,21 +135,6 @@ class Database:
                     FOREIGN KEY (ID) REFERENCES Clients (Client)
                 )
             ''')
-
-            conn.execute('''
-                CREATE TABLE IF NOT EXISTS  (
-                    ID INTEGER PRIMARY KEY,
-                    Start_Date DATE NOT NULL,
-                    Return_Date DATE,
-                    StartItemsJSON TEXT NOT NULL,
-                    ReturnedItemsJSON TEXT,
-                    Client INT NOT NULL,
-                    Deposit TEXT NOT NULL,
-                    COST INT NOT NULL,
-                    IsPayed BOOLEAN NOT NULL,
-                    FOREIGN KEY (ID) REFERENCES Clients (Client)
-                )
-            ''')
             
     def getClientRents(id):
         with sqlite3.connect('database.db') as conn:

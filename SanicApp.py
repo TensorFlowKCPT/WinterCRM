@@ -67,11 +67,11 @@ async def clients(request):
 
 @app.post('/sell_inventory')
 async def sellInventory(request):
-   Cost = request.json.get('Cost')
-   Comment = request.json.get('Comment')
-   id = request.json.get('id')
+   Cost = request.form.get('cost')
+   Comment = request.form.get('comment')
+   id = request.form.get('idinventory')
    Database.sellInventory(id,Cost,Comment)
-   return response.text('Ok', status=200)
+   return response.json({'status':'ok'}, status=200)
 
 # Обработчик для сохранения HTML таблицы
 @app.route('/save', methods=['POST'])
