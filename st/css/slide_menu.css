@@ -1,0 +1,74 @@
+/* Общий вид слад-меню */
+.slide_menu__wrapper {
+    background-color: var(--grey-0, #FFF);
+    padding: 4px 24px 32px;
+    display: flex;
+    flex-direction: column;
+    min-height: 928px;
+}
+
+.slide_menu__inset {
+    display: flex;
+    flex-direction: column;
+    padding: 28px 0 28px;
+    border-bottom: 1px solid #F1F1F4;
+    gap: 28px;
+    width: 230px;
+}
+
+.slide_menu__inset_center {
+    padding: 28px 0;
+    border: none;
+    margin-bottom: 240px;
+}
+
+/* Внутри слайд-меню (slide_menu__card) */
+.slide_menu__card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.slide_menu-text {
+    color: var(--grey-400, #8B8BA7);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: normal;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Кнопки */
+.slide_menu__button {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.slide_menu-button {
+    color: var(--grey-600, #585874);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 140%;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.slide_menu-button:hover {
+    color: #000;
+}
+
+.slide_menu-calendar-but {
+    padding: 1px 6px 0;
+}
+
+.slide_menu__active {
+    padding: 13px 2px 12px 0;
+    border-radius: 10px;
+    background: var(--primary-0, #E5F0FF);
+}
+
+.slide_menu__active-button {
+    color: #8A84E2;
+}
