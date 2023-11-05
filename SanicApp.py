@@ -87,7 +87,12 @@ async def updateTaskStatus(request):
 async def service(request):
     return response.text('Hello')
 
-# РАБОТА С ГРАФИКОМ СОТРУДНИКОВ
+@app.route("/rents", methods=['GET'])
+async def rents(request):
+    data = {}
+    template = env.get_template('rents.html')
+    render_template = template.render(data = data)
+    return response.html(render_template)
 
 @app.route("/schedule")
 async def schedule(request):
