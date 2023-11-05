@@ -31,6 +31,8 @@
             <th>Type</th>
             <th>Rented</th>
             <th>Size</th>
+            <th>Sell</th>
+            <th>Delete</th>
         </tr>
         <!-- Здесь нужно вставить данные из вашей базы данных -->
         {% for item in data['Inventory'] %}
@@ -39,7 +41,8 @@
             <td>{{item['Type']}}</td>
             <td>{{item['Rented']}}</td>
             <td>{{item['Size']}}</td>
-            <td><button></button></td>
+            <td><button onclick="Sell({{ item['ID'] }})">Продать</button></td>
+            <td><button onclick="Delete({{ item['ID'] }})">Удалить</button></td>
             
         </tr>
         {%endfor%}
@@ -58,14 +61,77 @@
         <input type="submit" value="Добавить">
     </form>
 
-    <div class="modalWindow" style="display: none; position: absolute; left: 50%; top: 50%;">
-        <label for="cost">Цена</label>
-        <input type="text" name="cost" id="">
-        <label for="comment">Комментарий</label>
-        <input type="text" name="comment" id="">
+    <div class="modalWindow" id="Modal" style="display: none; position: absolute; left: 50%; top: 50%;">
+        <form id='SellForm' action="/sell_inventory" method="post">
+            <label for="cost">Цена</label>
+            <input type="text" name="cost" id="cost">
+            <input type="text" style="display: none;" name="idinventory" id="idinventory">
+            <label for="comment">Комментарий</label>
+            <input type="text" name="comment" id="comment">
+            <input type="submit" name = 'submit' id = 'submit'>
+        </form>
     </div>
 
     <script>
+        document.getElementById("SellForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            // Получаем форму
+            const form = event.target;
+
+            // Создаем объект FormData для сбора данных из формы
+            const formData = new FormData(form);
+
+            // Здесь вы можете добавить дополнительные действия перед отправкой данных, если необходимо
+
+            // Отправляем данные на сервер с использованием fetch, например
+            fetch("/sell_inventory", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                // Обработка ответа от сервера
+                if (response.ok) {
+                    //document.getElementById("modalWindow").style.display="none"
+                    location.reload()
+                } else {
+                    alert("Ошибка при обращении к базе")
+                }
+            })
+            .catch(error => {
+                alert("Ошибка при обращении к базе")
+            });
+        });
+        function Sell(id){
+            const Modal = document.getElementById("Modal")
+            Modal.style.display="block"
+            console.log(id)
+            const idinventoryInput = Modal.querySelector('input[name="idinventory"]');
+            idinventoryInput.value = id;
+        }
+        function Delete(btnid) {
+            fetch("/del-inventory", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id: btnid })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Ошибка HTTP: " + response.status);
+                }
+            })
+            .then(data => {
+                // Обработка данных после успешного запроса
+                console.log("Успешно удалено", data);
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Ошибка при отправке запроса:", error);
+            });
+        }
         document.getElementById("addItemForm").addEventListener("submit", function (event) {
             event.preventDefault();
 
@@ -77,15 +143,22 @@
 
             const table = document.querySelector("table");
             const newRow = table.insertRow(table.rows.length);
-            const cells = [newRow.insertCell(0), newRow.insertCell(1), newRow.insertCell(2), newRow.insertCell(3), newRow.insertCell(4)];
+            const cells = [newRow.insertCell(0), newRow.insertCell(1), newRow.insertCell(2), newRow.insertCell(3), newRow.insertCell(4), newRow.insertCell(5)];
 
-            
+            const id = table.rows.length
             cells[0].innerText = name;
             cells[1].innerText = typetext;
             cells[2].innerText = rented;
             cells[3].innerText = size;
             var button = document.createElement("button");
+            button.textContent = "Продать"
+            
+            button.onclick = Sell(id)
             cells[4].appendChild(button)
+            var button = document.createElement("button");
+            button.textContent = "Удалить"
+            button.onclick = Delete(id)
+            cells[5].appendChild(button)
 
             const formData = new FormData();
             formData.append("name", name);

@@ -21,67 +21,137 @@
             background-color: #4CAF50;
             color: white;
         }
+
     </style>
 </head>
 <body>
     <table>
         <tr>
             <th>Name</th>
-            <th>Type</th>
-            <th>Rented</th>
-            <th>Size</th>
+            <th>Cost</th>
+            <th>Left</th>
+            <th>Sold</th>
+            <th>Delete</th>
         </tr>
         <!-- Здесь нужно вставить данные из вашей базы данных -->
-        {% for item in data['Shop'] %}
-        <tr>
+        {% for item in data['Consumables'] %}
+        <tr{% if item['Left'] <= 0 %} style="background:rgb(255, 84, 84)"{% endif %}>
             <td>{{item['Name']}}</td>
-            <td>{{item['Type']}}</td>
-            <td>{{item['Rented']}}</td>
-            <td>{{item['Size']}}</td>
+            <td>{{item['Cost']}}</td>
+            <td>{{item['Left']}} <button onclick="Add({{item['ID']}})">Добавить</button></td>
+            <td>{{item['Sold']}} <button onclick="Sell({{item['ID']}})">Продать</button></td>
+            <td><button onclick="Delete({{item['ID']}})"</button>Удалить</td>
         </tr>
         {%endfor%}
         <!-- Добавьте другие строки с данными по мере необходимости -->
     </table>
     <h2>Добавить новую запись</h2>
     <form id="addItemForm">
-        <input type="text" placeholder="Name" name="name" required>
-        <select name="type" required>
-            {% for type in data['InventoryTypes'] %}
-            <option value="{{ type['ID'] }}">{{type['Name']}}</option>
-            {%endfor%}
-        </select>
-        <input type="checkbox" name="rented" value="false">Rented
-        <input type="number" placeholder="Size" name="size">
+        <input type="text" placeholder="name" name="name" required>
+        <input type="number" placeholder="cost" name="cost" required>
         <input type="submit" value="Добавить">
     </form>
 
     <script>
+        function Delete(btnid) {
+            fetch("/del-consumable", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id: btnid })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Ошибка HTTP: " + response.status);
+                }
+            })
+            .then(data => {
+                // Обработка данных после успешного запроса
+                console.log("Успешно удалено", data);
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Ошибка при отправке запроса:", error);
+            });
+        }
+        function Add(btnid){
+            fetch("/add-consumable", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id: btnid })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Ошибка HTTP: " + response.status);
+                }
+            })
+            .then(data => {
+                // Обработка данных после успешного запроса
+                console.log("Успешно добавлено", data);
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Ошибка при отправке запроса:", error);
+            });
+        }
+        function Sell(btnid){
+            fetch("/sell-consumable", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id: btnid })
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error("Ошибка HTTP: " + response.status);
+                }
+            })
+            .then(data => {
+                // Обработка данных после успешного запроса
+                console.log("Успешно добавлено", data);
+                location.reload();
+            })
+            .catch(error => {
+                console.error("Ошибка при отправке запроса:", error);
+            });
+        }
         document.getElementById("addItemForm").addEventListener("submit", function (event) {
             event.preventDefault();
 
             const name = event.target.name.value;
-            const type = event.target.type.value;
-            const typetext = event.target.type.options[event.target.type.selectedIndex].text;
-            const rented = event.target.rented.checked;
-            const size = event.target.size.value;
+            const cost = event.target.cost.value;
 
             const table = document.querySelector("table");
             const newRow = table.insertRow(table.rows.length);
-            const cells = [newRow.insertCell(0), newRow.insertCell(1), newRow.insertCell(2), newRow.insertCell(3)];
+            newRow.style.background='rgb(255, 84, 84)'
+            const cells = [newRow.insertCell(0), newRow.insertCell(1), newRow.insertCell(2), newRow.insertCell(3), newRow.insertCell(4)];
 
-            
+            const id = table.rows.length
             cells[0].innerText = name;
-            cells[1].innerText = typetext;
-            cells[2].innerText = rented;
-            cells[3].innerText = size;
-
+            cells[1].innerText = cost;
+            cells[2].innerText = 0;
+            cells[3].innerText = 0;
+            var button = document.createElement("button");
+            button.textContent = "Удалить"
+            
+            button.onclick = Delete(id)
+            cells[4].appendChild(button)
+            
             const formData = new FormData();
-            formData.append("name", name);
-            formData.append("type", type);
-            formData.append("rented", rented);
-            formData.append("size", size);
+            formData.append("Name", name);
+            formData.append("Cost", cost);
 
-            fetch("/inventory", {
+            fetch("/shop", {
                 method: "POST",
                 body: formData
             })

@@ -44,7 +44,19 @@ class Database:
                         FOREIGN KEY (ID) REFERENCES WinterInventoryTypes (Type)
                      )
                  ''')
-            
+            conn.execute('''CREATE TABLE IF NOT EXISTS Consumables(
+                        ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                        Name TEXT NOT NULL,
+                        Cost INTEGER NOT NULL,
+                        Left INTEGER NOT NULL
+            )
+            ''')
+            conn.execute('''CREATE TABLE IF NOT EXISTS Shop(
+                        ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                        ConsumableId INTEGER NOT NULL,
+                        FOREIGN KEY (ID) REFERENCES Consumables (ConsumableId)
+            )
+            ''')
             conn.execute('''CREATE TABLE IF NOT EXISTS SoldInventory (
                         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         InventoryID INT NOT NULL,
@@ -135,8 +147,71 @@ class Database:
                     FOREIGN KEY (ID) REFERENCES Clients (Client)
                 )
             ''')
+    
 
+    def sellConsumable(id):
+        with sqlite3.connect('database.db') as conn:
+            conn.execute('UPDATE Consumables SET "Left" = "Left" - 1 WHERE id = ?', (id,))
+            conn.execute('INSERT INTO Shop (ConsumableId) VALUES (?)', (id,))
+
+    def getConsumableById(id):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT * FROM Consumables WHERE id = ?')
+            rows = cursor.fetchone()
+            if not rows:
+                return None
+            rows = [row for row in rows]
+            output = {}
+            row = rows[0]
+            output={
+                'ID' : row[0],
+                'Name': row[1],
+                'Cost' : row[2],
+                'Left' : row[3]}
+            cursor = conn.execute('SELECT Count() FROM Shop WHERE ConsumableId = ?',(id,))
+            rows = cursor.fetchone()
+            if not rows:
+                return output
+            rows = [row for row in rows]
+            output['Sold'] = row[0]
+            return output
+    def addConsumable(id, howMany):
+        with sqlite3.connect('database.db') as conn:
+            conn.execute('UPDATE Consumables SET "Left" = "Left" + ? WHERE id = ?', (howMany,id,))
+        return
+    def addConsumableType(name, cost):
+        with sqlite3.connect('database.db') as conn:
+            conn.execute('INSERT INTO Consumables (Name,Cost,Left) VALUES (?,?,?)', (name, cost, 0,))
+        return
+    def delConsumable(id):
+        with sqlite3.connect('database.db') as conn:
+            conn.execute('DELETE FROM Consumables WHERE ID = ?', (id,))
+            conn.commit()
+    def getConsumables():
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT * FROM Consumables')
+            rows = cursor.fetchall()
+            if not rows:
+                return None
+            rows = [row for row in rows]
+            output = []
+            for row in rows:
+                output.append({
+                    'ID' : row[0],
+                    'Name': row[1],
+                    'Cost' : row[2],
+                    'Left' : row[3]})
             
+            for consumable in output:
+                cursor = conn.execute('SELECT Count() FROM Shop WHERE ConsumableId = ?',(consumable['ID'],))
+                rows = cursor.fetchone()
+                if not rows:
+                    return output
+                rows = [row for row in rows]
+                consumable['Sold'] = rows[0]
+            return output
+
+
     def getClientRents(id):
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('SELECT * FROM Rents WHERE Client = ?',(id,))
@@ -225,6 +300,7 @@ class Database:
             for row in rows:
                 cursor = conn.execute('SELECT Name FROM WinterInventoryTypes WHERE ID = ?', (row[2],))
                 output.append({
+                    'ID' : row[0],
                     'Name' : row[1],
                     'Type' : cursor.fetchone()[0],
                     'Rented' : row[3],

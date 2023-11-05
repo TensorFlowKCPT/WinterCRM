@@ -12,6 +12,55 @@ env = Environment(
 )
 app.static("/static/", "./st/")
 
+
+#region /index
+@app.route("/")
+async def index(request):
+    return response.text('Hello')
+#endregion
+#region /shop
+@app.post("/shop")
+async def addConsumableType(request):
+    Name = request.form.get('Name')
+    Cost = request.form.get('Cost')
+    Database.addConsumableType(Name,Cost)
+    return response.json({'status':'ok'})
+@app.post("/sell-consumable")
+async def sellConsumable(request):
+    Database.sellConsumable(request.json.get('id'))
+    return response.json({'response':'OK'}, status = 200)
+@app.post("/add-consumable")
+async def addConsumable(request):
+    Database.addConsumable(request.json.get('id'), 1)
+    return response.json({'response':'OK'}, status = 200)
+@app.post("/del-consumable")
+async def deleteConsumable(request):
+    Database.delConsumable(request.json.get('id'))
+    return response.json({'response':'OK'}, status = 200)
+@app.get("/shop")
+async def shop(request):
+    consumables = Database.getConsumables()
+    Data = {}
+    if consumables:
+        Data['Consumables'] = consumables
+    template = env.get_template('shop.html')
+    rendered_html = template.render(data=Data)
+
+    return html(rendered_html)
+#endregion
+#region /tasks
+@app.route("/tasks")
+async def tasks(request):
+    return response.text('Hello')
+
+
+#endregion
+#region /service
+@app.route("/service")
+async def service(request):
+    return response.text('Hello')
+#endregion
+#region /schedule
 # Функция для получения значений по определенной дате
 def get_data_by_date(data_list, target_date):
     for item in data_list:
@@ -116,11 +165,11 @@ async def save(request):
     for i in monthObject:
         for j in i.findall(".//td"):
             if j.get("style") != None and "red" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 2)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 2)
             if j.get("style") != None and "blue" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 1)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 1)
             if j.get("style") != None and "green" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 3)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 3)
     return response.text("успех")
 
 @app.route('/get_schedule', methods=['POST'])
@@ -352,7 +401,81 @@ async def get_schedule(request):
 async def get_password(request):
     password = "adminqwerty"
     return response.json({'result': request.form.get('password') == password})
+#endregion
+#region /clients
+@app.post('/clients')
+async def addclient(request):
+    Fio = request.form.get('FIO')
+    Passport = request.form.get('Passport')
+    PhoneNumber = request.form.get('PhoneNumber')
+    Database.addClient(Fio,Passport,PhoneNumber)
+    return response.json('OK', status=200)
 
+@app.get('/clients')
+async def clients(request):
+    clients = Database.getClients()
+    Data = {}
+    if clients:
+        Data['Clients'] = clients
+    template = env.get_template('clients.html')
+    rendered_html = template.render(data=Data)
+
+    return html(rendered_html)
+#endregion
+#region /inventory
+@app.post('/sell_inventory')
+async def sellInventory(request):
+   Cost = request.form.get('cost')
+   Comment = request.form.get('comment')
+   id = request.form.get('idinventory')
+   Database.sellInventory(id,Cost,Comment)
+   return response.json({'status':'ok'}, status=200)
+
+# Обработчик для сохранения HTML таблицы
+@app.route('/save', methods=['POST'])
+async def save(request):
+    html_table = request.form.get('table')  # Получаем данные таблицы из формы
+    print(html_table)
+    listdate = {
+    "january": "01",
+    "february": "02",
+    "march": "03",
+    "april": "04",
+    "may": "05",
+    "june": "06",
+    "july": "07",
+    "august": "08",
+    "september": "09",
+    "october": "10",
+    "november": "11",
+    "december": "12"
+    }
+
+    xmlpars = ET.fromstring(html_table)
+    nameEmployees = xmlpars.find(".//h1")
+    idEployees = Database.getIdEployee(nameEmployees.text.strip())
+    print(nameEmployees.text.strip())
+    nameMonth = xmlpars.findall(".//h2")
+    monthObject = xmlpars.findall(".//table")
+
+    for i in monthObject:
+        for j in i.findall(".//td"):
+            if j.get("style") != None and "red" in j.get("style"):
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 2)
+            if j.get("style") != None and "blue" in j.get("style"):
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 1)
+            if j.get("style") != None and "green" in j.get("style"):
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 3)
+    return response.text("успех")
+
+
+
+
+
+@app.post('/del-inventory')
+async def deleteInventory(request):
+    Database.delInventory(request.json.get('id'))
+    return response.json({'response':'OK'}, status = 200)
 
 @app.get('/inventory')
 async def inventoryPage(request):
@@ -372,7 +495,7 @@ async def add_inventory(request):
     size = request.form.get('size')
     Database.addInventory(name,type,rented,size)
     return response.json('OK', status=200)
-
+#endregion
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
