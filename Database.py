@@ -136,20 +136,6 @@ class Database:
                 )
             ''')
 
-            conn.execute('''
-                CREATE TABLE IF NOT EXISTS  (
-                    ID INTEGER PRIMARY KEY,
-                    Start_Date DATE NOT NULL,
-                    Return_Date DATE,
-                    StartItemsJSON TEXT NOT NULL,
-                    ReturnedItemsJSON TEXT,
-                    Client INT NOT NULL,
-                    Deposit TEXT NOT NULL,
-                    COST INT NOT NULL,
-                    IsPayed BOOLEAN NOT NULL,
-                    FOREIGN KEY (ID) REFERENCES Clients (Client)
-                )
-            ''')
             
     def getClientRents(id):
         with sqlite3.connect('database.db') as conn:
@@ -285,7 +271,7 @@ class Database:
                     'Cost' : row[7],
                     'IsPayed' : row[8]})
             return output
-    def getStaff():
+    def getStaffName():
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('SELECT Name FROM Employees ')
             rows = cursor.fetchall()
@@ -293,6 +279,15 @@ class Database:
                 rows = [row[0] for row in rows]
                 return rows
             return None
+    
+    def getStaffAll():
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT * FROM Employees ')
+            rows = cursor.fetchall()
+            if rows:
+                return rows
+            return None
+    
     
     def putSchedule(idEmployee: int, date: str, idStatus: int):
         with sqlite3.connect('database.db') as conn:
@@ -342,7 +337,7 @@ class Database:
                 return result
             return None
         
-    def getTasks():
+    def getTasksAll():
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('SELECT * FROM Tasks')
             rows = cursor.fetchall()
@@ -365,6 +360,10 @@ class Database:
     def createTask(task: str, idEployees: int, deadline: str, status: bool):
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('INSERT INTO Tasks (Task, Performer, Deadline, Status)VALUES (?, ?, ?, ?)', (task, idEployees, deadline, status,))
+
+    def statusPut(idTask: int, status: bool):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute("UPDATE Tasks SET Status = ? WHERE id = ?", (status, idTask))
         
 
 

@@ -6,6 +6,105 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <h1>Add Task</h1>
+    <input type="text" id="task" placeholder="Task">
+    <select id="employees">
+    {% for employee in data['staff'] %}
+    <option value="{{ employee[0] }}">{{ employee[1] }}</option>
+    {% endfor %}
+    </select>
+    <input type="date" id="dueDate">
+    <button id="addTaskButton">Add Task</button>
+
+    <table>
+        <tr>
+            <td>Задача</td>
+            <td>Сотрудник</td>
+            <td>Дедлайн</td>
+            <td>Состояние</td>
+        </tr>
+        {% if data['tasks'] %}
+        {% for task in data['tasks'] %}
+        <tr>
+            <td>{{ task[1] }}</td>
+            <td>{{ task[2] }}</td>
+            <td>{{ task[3] }}</td>
+            <td><input type="checkbox" name="taskStatus" {% if task[4] %}checked{% endif %} class="task-status-checkbox" data-task-id="{{ task[0] }}"></td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+    </table>
+
+    <script>
+        const addTaskButton = document.getElementById('addTaskButton');
+        const taskInput = document.getElementById('task');
+        const employeesSelect = document.getElementById('employees'); 
+        const dueDateInput = document.getElementById('dueDate');
+
+        addTaskButton.addEventListener('click', async () => {
+            const task = taskInput.value;
+            const employee = employeesSelect.value;
+            const dueDate = dueDateInput.value;
+
+            if (task) {
+                const data = {
+                    task: task,
+                    employee: employee,
+                    dueDate: dueDate
+                };
+
+                const response = await fetch('/addTask', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.status === 200) {
+                    alert('Task added successfully');
+                    taskInput.value = '';
+                    employeesSelect.value = '';
+                    dueDateInput.value = '';
+                } else {
+                    alert('Failed to add task');
+                }
+            } else {
+                alert('Please enter a task');
+            }
+        });
+
+        const checkboxes = document.querySelectorAll('.task-status-checkbox');
+
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', async () => {
+        const taskId = checkbox.getAttribute('data-task-id');
+        const isChecked = checkbox.checked;
+        console.log(taskId ,isChecked)
+        const data = {
+            taskId: taskId,
+            isChecked: isChecked
+        };
+
+        try {
+            const response = await fetch('/updateTaskStatus', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.status === 200) {
+                console.log(`Task status for task ${taskId} updated successfully.`);
+            } else {
+                console.error('Failed to update task status.');
+            }
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    });
+});
+    </script>
 </body>
 </html>

@@ -28,9 +28,30 @@ async def index(request):
 async def shop(request):
     return response.text('Hello')
 
+@app.route("/addTask", methods=['POST'])
+async def addTask(request):
+    task = request.json.get('task')
+    epmloyee = request.json.get('employee')
+    date = request.json.get('dueDate')
+    Database.createTask(task=task, idEployees=epmloyee, deadline=date, status=False)
+    return text("кайф")
+
 @app.route("/tasks")
 async def tasks(request):
-    return response.text('Hello')
+    tasks = Database.getTasksAll()
+    staff = Database.getStaffAll()
+    data = {"tasks": tasks, "staff": staff}
+    template = env.get_template('tasks.html')
+    render_template = template.render(data = data)
+    return response.html(render_template)
+
+@app.route("/updateTaskStatus", methods=['POST'])
+async def updateTaskStatus(request):
+    taskId = request.json.get('taskId')
+    status = request.json.get('isChecked')
+    Database.statusPut(idTask=taskId, status=status)
+    return response.json({"status": 200})
+
 
 @app.route("/service")
 async def service(request):
@@ -40,7 +61,7 @@ async def service(request):
 
 @app.route("/schedule")
 async def schedule(request):
-    staff = Database.getStaff()
+    staff = Database.getStaffName()
     template = env.get_template('schedule.html')
     rendered_html = template.render(data=staff)
 
@@ -95,11 +116,11 @@ async def save(request):
     for i in monthObject:
         for j in i.findall(".//td"):
             if j.get("style") != None and "red" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 2)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 2)
             if j.get("style") != None and "blue" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 1)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 1)
             if j.get("style") != None and "green" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 3)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 3)
     return response.text("успех")
 
 @app.route('/get_schedule', methods=['POST'])
