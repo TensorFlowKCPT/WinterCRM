@@ -18,6 +18,7 @@ app.static("/static/", "./st/")
 async def index(request):
     return response.text('Hello')
 #endregion
+
 #region /shop
 @app.post("/shop")
 async def addConsumableType(request):
@@ -76,9 +77,29 @@ async def updateTaskStatus(request):
 #endregion
 
 #region /service
-@app.route("/service")
+@app.route("/service", methods=['GET'])
 async def service(request):
-    return response.text('Hello')
+    getClients = Database.getClients()
+    getInventory = Database.getInventory()
+    getService = Database.getService()
+    data = {"clients": getClients, 'inventory': getInventory, 'service':getService}
+    template = env.get_template('service.html')
+    render_template = template.render(data = data)
+    return response.html(render_template)
+
+@app.route("/service_create", methods=['POST'])
+async def service_create(request):
+    creating_date = request.json.get('creating_date')
+    clients = request.json.get('clients')
+    inventory = request.json.get('inventory')
+    task = request.json.get('task')
+    parts = request.json.get('parts')
+    cost = request.json.get('cost')
+    ispayed = request.json.get('ispayed')
+
+    Database.createService(creating_date=creating_date, id_client=clients, id_inventory=inventory, task=task, parts=parts, cost=cost, isPayed=ispayed)
+    return text("норм")
+
 #endregion
 
 #region /rents
@@ -377,6 +398,7 @@ async def get_password(request):
     password = "adminqwerty"
     return response.json({'result': request.form.get('password') == password})
 #endregion
+
 #region /clients
 @app.post('/clients')
 async def addclient(request):
@@ -397,6 +419,7 @@ async def clients(request):
 
     return html(rendered_html)
 #endregion
+
 #region /inventory
 @app.post('/sell_inventory')
 async def sellInventory(request):
