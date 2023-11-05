@@ -49,15 +49,7 @@ async def shop(request):
     return html(rendered_html)
 #endregion
 
-#region /schedule
-# Функция для получения значений по определенной дате
-def get_data_by_date(data_list, target_date):
-    for item in data_list:
-        _, _, date, value = item  # Распаковываем элемент кортежа
-        if date == target_date:
-            return value
-    return False  # Если данных на указанную дату нет
-
+#region /task
 @app.route("/addTask", methods=['POST'])
 async def addTask(request):
     task = request.json.get('task')
@@ -81,18 +73,34 @@ async def updateTaskStatus(request):
     status = request.json.get('isChecked')
     Database.statusPut(idTask=taskId, status=status)
     return response.json({"status": 200})
+#endregion
 
-
+#region /service
 @app.route("/service")
 async def service(request):
     return response.text('Hello')
+#endregion
 
+#region /rents
 @app.route("/rents", methods=['GET'])
 async def rents(request):
     data = {}
     template = env.get_template('rents.html')
     render_template = template.render(data = data)
     return response.html(render_template)
+
+
+
+#endregion
+
+#region /schedule
+# Функция для получения значений по определенной дате
+def get_data_by_date(data_list, target_date):
+    for item in data_list:
+        _, _, date, value = item  # Распаковываем элемент кортежа
+        if date == target_date:
+            return value
+    return False  # Если данных на указанную дату нет
 
 @app.route("/schedule")
 async def schedule(request):

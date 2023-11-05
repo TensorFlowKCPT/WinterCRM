@@ -7,38 +7,37 @@
 </head>
 <body>
     <div>
-        <input type="date" name="" id="">
-        <input type="date" name="" id="">
-        <div class="inventory">
-
-        </div>
-    <select name="" id="">
-
-    </select>
-    <select name="" id="">
-
-    </select>
-    <input type="text" name="" id="">
-    <input type="text" name="" id="">
-    <input type="checkbox" name="" id="">
+        
     </div>
 
+    <button id="create-rent">Создать</button>
 
-    <div class="create-newrent">
+
+    <div style="display: none;" class="create-newrent modal-window">
         <input type="date" name="" id="">
         <input type="date" name="" id="">
-        <div class="inventory">
-
-        </div>
-    <select name="" id="">
-
-    </select>
-    <select name="" id="">
-
-    </select>
-    <input type="text" name="" id="">
-    <input type="text" name="" id="">
-    <input type="checkbox" name="" id="">
+        <div class="inventory"></div>
+        <select name="" id=""></select>
+        <input type="text" name="" id="">
+        <input type="text" name="" id="">
+        <input type="checkbox" name="" id="">
     </div>
+    <script>
+        // Находим элементы по их id
+const createButton = document.getElementById("create-rent");
+const modalWindow = document.querySelector(".create-newrent");
+
+// Добавляем обработчик события на кнопку "Создать"
+createButton.addEventListener("click", function() {
+    // Проверяем текущее состояние отображения модального окна
+    if (modalWindow.style.display === "none" || modalWindow.style.display === "") {
+        // Если оно скрыто, показываем модальное окно
+        modalWindow.style.display = "block";
+    } else {
+        // Иначе, скрываем модальное окно
+        modalWindow.style.display = "none";
+    }
+});
+    </script>
 </body>
 </html>
