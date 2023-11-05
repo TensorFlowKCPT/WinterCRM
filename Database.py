@@ -147,6 +147,21 @@ class Database:
                     FOREIGN KEY (ID) REFERENCES Clients (Client)
                 )
             ''')
+
+            conn.execute('''
+                CREATE TABLE IF NOT EXISTS Service (
+                    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Creation_Date DATE not null,
+                    Client_Id INT not null,
+                    Inventory_Id INT not null,
+                    Task text not null,
+                    Parts int,
+                    Cost int,
+                    IsPayed BOOLEAN,
+                    FOREIGN KEY (ID) REFERENCES Clients (Client_Id),
+                    FOREIGN KEY (ID) REFERENCES WinterInventory (Inventory_Id)
+                )
+            ''')
     
 
     def sellConsumable(id):
@@ -440,7 +455,23 @@ class Database:
     def statusPut(idTask: int, status: bool):
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute("UPDATE Tasks SET Status = ? WHERE id = ?", (status, idTask))
+
+    def createService(creating_date: str, id_client: int, id_inventory:int, task: str, parts: int, cost: int, isPayed: bool):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute("INSERT INTO Service (Creation_Date, Client_Id, Inventory_Id, Task, Parts, Cost, IsPayed) VALUES (?, ?, ?, ?, ?, ?, ?);", (creating_date, id_client, id_inventory, task, parts, cost, isPayed))\
         
+    def getService():
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('''
+    SELECT s.ID, s.Creation_Date, c.FIO AS Client_Name, wi.Name AS Inventory_Name, s.Task, s.Parts, s.Cost, s.IsPayed
+    FROM Service AS s
+    JOIN Clients AS c ON s.Client_Id = c.ID
+    JOIN WinterInventory AS wi ON s.Inventory_Id = wi.ID
+''')
+            rows = cursor.fetchall()
+            if rows:
+                return rows
+            return None
 
 
 
