@@ -48,18 +48,7 @@ async def shop(request):
 
     return html(rendered_html)
 #endregion
-#region /tasks
-@app.route("/tasks")
-async def tasks(request):
-    return response.text('Hello')
 
-
-#endregion
-#region /service
-@app.route("/service")
-async def service(request):
-    return response.text('Hello')
-#endregion
 #region /schedule
 # Функция для получения значений по определенной дате
 def get_data_by_date(data_list, target_date):
@@ -68,14 +57,6 @@ def get_data_by_date(data_list, target_date):
         if date == target_date:
             return value
     return False  # Если данных на указанную дату нет
-
-@app.route("/")
-async def index(request):
-    return response.text('Hello')
-
-@app.route("/shop")
-async def shop(request):
-    return response.text('Hello')
 
 @app.route("/addTask", methods=['POST'])
 async def addTask(request):
@@ -116,25 +97,6 @@ async def schedule(request):
 
     return html(rendered_html)
 
-@app.post('/clients')
-async def addclient(request):
-    Fio = request.form.get('FIO')
-    Passport = request.form.get('Passport')
-    PhoneNumber = request.form.get('PhoneNumber')
-    Database.addClient(Fio,Passport,PhoneNumber)
-    return response.json('OK', status=200)
-
-@app.get('/clients')
-async def clients(request):
-    clients = Database.getClients()
-    Data = {}
-    if clients:
-        Data['Clients'] = clients
-    template = env.get_template('clients.html')
-    rendered_html = template.render(data=Data)
-
-    return html(rendered_html)
-
 # Обработчик для сохранения HTML таблицы
 @app.route('/save', methods=['POST'])
 async def save(request):
@@ -165,11 +127,11 @@ async def save(request):
     for i in monthObject:
         for j in i.findall(".//td"):
             if j.get("style") != None and "red" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 2)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 2)
             if j.get("style") != None and "blue" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 1)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 1)
             if j.get("style") != None and "green" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 3)
+                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 3)
     return response.text("успех")
 
 @app.route('/get_schedule', methods=['POST'])
@@ -430,47 +392,6 @@ async def sellInventory(request):
    id = request.form.get('idinventory')
    Database.sellInventory(id,Cost,Comment)
    return response.json({'status':'ok'}, status=200)
-
-# Обработчик для сохранения HTML таблицы
-@app.route('/save', methods=['POST'])
-async def save(request):
-    html_table = request.form.get('table')  # Получаем данные таблицы из формы
-    print(html_table)
-    listdate = {
-    "january": "01",
-    "february": "02",
-    "march": "03",
-    "april": "04",
-    "may": "05",
-    "june": "06",
-    "july": "07",
-    "august": "08",
-    "september": "09",
-    "october": "10",
-    "november": "11",
-    "december": "12"
-    }
-
-    xmlpars = ET.fromstring(html_table)
-    nameEmployees = xmlpars.find(".//h1")
-    idEployees = Database.getIdEployee(nameEmployees.text.strip())
-    print(nameEmployees.text.strip())
-    nameMonth = xmlpars.findall(".//h2")
-    monthObject = xmlpars.findall(".//table")
-
-    for i in monthObject:
-        for j in i.findall(".//td"):
-            if j.get("style") != None and "red" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 2)
-            if j.get("style") != None and "blue" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 1)
-            if j.get("style") != None and "green" in j.get("style"):
-                Database.putSchedule(idEployees, f"{i.get('id').split('_')[1]}-{listdate[i.get('id').split('_')[0]]}-{j.text}", 3)
-    return response.text("успех")
-
-
-
-
 
 @app.post('/del-inventory')
 async def deleteInventory(request):
