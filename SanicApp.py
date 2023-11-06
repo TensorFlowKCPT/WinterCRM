@@ -53,10 +53,15 @@ async def shop(request):
 #region /task
 @app.route("/addTask", methods=['POST'])
 async def addTask(request):
-    task = request.json.get('task')
-    employee = request.json.get('employee')
-    date = request.json.get('dueDate')
-    color = request.json.get('color')
+    try:
+        task = request.json.get('task')
+        employee = request.json.get('employee')
+        date = request.json.get('dueDate')
+        color = request.json.get('color')
+    except:
+        return response.text('NOT OK, NOT OK', status=500)
+    if task == '' or employee == '' or date == None or color == '':
+        return response.text('NOT OK, NOT OK', status=500)
     Database.createTask(task=task, idEployees=employee, deadline=date, status=False, color = color)
     return response.text('OK',status=200)
 
