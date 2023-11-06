@@ -17,7 +17,13 @@ function closeModal() {
     modal = document.getElementById('myModal');
     modal.style.display = 'none';
 }
-  
+
+// Функция для обновления массива rows
+function updateRows() {
+    rows = Array.from(tbody.querySelectorAll("tr")).slice(1);
+    return rows
+}
+
 document.getElementById("addItemForm").addEventListener("submit", function (event) {
             event.preventDefault();
 
@@ -72,6 +78,7 @@ document.getElementById("addItemForm").addEventListener("submit", function (even
 
                 var modal = document.getElementById('myModal');
                 closeModal(modal)
+                updateRows()
             })
             .catch(error => {
                 console.error("Ошибка при отправке запроса:", error);
@@ -125,6 +132,7 @@ document.addEventListener('click', function(event) {
           const clientsCountElement = document.getElementById('clientsCount');
           const currentCount = parseInt(clientsCountElement.textContent, 10) - 1;
           clientsCountElement.textContent = formatClientCount(currentCount);
+          updateRows()
         } else {
           console.error("Ошибка удаления объекта.");
         }
@@ -160,6 +168,7 @@ document.addEventListener('click', function(event) {
                 if (rowToDelete) {
                   rowToDelete.remove();
                 }
+                updateRows();
               });
   
               const clientsCountElement = document.getElementById('clientsCount');
@@ -205,15 +214,13 @@ document.addEventListener('click', function(event) {
 const sortSelect = document.getElementById("sortirovka-filter");
 const tbody = document.querySelector("tbody");
 
-let rows = Array.from(tbody.querySelectorAll("tr")).slice(1);
-
 sortSelect.addEventListener("change", function () {
-    sortTable();
+    sortTable(updateRows());
 });
 
-function sortTable() {
+function sortTable(rowss) {
     const sortBy = sortSelect.value;
-
+    rows = rowss
     rows.sort((a, b) => {
         const aText = a.querySelector(".table-colon").textContent.toLowerCase();
         const bText = b.querySelector(".table-colon").textContent.toLowerCase();
@@ -238,5 +245,6 @@ function sortTable() {
         tbody.appendChild(row);
     });
 }
+
 
   
