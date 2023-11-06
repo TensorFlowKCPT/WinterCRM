@@ -18,6 +18,7 @@ app.static("/static/", "./st/")
 async def index(request):
     return response.text('Hello')
 #endregion
+
 #region /shop
 @app.post("/shop")
 async def addConsumableType(request):
@@ -82,15 +83,16 @@ async def service(request):
 #endregion
 
 #region /rents
-@app.route("/rents", methods=['GET'])
+@app.get("/rents")
 async def rents(request):
     data = {}
+    Inventory = Database.getInventory()
+    if Inventory:
+        NotRentedInventory = list(filter(lambda item: item['Rented'] != 'true', Inventory))
+        data['Inventory'] = NotRentedInventory
     template = env.get_template('rents.html')
     render_template = template.render(data = data)
     return response.html(render_template)
-
-
-
 #endregion
 
 #region /schedule
