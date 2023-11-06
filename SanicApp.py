@@ -400,20 +400,41 @@ async def get_password(request):
 #endregion
 
 #region /clients
-@app.post('/clients')
+@app.route('/add_client', methods=['POST'])
 async def addclient(request):
     Fio = request.form.get('FIO')
     Passport = request.form.get('Passport')
     PhoneNumber = request.form.get('PhoneNumber')
-    Database.addClient(Fio,Passport,PhoneNumber)
-    return response.json('OK', status=200)
+    newclient = {"id":Database.addClient(Fio,Passport,PhoneNumber)}
+    return response.json(newclient)
 
-@app.get('/clients')
+@app.route('/del_client', methods=['DELETE'])
+async def delclient(request):
+    idClient = request.json.get('id')
+    print(idClient)
+    Database.delClientById(idClient)
+    responseData = {"success": True}
+    return response.json(responseData)
+
+@app.route('/clients', methods=['GET'])
 async def clients(request):
+    # Получение клиентов из БД, создание словаря и занесение в него данных.
     clients = Database.getClients()
     Data = {}
+    Data['lenClients'] = "0 клиентов"
     if clients:
         Data['Clients'] = clients
+        # Динамический показ количества клиентов.
+        lenClients = len(clients)
+        if lenClients % 10 == 1 and lenClients % 100 != 11:
+            lenClients = str(len(clients)) + " клиент"
+        elif 2 <= lenClients % 10 <= 4 and (lenClients % 100 < 10 or lenClients % 100 >= 20):
+            lenClients = str(len(clients)) + " клиента"
+        else:
+            lenClients = str(len(clients)) + " клиентов"
+        Data['lenClients'] = lenClients
+    
+    # Добавление данных в шаблонизатор
     template = env.get_template('clients.html')
     rendered_html = template.render(data=Data)
 
