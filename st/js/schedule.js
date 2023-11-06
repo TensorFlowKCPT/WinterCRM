@@ -27,46 +27,45 @@ function schedtojson(dv){
     var json = {"name":None, 'month':None} 
     
 }
-document.querySelectorAll('.buttonName').forEach(function(button) {
-    button.addEventListener('click', function() {
-        const employee_id = button.innerText; // Предполагая, что текст на кнопке - это ID сотрудника
-        fetch('/get_schedule', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ employee_id: employee_id })
-        })
-        .then(response => response.text()) // Ожидаем текстовый ответ
-        .then(data => {
-            console.log(data)
-            const scheduleContainer = document.getElementsByClassName("schedule");
-            scheduleContainer[0].innerHTML = data;
-            var radioButtons = document.querySelectorAll('input[type="radio"]');
-var tableCells = document.querySelectorAll('.cell');
-// Назначаем обработчик события для каждой радиокнопки
-radioButtons.forEach(function(radioButton, index) {
-    radioButton.addEventListener('change', function() {
-        // Если радиокнопка выбрана, сохраняем ее цвет
-        if (radioButton.checked) {
-            var selectedColor = radioButton.nextElementSibling.style.backgroundColor;
+document.querySelector('.dropdown').addEventListener('change', function() {
+    const selectedEmployee = this.value;
+    fetch('/get_schedule', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ employee_id: selectedEmployee })
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data);
+        const scheduleContainer = document.querySelector('.schedule');
+        scheduleContainer.innerHTML = data;
+        var radioButtons = document.querySelectorAll('input[type="radio"]');
+            var tableCells = document.querySelectorAll('.cell');
+            
+            // Назначаем обработчик события для каждой радиокнопки
+            radioButtons.forEach(function(radioButton, index) {
+                radioButton.addEventListener('change', function() {
+                    // Если радиокнопка выбрана, сохраняем ее цвет
+                    if (radioButton.checked) {
+                        var selectedColor = radioButton.nextElementSibling.style.backgroundColor;
 
-            // Назначаем обработчик события для каждой ячейки таблицы
-            tableCells.forEach(function(cell) {
-                cell.addEventListener('click', function() {
-                    // Закрашиваем ячейку выбранным цветом
-                    cell.style.backgroundColor = selectedColor;
+                        // Назначаем обработчик события для каждой ячейки таблицы
+                        tableCells.forEach(function(cell) {
+                            cell.addEventListener('click', function() {
+                                // Закрашиваем ячейку выбранным цветом
+                                cell.style.backgroundColor = selectedColor;
+                            });
+                        });
+                    }
                 });
             });
-        }
-    });
-})
         })
         .catch(error => {
             console.error('Произошла ошибка:', error);
         });
     });
-});
 document.getElementById('passwordButton').addEventListener('click', () => {
             const password = document.getElementById('password').value;
 
