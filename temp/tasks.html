@@ -1,110 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Add Task</h1>
-    <input type="text" id="task" placeholder="Task">
-    <select id="employees">
-    {% for employee in data['staff'] %}
-    <option value="{{ employee[0] }}">{{ employee[1] }}</option>
-    {% endfor %}
-    </select>
-    <input type="date" id="dueDate">
-    <button id="addTaskButton">Add Task</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/tasks.css" />
+    <title>Задача</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <main>
+      <div class="tasks__wrapper">
+        <div class="tasks__header">
+          <div class="tesks__headling">
+            <h1>Новая задача</h1>
+            <svg
+              class="svg-cross"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
+                fill="#DFDFE6"
+              />
+              <path
+                d="M9.17011 15.58C8.98011 15.58 8.79011 15.51 8.64011 15.36C8.35011 15.07 8.35011 14.59 8.64011 14.3L14.3001 8.63999C14.5901 8.34999 15.0701 8.34999 15.3601 8.63999C15.6501 8.92999 15.6501 9.40998 15.3601 9.69998L9.70011 15.36C9.56011 15.51 9.36011 15.58 9.17011 15.58Z"
+                fill="#23262F"
+              />
+              <path
+                d="M14.8301 15.58C14.6401 15.58 14.4501 15.51 14.3001 15.36L8.64011 9.69998C8.35011 9.40998 8.35011 8.92999 8.64011 8.63999C8.93011 8.34999 9.41011 8.34999 9.70011 8.63999L15.3601 14.3C15.6501 14.59 15.6501 15.07 15.3601 15.36C15.2101 15.51 15.0201 15.58 14.8301 15.58Z"
+                fill="#23262F"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <input
+          type="text"
+          id="task"
+          class="task"
+          placeholder="Название задачи"
+        />
+
+        <div class="tasks__center">
+          <div class="tasks__center-text">Описание</div>
+          <div class="tasks__center-color">
+            <div class="text-color">Цвет</div>
+            <div class="color-circle color-gray"></div>
+            <div class="color-circle color-blue"></div>
+            <div class="color-circle color-yellow"></div>
+            <div class="color-circle color-red"></div>
+          </div>
+        </div>
+
+        <div class="tasks__employees">
+          <svg
+            class="task-employee"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+              stroke="#87898E"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+              stroke="#87898E"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <select class="employees" id="employees">
+            <option value="placeholder" selected hidden>
+              Выберите сотруднка
+            </option>
+            {% for employee in data['staff'] %}
+            <option value="{{ employee[0] }}">{{ employee[1] }}</option>
+            {% endfor %}
+          </select>
+          <svg
+            class="task-strelka"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M19.9201 8.95L13.4001 15.47C12.6301 16.24 11.3701 16.24 10.6001 15.47L4.08008 8.95"
+              stroke="#23262F"
+              stroke-width="1.5"
+              stroke-miterlimit="10"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+
+        <div class="date">
+          <input type="date" id="dueDate" />
+        </div>
+
+        <div class="tasks__end">
+          <button class="addTaskButton" id="addTaskButton">Создать</button>
+        </div>
+      </div>
+    </main>
 
     <table>
-        <tr>
-            <td>Задача</td>
-            <td>Сотрудник</td>
-            <td>Дедлайн</td>
-            <td>Состояние</td>
-        </tr>
-        {% if data['tasks'] %}
-        {% for task in data['tasks'] %}
-        <tr>
-            <td>{{ task[1] }}</td>
-            <td>{{ task[2] }}</td>
-            <td>{{ task[3] }}</td>
-            <td><input type="checkbox" name="taskStatus" {% if task[4] %}checked{% endif %} class="task-status-checkbox" data-task-id="{{ task[0] }}"></td>
-        </tr>
-        {% endfor %}
-        {% endif %}
+      <tr>
+        <td>Задача</td>
+        <td>Сотрудник</td>
+        <td>Дедлайн</td>
+        <td>Состояние</td>
+      </tr>
+      {% if data['tasks'] %} {% for task in data['tasks'] %}
+      <tr>
+        <td>{{ task[1] }}</td>
+        <td>{{ task[2] }}</td>
+        <td>{{ task[3] }}</td>
+        <td>
+          <input
+            type="checkbox"
+            name="taskStatus"
+            {%
+            if
+            task[4]
+            %}checked{%
+            endif
+            %}
+            class="task-status-checkbox"
+            data-task-id="{{ task[0] }}"
+          />
+        </td>
+      </tr>
+      {% endfor %} {% endif %}
     </table>
 
-    <script>
-        const addTaskButton = document.getElementById('addTaskButton');
-        const taskInput = document.getElementById('task');
-        const employeesSelect = document.getElementById('employees'); 
-        const dueDateInput = document.getElementById('dueDate');
-
-        addTaskButton.addEventListener('click', async () => {
-            const task = taskInput.value;
-            const employee = employeesSelect.value;
-            const dueDate = dueDateInput.value;
-
-            if (task) {
-                const data = {
-                    task: task,
-                    employee: employee,
-                    dueDate: dueDate
-                };
-
-                const response = await fetch('/addTask', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                if (response.status === 200) {
-                    alert('Task added successfully');
-                    taskInput.value = '';
-                    employeesSelect.value = '';
-                    dueDateInput.value = '';
-                } else {
-                    alert('Failed to add task');
-                }
-            } else {
-                alert('Please enter a task');
-            }
-        });
-
-        const checkboxes = document.querySelectorAll('.task-status-checkbox');
-
-checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', async () => {
-        const taskId = checkbox.getAttribute('data-task-id');
-        const isChecked = checkbox.checked;
-        console.log(taskId ,isChecked)
-        const data = {
-            taskId: taskId,
-            isChecked: isChecked
-        };
-
-        try {
-            const response = await fetch('/updateTaskStatus', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-
-            if (response.status === 200) {
-                console.log(`Task status for task ${taskId} updated successfully.`);
-            } else {
-                console.error('Failed to update task status.');
-            }
-        } catch (error) {
-            console.error('An error occurred:', error);
-        }
-    });
-});
-    </script>
-</body>
+    <script src="/static/js/clients.js"></script>
+  </body>
 </html>

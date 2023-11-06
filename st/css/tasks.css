@@ -1,0 +1,179 @@
+/* default settings */
+body {
+    background: var(--color-light-light, #FCFCFD);
+    margin: 0;
+    max-width: 1920px;
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    box-sizing: border-box;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    margin-top: 90px;
+}
+
+table {
+    margin-top: 50px;
+    width: 50%;
+}
+
+/* Параметры модального окна */
+.tasks__wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 32px;
+    width: 544px;
+}
+
+/* Верхняя часть */
+.tesks__headling {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 32px;
+    margin: 0;
+    padding: 0;
+}
+
+.svg-cross {
+    cursor: pointer;
+}
+
+/* Строчка "Название задачи" */
+.task {
+    border-radius: 12px;
+    border: 2px solid var(--color-light-light-3, #DFDFE6);
+    background: var(--color-light-light, #FCFCFD);
+    color: var(--color-dark-dark-2, #87898E);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+/* Центр */
+.tasks__center {
+    display: flex;
+    gap: 24px;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+
+.tasks__center-text {
+    color: var(--color-dark-dark-2, #87898E);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+}
+
+/* Строчка для выбора цвета */
+.tasks__center-color {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.text-color {
+    color: var(--color-dark-dark, #23262F);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+/* Одна строчка для формы круга */
+.color-circle {
+    border-radius: 20px;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+}
+
+/* Цвета кругов */
+.color-gray {
+    background: #C0C2C5;
+}
+
+.color-blue {
+    background: #8AC7FF;
+}
+
+.color-yellow {
+    background: #FFC273;
+}
+
+.color-red {
+    background: #FF6868;
+}
+
+/* Для сотрудника */
+.employees {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 12px;
+    border: 2px solid var(--color-light-light-3, #DFDFE6);
+    background: var(--color-light-light, #FCFCFD);
+    padding: 5px 55px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    color: var(--color-dark-dark-2, #87898E);
+    width: 100%;
+    height: 56px;
+    cursor: pointer;
+}
+
+.tasks__employees {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+/* Иконки */
+.task-employee {
+    position: absolute;
+    left: 3%;
+    top: 28%;
+}
+
+.task-strelka {
+    position: absolute;
+    right: 4%;
+    top: 30%;
+}
+
+/* Кнопка */
+.tasks__end {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addTaskButton {
+    padding: 20px 0;
+    border-radius: 10px;
+    background: var(--color-light-mode-primary-primary, #3772FF);
+    width: 270px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    cursor: pointer;
+    color: var(--color-light-light, #FCFCFD);
+}
+
+.addTaskButton:hover {
+    color: #000;
+}
+
+/* Сделаю позже */
+.date {
+    margin-bottom: 32px;
+}
