@@ -63,7 +63,15 @@ async def addTask(request):
 async def tasks(request):
     tasks = Database.getTasksAll()
     staff = Database.getStaffAll()
-    data = {"tasks": tasks, "staff": staff}
+    data = {}
+    if tasks:
+        data["tasks"] = tasks
+        data['allTasksCount'] = len(tasks)
+        data['uncheckedTasksCount'] = len(tasks)
+        print(tasks)
+    if staff:
+        data['staff'] = staff
+    
     template = env.get_template('tasks.html')
     render_template = template.render(data = data)
     return response.html(render_template)

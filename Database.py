@@ -436,8 +436,17 @@ class Database:
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('SELECT * FROM Tasks')
             rows = cursor.fetchall()
+            output = []
             if rows:
-                return rows
+                for row in rows:
+                    Employee = conn.execute('SELECT ID,NAME FROM Employees WHERE ID = ?',(row[2],)).fetchone()
+                    output.append({
+                        'ID': row[0],
+                        'Task': row[1],
+                        'Performer' : {'ID':Employee[0],'Name':Employee[1]},
+                        'Deadline' : row[3],
+                        'Status' : row[4]
+                    })
             return None
     
     def getTasksForEmployees(idEmployee: int):
