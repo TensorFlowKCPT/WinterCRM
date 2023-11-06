@@ -1,4 +1,3 @@
-addEventListener
 function formatClientCount(count) {
     if (count % 10 === 1 && count % 100 !== 11) {
         return count + " клиент";
@@ -37,7 +36,6 @@ document.getElementById("addItemForm").addEventListener("submit", function (even
             cells[3].classList.add("table-colon");
             cells[4].classList.add("table-colon");
 
-            
             const button = document.createElement("button");
             button.classList.add('delete-button')
             button.innerText = 'Удалить'
@@ -66,6 +64,7 @@ document.getElementById("addItemForm").addEventListener("submit", function (even
                 const newId = data.id
                 button.setAttribute('data-id', newId);
                 checkbox.setAttribute('data-id', newId);
+                newRow.setAttribute('data-id', newId);
 
                 const clientsCountElement = document.getElementById('clientsCount')
                 const currentCount = parseInt(clientsCountElement.textContent, 10)+1;
@@ -135,3 +134,109 @@ document.addEventListener('click', function(event) {
       });
     }
   });
+
+  document.addEventListener('click', function(event) {
+    if (event.target && event.target.id === "deleteSelected") {
+      const selectedCheckboxes = document.querySelectorAll(".select-checkbox:checked");
+  
+      if (selectedCheckboxes.length > 0) {
+        const idsToDelete = Array.from(selectedCheckboxes).map(checkbox => checkbox.getAttribute("data-id"));
+  
+        // Отправка запроса на сервер для удаления выбранных объектов
+        fetch("/del_selected_clients", {
+          method: "POST",
+          body: JSON.stringify({ ids: idsToDelete }),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              // Успешно удалено, обновите интерфейс
+              idsToDelete.forEach(id => {
+                const rowToDelete = document.querySelector(`tr[data-id="${id}"]`);
+                console.log(rowToDelete)
+                if (rowToDelete) {
+                  rowToDelete.remove();
+                }
+              });
+  
+              const clientsCountElement = document.getElementById('clientsCount');
+              const currentCount = parseInt(clientsCountElement.textContent, 10) - idsToDelete.length;
+              clientsCountElement.textContent = formatClientCount(currentCount);
+            } else {
+              console.error("Ошибка удаления объектов.");
+            }
+          })
+          .catch(error => {
+            console.error("Ошибка сети: " + error);
+          });
+      } else {
+        console.log("Нет выбранных объектов для удаления.");
+      }
+    }
+  });
+
+  document.querySelector(".clients__search-input").addEventListener("input", function () {
+    var searchInput = this.value.toLowerCase();
+    var rows = document.querySelectorAll("tbody tr");
+    
+    for (var i = 1; i < rows.length; i++) {  // Начинаем с 1, чтобы пропустить строку с заголовками
+        var cells = rows[i].querySelectorAll(".table-colon");
+        var match = false;
+        
+        for (var j = 0; j < cells.length; j++) {
+            var cellContent = cells[j].textContent.toLowerCase();
+            if (cellContent.indexOf(searchInput) !== -1) {
+                match = true;
+                break;
+            }
+        }
+        
+        if (match) {
+            rows[i].style.display = "";
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+});
+// СОРТИРОВКА
+const sortSelect = document.getElementById("sortirovka-filter");
+const tbody = document.querySelector("tbody");
+
+let rows = Array.from(tbody.querySelectorAll("tr")).slice(1);
+
+sortSelect.addEventListener("change", function () {
+    sortTable();
+});
+
+function sortTable() {
+    const sortBy = sortSelect.value;
+
+    rows.sort((a, b) => {
+        const aText = a.querySelector(".table-colon").textContent.toLowerCase();
+        const bText = b.querySelector(".table-colon").textContent.toLowerCase();
+
+        if (sortBy === "name") {
+            return aText.localeCompare(bText);
+        } else if (sortBy === "surname") {
+            const aSurname = aText.split(" ")[0];
+            const bSurname = bText.split(" ")[0];
+            return aSurname.localeCompare(bSurname);
+        } else if (sortBy === "lastname") {
+            const aLastname = aText.split(" ")[2] || "";
+            const bLastname = bText.split(" ")[2] || "";
+            return aLastname.localeCompare(bLastname);
+        }
+
+        return 0;
+    });
+
+    tbody.innerHTML = "";
+    rows.forEach((row) => {
+        tbody.appendChild(row);
+    });
+}
+
+  

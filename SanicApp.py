@@ -401,7 +401,7 @@ async def get_password(request):
 
 #region /clients
 @app.route('/add_client', methods=['POST'])
-async def addclient(request):
+async def addClient(request):
     Fio = request.form.get('FIO')
     Passport = request.form.get('Passport')
     PhoneNumber = request.form.get('PhoneNumber')
@@ -409,10 +409,17 @@ async def addclient(request):
     return response.json(newclient)
 
 @app.route('/del_client', methods=['DELETE'])
-async def delclient(request):
+async def delClient(request):
     idClient = request.json.get('id')
-    print(idClient)
     Database.delClientById(idClient)
+    responseData = {"success": True}
+    return response.json(responseData)
+
+@app.route('/del_selected_clients', methods=['POST'])
+async def delSelectedClient(request):
+    idsClient = request.json.get('ids')
+    for i in idsClient:
+        Database.delClientById(i)
     responseData = {"success": True}
     return response.json(responseData)
 

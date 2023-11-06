@@ -275,14 +275,12 @@
               <button id="deleteSelected" class="delSelectedBtn">Удалить выбранных</button>
               <button id="openModalBtn" class="mdlbutton">Добавить клиента</button>
               <!-- Пример сортировки (id) -->
-              <select
-                class="clients-filter clietns-sortirovka"
-                id="sortirovka-filter"
-              >
-                <option value="placeholder" selected hidden>Сортировка</option>
+              <select class="clients-filter clietns-sortirovka" id="sortirovka-filter">
+                <option value="default" selected hidden>Сортировка</option>
                 <optgroup>
-                  <option value="option1">Опция 1</option>
-                  <option value="option2">Опция 2</option>
+                  <option value="name">По имени</option>
+                  <option value="surname">По фамилии</option>
+                  <option value="lastname">По отчеству</option>
                 </optgroup>
               </select>
               <svg
@@ -304,7 +302,7 @@
         </div>
 
         <div>
-          <table>
+          <table id="clients-table">
             <tr class="table__header">
                 <th>FIO</th>
                 <th>Passport</th>
@@ -313,7 +311,7 @@
                 <th>Select</th> 
             </tr>
             {% for item in data['Clients'] %}
-            <tr>
+            <tr data-id="{{item['ID']}}">
                 <td class="table-colon">{{item['FIO']}}</td>
                 <td class="table-colon table-colon2">{{item['Passport']}}</td>
                 <td class="table-colon">{{item['PhoneNumber']}}</td>
