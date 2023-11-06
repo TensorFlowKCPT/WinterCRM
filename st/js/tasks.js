@@ -67,3 +67,23 @@ checkboxes.forEach(checkbox => {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('myModal');
+    var openModalButton = document.getElementById('openModalButton');
+    var closeModalSpan = document.getElementsByClassName('svg-cross')[0];
+  
+    openModalButton.onclick = function () {
+      modal.style.display = 'block';
+    };
+  
+    closeModalSpan.onclick = function () {
+      modal.style.display = 'none';
+    };
+  
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    };
+  });
