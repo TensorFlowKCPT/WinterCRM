@@ -10,7 +10,6 @@ body {
 
 main {
     display: flex;
-    justify-content: center;
 }
 
 table {
@@ -24,6 +23,7 @@ table {
     flex-direction: column;
     padding: 24px 32px;
     width: 544px;
+    flex: 1;
 }
 
 /* Верхняя часть */
@@ -172,39 +172,34 @@ h1 {
     color: #000;
 }
 
-/* Сделаю позже */
-.date {
-    margin-bottom: 32px;
-}
-
-/* default settings */
-body {
-    background: #F1F1F4;
-    margin: 0;
-    max-width: 1920px;
-    font-family: 'Inter', sans-serif;
-    font-style: normal;
-    box-sizing: border-box;
-}
-
-main {
+.tasks__score {
     display: flex;
+    gap: 20px;
 }
 
-/* Центр сайта */
-.tasks__wrapper {
+.score {
+    display: flex;
+    gap: 3px;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+}
+
+.modal__wrapper {
     display: flex;
     flex-direction: column;
     padding: 0 24px;
     flex: 1;
 }
 
-/* Вверх сайта */
-.tasks__header {
+.modal__header {
     display: flex;
     padding: 12px 0 18px 24px;
     align-items: center;
     justify-content: space-between;
+    margin-top: 20px;
 }
 
 /* Настройка для левой стороны header */
@@ -263,6 +258,16 @@ main {
     width: 135px;
 }
 
+.tasks-color {
+    text-align: center;
+    padding: 4px 4px 4px 0;
+}
+
+.tasks__header {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Параметры текста клиентов */
 .clients-score {
     color: var(--slate-500, #64748B);
@@ -312,6 +317,7 @@ tr {
     line-height: 20px;
 }
 
+/* Модальное окно */
 .modal {
     display: none;
     position: fixed;
@@ -323,15 +329,16 @@ tr {
     justify-content: center;
     align-items: center;
 }
+
 .modal-content {
     background-color: #fefefe;
     width: 540px;
     height: 560px;
-    text-align: center;
     border-radius: 15px;
     box-sizing: border-box;
     margin: auto;
 }
+
 .close {
     color: #aaa;
     float: right;
@@ -347,18 +354,15 @@ tr {
 }
 
 .mdlbutton {
-width: 137px;
-height: 32px;
-background: white;
-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-border-radius: 6px;
-border: 1px #E5E7EB solid;
-font-family: "Inter", sans-serif;
-font-weight: bolder;
-display: inline-flex;
-align-items: center;
-justify-content: space-between;
-
+    width: 137px;
+    height: 32px;
+    background: white;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    border: 1px #E5E7EB solid;
+    font-weight: bolder;
+    align-items: center;
+    width: 100%;
 }
 
 .delSelectedBtn {
@@ -372,25 +376,30 @@ justify-content: space-between;
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    
+
 }
-input[type="date"]{
+
+input[type="date"] {
     background-color: #0080ff;
     padding: 15px;
     position: absolute;
-    transform: translate(-50%,-50%);
-    top: 50%;
+    transform: translate(-50%, -50%);
+    top: 39%;
     left: 50%;
-    font-family: "Inter",sans-serif;
     color: #ffffff;
     font-size: 18px;
     border: none;
     outline: none;
     border-radius: 5px;
 }
-::-webkit-calendar-picker-indicator{
+
+::-webkit-calendar-picker-indicator {
     background-color: #ffffff;
     padding: 5px;
     cursor: pointer;
     border-radius: 3px;
+}
+
+.date {
+    margin-bottom: 20%;
 }

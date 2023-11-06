@@ -147,13 +147,15 @@ tr {
 
 .modal-content {
     background-color: #fefefe;
-    margin: 50px auto; /* Центрирование по вертикали и горизонтали */
+    margin: 50px auto;
+    /* Центрирование по вертикали и горизонтали */
     padding: 20px;
     border: 1px solid #888;
     width: 540px;
     height: 560px;
     text-align: center;
-    border-radius: 15px; /* Скругление углов */
+    border-radius: 15px;
+    /* Скругление углов */
     box-sizing: border-box;
 }
 
@@ -162,14 +164,15 @@ tr {
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 10px;
-    padding: 16px; 
-    background: #FCFCFD; 
-    border-radius: 12px; 
-    border: 2px #DFDFE6 solid; 
-    justify-content: flex-start; 
-    align-items: center; 
-    gap: 8px; 
-    display: inline-flex"
+    padding: 16px;
+    background: #FCFCFD;
+    border-radius: 12px;
+    border: 2px #DFDFE6 solid;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    display: inline-flex;
+    margin-bottom: 32px;
 }
 
 .close {
@@ -194,28 +197,25 @@ tr {
     margin-top: 15px;
     margin-bottom: 0;
     background: #3772FF;
-    font-family: "Inter", sans-serif;
-    font-weight: 400; 
-    border-radius: 10px; 
-    justify-content: center; 
-    align-items: center; 
-    gap: 16px; 
+    font-weight: 400;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
     display: inline-flex;
-    color:white;
+    color: white;
 }
-.mdlbutton {
-width: 137px;
-height: 32px;
-background: white;
-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-border-radius: 6px;
-border: 1px #E5E7EB solid;
-font-family: "Inter", sans-serif;
-font-weight: bolder;
-display: inline-flex;
-align-items: center;
-justify-content: space-between;
 
+.mdlbutton {
+    width: 137px;
+    height: 32px;
+    background: white;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    border: 1px #E5E7EB solid;
+    font-weight: bolder;
+    display: inline-flex;
+    align-items: center;
 }
 
 .delSelectedBtn {
@@ -224,12 +224,9 @@ justify-content: space-between;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     border-radius: 6px;
     border: 1px #E5E7EB solid;
-    font-family: "Inter", sans-serif;
     font-weight: bolder;
     display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    
 }
 
 .delete-button {
@@ -239,10 +236,11 @@ justify-content: space-between;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     border-radius: 6px;
     border: 1px #E5E7EB solid;
-    font-family: "Inter", sans-serif;
     font-weight: bolder;
     display: inline-flex;
     align-items: center;
-    justify-content: space-between;
-    
+}
+
+.addItemForm-first {
+    margin-top: 15%;
 }
