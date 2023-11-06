@@ -271,8 +271,12 @@ class Database:
 
     def addClient(fio, passport, phone_number):
         with sqlite3.connect('database.db') as conn:
-            conn.execute('INSERT INTO Clients (FIO, Passport, PhoneNumber) VALUES (?,?,?)', (fio, passport, phone_number,))
+            cursor = conn.cursor()
+            cursor.execute('INSERT INTO Clients (FIO, Passport, PhoneNumber) VALUES (?,?,?)', (fio, passport, phone_number,))
             conn.commit()
+
+            newid = cursor.lastrowid
+        return newid
 
     def getInventoryTypes():
         with sqlite3.connect('database.db') as conn:
