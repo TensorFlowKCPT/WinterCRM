@@ -36,7 +36,7 @@
         </tr>
         <!-- Здесь нужно вставить данные из вашей базы данных -->
         {% for item in data['Inventory'] %}
-        <tr>
+        <tr id="{{item['ID']}}">
             <td>{{item['Name']}}</td>
             <td>{{item['Type']}}</td>
             <td>{{item['Rented']}}</td>
@@ -126,7 +126,7 @@
             .then(data => {
                 // Обработка данных после успешного запроса
                 console.log("Успешно удалено", data);
-                location.reload();
+                document.getElementById(btnid).remove();
             })
             .catch(error => {
                 console.error("Ошибка при отправке запроса:", error);

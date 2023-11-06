@@ -54,21 +54,29 @@ async def shop(request):
 @app.route("/addTask", methods=['POST'])
 async def addTask(request):
     task = request.json.get('task')
-    epmloyee = request.json.get('employee')
+    employee = request.json.get('employee')
     date = request.json.get('dueDate')
-    Database.createTask(task=task, idEployees=epmloyee, deadline=date, status=False)
-    return text("кайф")
+    color = request.json.get('color')
+    Database.createTask(task=task, idEployees=employee, deadline=date, status=False, color = color)
+    return response.text('OK',status=200)
+
+@app.post("/del-task")
+async def delTask(request):
+    Database.delTask(request.json.get('id'))
+    return response.json({'response':'OK'}, status = 200)
 
 @app.route("/tasks")
 async def tasks(request):
     tasks = Database.getTasksAll()
     staff = Database.getStaffAll()
     data = {}
+    data['allTasksCount'] = 0
+    data['uncheckedTasksCount'] = 0
     if tasks:
-        data["tasks"] = tasks
+        data["tasks"] = sorted(tasks, key=lambda x: (x['Status'], x['Deadline']))
         data['allTasksCount'] = len(tasks)
-        data['uncheckedTasksCount'] = len(tasks)
-        print(tasks)
+        data['uncheckedTasksCount'] = sum(1 for task in tasks if task['Status'] == 0)
+        
     if staff:
         data['staff'] = staff
     

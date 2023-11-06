@@ -101,6 +101,7 @@ class Database:
                     Performer INT NOT NULL,
                     Deadline DATE,
                     Status BOOLEAN NOT NULL,
+                    Color TEXT,
                     FOREIGN KEY (ID) REFERENCES Employees (Performer)
                 )
             ''')
@@ -445,8 +446,10 @@ class Database:
                         'Task': row[1],
                         'Performer' : {'ID':Employee[0],'Name':Employee[1]},
                         'Deadline' : row[3],
-                        'Status' : row[4]
+                        'Status' : row[4],
+                        'Color' : row[5]
                     })
+                return output
             return None
     
     def getTasksForEmployees(idEmployee: int):
@@ -461,9 +464,9 @@ class Database:
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('DELETE FROM Tasks WHERE ID = ?', (idTask,))
 
-    def createTask(task: str, idEployees: int, deadline: str, status: bool):
+    def createTask(task: str, idEployees: int, deadline: str, status: bool, color: str):
         with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('INSERT INTO Tasks (Task, Performer, Deadline, Status)VALUES (?, ?, ?, ?)', (task, idEployees, deadline, status,))
+            cursor = conn.execute('INSERT INTO Tasks (Task, Performer, Deadline, Status, Color)VALUES (?, ?, ?, ?, ?)', (task, idEployees, deadline, status, color,))
 
     def statusPut(idTask: int, status: bool):
         with sqlite3.connect('database.db') as conn:
