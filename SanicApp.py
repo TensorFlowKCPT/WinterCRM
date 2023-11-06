@@ -54,16 +54,32 @@ async def shop(request):
 @app.route("/addTask", methods=['POST'])
 async def addTask(request):
     task = request.json.get('task')
-    epmloyee = request.json.get('employee')
+    employee = request.json.get('employee')
     date = request.json.get('dueDate')
-    Database.createTask(task=task, idEployees=epmloyee, deadline=date, status=False)
-    return text("кайф")
+    color = request.json.get('color')
+    Database.createTask(task=task, idEployees=employee, deadline=date, status=False, color = color)
+    return response.text('OK',status=200)
+
+@app.post("/del-task")
+async def delTask(request):
+    Database.delTask(request.json.get('id'))
+    return response.json({'response':'OK'}, status = 200)
 
 @app.route("/tasks")
 async def tasks(request):
     tasks = Database.getTasksAll()
     staff = Database.getStaffAll()
-    data = {"tasks": tasks, "staff": staff}
+    data = {}
+    data['allTasksCount'] = 0
+    data['uncheckedTasksCount'] = 0
+    if tasks:
+        data["tasks"] = sorted(tasks, key=lambda x: (x['Status'], x['Deadline']))
+        data['allTasksCount'] = len(tasks)
+        data['uncheckedTasksCount'] = sum(1 for task in tasks if task['Status'] == 0)
+        
+    if staff:
+        data['staff'] = staff
+    
     template = env.get_template('tasks.html')
     render_template = template.render(data = data)
     return response.html(render_template)
@@ -103,15 +119,16 @@ async def service_create(request):
 #endregion
 
 #region /rents
-@app.route("/rents", methods=['GET'])
+@app.get("/rents")
 async def rents(request):
     data = {}
+    Inventory = Database.getInventory()
+    if Inventory:
+        NotRentedInventory = list(filter(lambda item: item['Rented'] != 'true', Inventory))
+        data['Inventory'] = NotRentedInventory
     template = env.get_template('rents.html')
     render_template = template.render(data = data)
     return response.html(render_template)
-
-
-
 #endregion
 
 #region /schedule
@@ -400,20 +417,41 @@ async def get_password(request):
 #endregion
 
 #region /clients
-@app.post('/clients')
+@app.route('/add_client', methods=['POST'])
 async def addclient(request):
     Fio = request.form.get('FIO')
     Passport = request.form.get('Passport')
     PhoneNumber = request.form.get('PhoneNumber')
-    Database.addClient(Fio,Passport,PhoneNumber)
-    return response.json('OK', status=200)
+    newclient = {"id":Database.addClient(Fio,Passport,PhoneNumber)}
+    return response.json(newclient)
 
-@app.get('/clients')
+@app.route('/del_client', methods=['DELETE'])
+async def delclient(request):
+    idClient = request.json.get('id')
+    print(idClient)
+    Database.delClientById(idClient)
+    responseData = {"success": True}
+    return response.json(responseData)
+
+@app.route('/clients', methods=['GET'])
 async def clients(request):
+    # Получение клиентов из БД, создание словаря и занесение в него данных.
     clients = Database.getClients()
     Data = {}
+    Data['lenClients'] = "0 клиентов"
     if clients:
         Data['Clients'] = clients
+        # Динамический показ количества клиентов.
+        lenClients = len(clients)
+        if lenClients % 10 == 1 and lenClients % 100 != 11:
+            lenClients = str(len(clients)) + " клиент"
+        elif 2 <= lenClients % 10 <= 4 and (lenClients % 100 < 10 or lenClients % 100 >= 20):
+            lenClients = str(len(clients)) + " клиента"
+        else:
+            lenClients = str(len(clients)) + " клиентов"
+        Data['lenClients'] = lenClients
+    
+    # Добавление данных в шаблонизатор
     template = env.get_template('clients.html')
     rendered_html = template.render(data=Data)
 

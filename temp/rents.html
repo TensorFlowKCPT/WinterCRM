@@ -4,20 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Заказы</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+    </style>
 </head>
 <body>
-    <div>
-        
-    </div>
-
+    <table>
+        <tr>
+            <th>Start_Date</th>
+            <th>Return_Date</th>
+            <th>StartItemsJSON</th>
+            <th>Client</th>
+            <th>Deposit</th>
+            <th>COST</th>
+            <th>IsPayed</th>
+            <th>Open</th>
+        </tr>
+        <!-- Здесь нужно вставить данные из вашей базы данных -->
+        {% for item in data['Rents'] %}
+        <tr>
+            <td>{{item['Start_Date']}}</td>
+            <td>{{item['Return_Date']}}</td>
+            <td>{{item['StartItemsJSON']}}</td>
+            <td>{{item['Client']}}</td>
+            <td>{{item['Deposit']}}</td>
+            <td>{{item['COST']}}</td>
+            <td>{{item['IsPayed']}}</td>
+            <td><button>Подробнее</button></td>
+            
+        </tr>
+        {%endfor%}
+        <!-- Добавьте другие строки с данными по мере необходимости -->
+    </table>
     <button id="create-rent">Создать</button>
-
-
     <div style="display: none;" class="create-newrent modal-window">
         <input type="date" name="" id="">
         <input type="date" name="" id="">
         <div class="inventory"></div>
-        <select name="" id=""></select>
+        <select name="inventory" id="inventory">
+            {% for item in data['Inventory'] %}
+            <option value="{{ item['ID'] }}">{{item['Name']}}</option>
+            {%endfor%}
+        </select>
         <input type="text" name="" id="">
         <input type="text" name="" id="">
         <input type="checkbox" name="" id="">

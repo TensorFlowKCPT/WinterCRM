@@ -242,11 +242,23 @@
             </div>
             <div class="tasks__filter">
               <!-- Пример фильтра -->
-              <select class="tasks-filter" id="tasks-filter">
-                <option value="placeholder" disabled selected hidden>Фильтр</option>
+              <select class="tasks-filter" id="staff-filter" onchange="filterTasks()">
+                <option value="placeholder" disabled selected hidden>Сотрудник</option>
                 <optgroup>
-                  <option value="option1">Опция 1</option>
-                  <option value="option2">Опция 2</option>
+                  <option value="all">Все</option>
+                  {%for employee in data['staff']%}
+                  <option value="{{employee[1]}}">{{employee[1]}}</option>
+                  {%endfor%}
+                </optgroup>
+              </select>
+              <select class="tasks-filter" id="color-filter" onchange="filterTasks()">
+                <option value="placeholder" disabled selected hidden>Цвет</option>
+                <optgroup>
+                  <option value="all">Все</option>
+                  <option value="red" style="background-color: #FF6868;">Красный</option>
+                  <option value="blue" style="background-color: #8AC7FF;">Синий</option>
+                  <option value="yellow" style="background-color: #FFC273;">Желтый</option>
+                  <option value="gray" style="background-color: #cccccc;">Серый</option>
                 </optgroup>
               </select>
               <svg
@@ -266,25 +278,16 @@
             </div>
             <div class="tasks__score">
               <!-- Лучше в этом диве делать счет -->
-              <div class="tasks-score">64 Задачи</div>
+              <div class="tasks-score">Всего задач: </div>
+              <div class="tasks-score" id="allTasksCount">{{ data['allTasksCount'] }}</div>
+              <div class="tasks-score">Невыполненых задач: </div>
+              <div class="tasks-score" id="uncheckedTasksCount">{{ data['uncheckedTasksCount'] }}</div>
+
             </div>
           </div>
-
           <div class="tasks__right">
             <div class="tasks__filter">
-              <button id="deleteSelected" class="delSelectedBtn">Удалить выбранных</button>
               <button id="openModalButton" class="mdlbutton">Добавить задачу</button>
-              <!-- Пример сортировки (id) -->
-              <select
-                class="tasks-filter tasks-sortirovka"
-                id="sortirovka-filter"
-              >
-                <option value="placeholder" selected hidden>Сортировка</option>
-                <optgroup>
-                  <option value="option1">Опция 1</option>
-                  <option value="option2">Опция 2</option>
-                </optgroup>
-              </select>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -310,18 +313,20 @@
               <td class="table-colon">Сотрудник</td>
               <td class="table-colon">Дедлайн</td>
               <td class="table-colon">Состояние</td>
+              <td class="table-colon">Удалить</td>
             </tr>
-            {% if data['tasks'] %} {% for task in data['tasks'] %}
-            <tr>
-              <td class="table-colon">{{ task[1] }}</td>
-              <td class="table-colon">{{ task[2] }}</td>
-              <td class="table-colon">{{ task[3] }}</td>
+            {% for task in data['tasks'] %}
+            <tr id="{{task['ID']}}" style="background-color: {{ task['Color']}} ;">
+              <td class="table-colon">{{ task['Task'] }}</td>
+              <td class="table-colon">{{ task['Performer']['Name'] }}</td>
+              <td class="table-colon">{{ task['Deadline'] }}</td>
               <td>
-                <input type="checkbox" name="taskStatus" {% if task[4] %}checked{% endif %}
-                  class="task-status-checkbox" data-task-id="{{ task[0] }}" />
+                <input type="checkbox" name="taskStatus" {% if task['Status'] %}checked{% endif %}
+                  class="task-status-checkbox" data-task-id="{{ task['ID'] }}" />
               </td>
+              <td><button onclick="Delete({{ task['ID'] }})">Удалить</button></td>
             </tr>
-            {% endfor %} {% endif %}
+            {% endfor %}
           </table>
 
 
@@ -354,10 +359,10 @@
                       <div class="tasks__center-text">Описание</div>
                       <div class="tasks__center-color">
                         <div class="text-color">Цвет</div>
-                        <div class="color-circle color-gray"></div>
-                        <div class="color-circle color-blue"></div>
-                        <div class="color-circle color-yellow"></div>
-                        <div class="color-circle color-red"></div>
+                        <div class="color-circle color-gray" style="border: 2px solid black;" onclick="selectColor(this)"></div>
+                        <div class="color-circle color-blue" onclick="selectColor(this)"></div>
+                        <div class="color-circle color-yellow" onclick="selectColor(this)"></div>
+                        <div class="color-circle color-red" onclick="selectColor(this)"></div>
                       </div>
                     </div>
               

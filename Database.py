@@ -101,6 +101,7 @@ class Database:
                     Performer INT NOT NULL,
                     Deadline DATE,
                     Status BOOLEAN NOT NULL,
+                    Color TEXT,
                     FOREIGN KEY (ID) REFERENCES Employees (Performer)
                 )
             ''')
@@ -271,8 +272,12 @@ class Database:
 
     def addClient(fio, passport, phone_number):
         with sqlite3.connect('database.db') as conn:
-            conn.execute('INSERT INTO Clients (FIO, Passport, PhoneNumber) VALUES (?,?,?)', (fio, passport, phone_number,))
+            cursor = conn.cursor()
+            cursor.execute('INSERT INTO Clients (FIO, Passport, PhoneNumber) VALUES (?,?,?)', (fio, passport, phone_number,))
             conn.commit()
+
+            newid = cursor.lastrowid
+        return newid
 
     def getInventoryTypes():
         with sqlite3.connect('database.db') as conn:
@@ -432,8 +437,19 @@ class Database:
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('SELECT * FROM Tasks')
             rows = cursor.fetchall()
+            output = []
             if rows:
-                return rows
+                for row in rows:
+                    Employee = conn.execute('SELECT ID,NAME FROM Employees WHERE ID = ?',(row[2],)).fetchone()
+                    output.append({
+                        'ID': row[0],
+                        'Task': row[1],
+                        'Performer' : {'ID':Employee[0],'Name':Employee[1]},
+                        'Deadline' : row[3],
+                        'Status' : row[4],
+                        'Color' : row[5]
+                    })
+                return output
             return None
     
     def getTasksForEmployees(idEmployee: int):
@@ -448,9 +464,9 @@ class Database:
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('DELETE FROM Tasks WHERE ID = ?', (idTask,))
 
-    def createTask(task: str, idEployees: int, deadline: str, status: bool):
+    def createTask(task: str, idEployees: int, deadline: str, status: bool, color: str):
         with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('INSERT INTO Tasks (Task, Performer, Deadline, Status)VALUES (?, ?, ?, ?)', (task, idEployees, deadline, status,))
+            cursor = conn.execute('INSERT INTO Tasks (Task, Performer, Deadline, Status, Color)VALUES (?, ?, ?, ?, ?)', (task, idEployees, deadline, status, color,))
 
     def statusPut(idTask: int, status: bool):
         with sqlite3.connect('database.db') as conn:
