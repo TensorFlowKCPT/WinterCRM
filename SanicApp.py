@@ -160,11 +160,11 @@ async def save(request):
 
     for i in monthObject:
         for j in i.findall(".//td"):
-            if j.get("style") != None and "red" in j.get("style"):
+            if j.get("style") != None and "rgb(255, 207, 207)" in j.get("style"):
                 Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 2)
-            if j.get("style") != None and "blue" in j.get("style"):
+            if j.get("style") != None and "rgb(207, 232, 255)" in j.get("style"):
                 Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 1)
-            if j.get("style") != None and "green" in j.get("style"):
+            if j.get("style") != None and "rgb(253, 255, 174)" in j.get("style"):
                 Database.putSchedule(idEployees, f"{i.get('id').split('_')[1].strip()}-{listdate[i.get('id').split('_')[0]].strip()}-{j.text.strip()}", 3)
     return response.text("успех")
 
@@ -200,11 +200,11 @@ async def get_schedule(request):
                     tagTd.string = str(j)
                     data = get_data_by_date(scheduleForEmployees, date)
                     if data == 'Больничный':
-                        tagTd['style'] = 'background-color: red'
+                        tagTd['style'] = 'background-color: rgb(255, 207, 207)'
                     elif data == 'Работает':
-                        tagTd['style'] = 'background-color: blue'
+                        tagTd['style'] = 'background-color: rgb(207, 232, 255)'
                     elif data == 'Отпуск':
-                        tagTd['style'] = 'background-color: green'
+                        tagTd['style'] = 'background-color: rgb(253, 255, 174)'
                     lastTr.append(tagTd)
                 else:
                     tagTd = soup.new_tag(name ='td')
