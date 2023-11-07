@@ -217,28 +217,38 @@
       <div class="schedule"></div>
       <div class="employees__wrapper">
         <select class="dropdown">
-            {% for emp in data %}
-                <option value="{{ emp }}">{{ emp }}</option>
-            {% endfor %}
+          <option value="placeholder" disabled selected hidden>
+            Выберите сотрудника
+          </option>
+          {% for emp in data %}
+          <option value="{{ emp }}">{{ emp }}</option>
+          {% endfor %}
         </select>
         <div style="display: none" class="status">
           <input type="radio" id="option1" name="radioGroup" value="option1" />
           <label style="background-color: blue" for="option1">Работает</label>
-    
+
           <input type="radio" id="option2" name="radioGroup" value="option2" />
           <label style="background-color: red" for="option2">Болеет</label>
-    
+
           <input type="radio" id="option3" name="radioGroup" value="option3" />
           <label style="background-color: green" for="option3">Отпуск</label>
-    
+
           <button id="saveButton">Сохранить</button>
         </div>
         <div>
-          <input type="password" id="password" name="password" placeholder="Пароль" required />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Пароль"
+            required
+          />
           <br />
           <button id="passwordButton" class="buttonName">Отправить</button>
           <script src="/static/js/schedule.js"></script>
         </div>
+      </div>
     </main>
   </body>
 </html>
