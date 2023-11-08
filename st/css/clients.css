@@ -176,18 +176,10 @@ tr {
 }
 
 .close {
-    color: #aaa;
     float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
     cursor: pointer;
 }
+
 
 /* Центрирование кнопки "Добавить" */
 #addItemForm input[type="submit"] {
