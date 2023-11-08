@@ -12,6 +12,65 @@ main {
     position: relative;
 }
 
+.checkbox {
+    display: inline-block;
+}
+
+.checkbox__inp {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    appearance: none;
+}
+
+.checkbox__inner {
+    display: inline-block;
+    position: relative;
+    font-size: 18px;
+    padding: 8px;
+    padding-left: 74px;
+}
+
+.checkbox__inner:before {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 55px;
+    height: 31px;
+    border-radius: 18px;
+    background-color: rgb(216, 216, 216);
+    transition: background-color .3s;
+}
+
+.checkbox__inner::after {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    border-radius: 15px;
+    background-color: #3772FF;
+    left: 3px;
+    top: 3px;
+    transition: background-color .3s, left .3s;
+}
+
+.checkbox__inp:checked+.checkbox__inner::before {
+    background-color: #3772FF;
+}
+.checkbox__inp:checked+.checkbox__inner::after {
+    background-color: white;
+    left: 27px;
+}
+
+.checkbox__inp:focus+.checkbox__inner:before {
+    outline: 1px solid gray;
+    outline-offset: 3px;
+}
+
 .rents__wrapper {
     display: flex;
     flex-direction: column;
@@ -152,9 +211,81 @@ tr {
     gap: 9px;
 }
 
+.modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .close {
     float: right;
+    margin-bottom: 10px;
     cursor: pointer;
+}
+.date-picker-container {
+    display: flex;
+    flex-direction: row; /* Изменили направление на горизонтальное */
+    justify-content: space-between; /* Распределяем пространство между элементами */
+}
+
+.date-picker-container div {
+    display: flex;
+    flex-direction: column; /* Меняем направление внутреннего контейнера на вертикальное */
+    margin-right: 10px; /* Добавляем небольшой отступ между input */
+}
+
+.date-picker-container input[type="date"] {
+    width: 375px;
+}
+    
+select[name="itemsListBox"] {
+   border-radius: 10px;
+   height: 120px;
+   width: 450px;
+   font-size: medium;
+   font-family: "Inter" sans-serif;
+   box-sizing: border-box;
+   background: #FCFCFD;
+   border-radius: 12px;
+   border: 2px #DFDFE6 solid;
+   justify-content: flex-start;
+   align-items: center;
+   gap: 8px;
+   display: inline-flex;
+  }
+
+#addItemForm input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    background: #FCFCFD;
+    border-radius: 12px;
+    border: 2px #DFDFE6 solid;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    display: inline-flex;
+    margin-bottom: 32px;
+}
+
+.addItemForm-first {
+    margin-top: 15%;
+}
+
+#addItemForm input[type="submit"] {
+    width: 50%;
+    height: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-top: 15px;
+    background: #3772FF;
+    font-weight: 400;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    display: inline-flex;
+    color: white;
 }
 
 .mdlbutton {
@@ -167,6 +298,33 @@ tr {
     font-weight: bolder;
     align-items: center;
     width: 100%;
+}
+.delSelectedBtn {
+    background: white;
+    height: 32px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    border: 1px #E5E7EB solid;
+    font-family: "Inter", sans-serif;
+    font-weight: bolder;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.dropdownPayment{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    background: #FCFCFD;
+    border-radius: 12px;
+    border: 2px #DFDFE6 solid;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    display: inline-flex;
+    margin-bottom: 32px;
 }
 
 .modal {
@@ -183,8 +341,16 @@ tr {
 
 .modal__content {
     background-color: #fefefe;
-    margin: 50px 20px;
+    margin: auto;
     padding: 35px 27px 35px 30px;
+    /* Центрирование по вертикали и горизонтали */
+    border: 1px solid #888;
+    width: 540px;
+    height: auto;
+    text-align: center;
+    border-radius: 15px;
+    /* Скругление углов */
+    box-sizing: border-box;
 }
 
 /* Для второго модального окна */
