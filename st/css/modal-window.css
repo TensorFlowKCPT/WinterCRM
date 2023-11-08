@@ -19,8 +19,7 @@
     margin: 20px auto 10px;
     position: relative;
     display: none;
-    /*     Если список будет большой то он нормально вставляться не хочет
-    overflow-y: scroll; */
+    overflow-y: scroll;
 }
 
 .close {
