@@ -5,6 +5,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from Database import Database
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
+from datetime import datetime
 app = Sanic("WinterCRM")
 env = Environment(
     loader=FileSystemLoader('temp'),  # Папка с шаблонами
@@ -124,13 +125,26 @@ async def service_create(request):
 #endregion
 
 #region /rents
+def rents_sort_key(item):
+    return (
+        item['Return_Date'] or datetime(1900, 1, 1),  # Сортировка по Return_Date, "None" ставится в начало
+        item['IsPayed'],  # По IsPayed
+        item['Start_Date']  # По Start_Date
+    )
+
 @app.get("/rents")
 async def rents(request):
     data = {}
     Inventory = Database.getInventory()
     if Inventory:
-        NotRentedInventory = list(filter(lambda item: item['Rented'] != 'true', Inventory))
+        NotRentedInventory = list(filter(lambda item: item['Rented'] == 'false', Inventory))
         data['Inventory'] = NotRentedInventory
+    Rents = Database.getRents()
+    data['lenRents'] = 0
+    if Rents:
+        Rents = sorted(data, key=rents_sort_key)
+        data['Rents'] = Rents
+        data['lenRents'] = len(Rents)
     template = env.get_template('rents.html')
     render_template = template.render(data = data)
     return response.html(render_template)

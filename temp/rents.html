@@ -231,7 +231,7 @@
                   fill="#64748B"
                 />
               </svg>
-              <!-- Я взял строчки в клиенте, нужно менять ли для поиска для них? -->
+              <!-- Не парься, главное чтобы выглядело адекватно, подвяжем мы сам -->
               <input
                 class="clients__search-input"
                 type="text"
@@ -240,7 +240,7 @@
               />
             </div>
             <div class="rents__filter">
-              <!-- Тут взято из клиента, нужно менять для фильтра? -->
+              <!-- Не парься, главное чтобы выглядело адекватно, подвяжем мы сами -->
               <select class="rents-filter" id="clients-filter">
                 <option value="placeholder" disabled selected hidden>
                   Фильтр
@@ -267,8 +267,11 @@
             </div>
             <div class="rents__score">
               <!-- Вместо счет клиентов, нужно для заказов -->
-              <div id="clientsCount" class="rents-score">
-                {{ data['lenClients'] }}
+              <div class="rents-score">
+                Всего заказов:
+              </div>
+              <div id="rentsCount" class="rents-score">
+                {{ data['lenRents'] }}
               </div>
             </div>
           </div>
@@ -282,15 +285,15 @@
         <div>
           <table>
             <tr class="table__header">
-              <th>ID Заказа</th>
               <th>Статус заказа</th>
               <th>Предметы</th>
               <th>Имя клиента</th>
               <th></th>
             </tr>
             <!-- БД для заказов -->
-            <tr>
-              <td class="colone"></td>
+            {% for rent in data['Rents'] %}
+            <tr id="rent['ID']">
+              <td class="colone">rent['']</td>
               <td class="colone-status"></td>
               <td class="colone colone-items"></td>
               <td class="colone colone-name"></td>
@@ -312,6 +315,7 @@
                 </svg>
               </td>
             </tr>
+            {% endfor %}
           </table>
         </div>
       </div>
