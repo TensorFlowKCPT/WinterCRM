@@ -231,7 +231,7 @@
                   fill="#64748B"
                 />
               </svg>
-              <!-- Я взял строчки в клиенте, нужно менять ли для поиска для них? -->
+              <!-- Не парься, главное чтобы выглядело адекватно, подвяжем мы сам -->
               <input
                 class="rents__search-input"
                 type="text"
@@ -240,7 +240,7 @@
               />
             </div>
             <div class="rents__filter">
-              <!-- Тут взято из клиента, нужно менять для фильтра? -->
+              <!-- Не парься, главное чтобы выглядело адекватно, подвяжем мы сами -->
               <select class="rents-filter" id="clients-filter">
                 <option value="placeholder" disabled selected hidden>
                   Фильтр
@@ -266,8 +266,11 @@
             </div>
             <div class="rents__score">
               <!-- Вместо счет клиентов, нужно для заказов -->
-              <div id="clientsCount" class="rents-score">
-                {{ data['lenClients'] }}
+              <div class="rents-score">
+                Всего заказов:
+              </div>
+              <div id="rentsCount" class="rents-score">
+                {{ data['lenRents'] }}
               </div>
             </div>
           </div>
@@ -279,18 +282,31 @@
         <div>
           <table>
             <tr class="table__header">
-              <th>ID Заказа</th>
               <th>Статус заказа</th>
               <th>Предметы</th>
               <th>Имя клиента</th>
-              <th></th>
+              <th><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M11 5H6C4.89543 5 4 5.89543 4 7V18C4 19.1046 4.89543 20 6 20H17C18.1046 20 19 19.1046 19 18V13M17.5858 3.58579C18.3668 2.80474 19.6332 2.80474 20.4142 3.58579C21.1953 4.36683 21.1953 5.63316 20.4142 6.41421L11.8284 15H9L9 12.1716L17.5858 3.58579Z"
+                  stroke="#6B7280"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg></th>
             </tr>
             <!-- БД для заказов -->
-            <tr>
-              <td class="colone"></td>
-              <td class="colone-status"></td>
-              <td class="colone colone-items"></td>
-              <td class="colone colone-name"></td>
+            {% for rent in data['Rents'] %}
+            <tr id="{{rent['ID']}}">
+              <td class="colone">{{rent['IsPayed']}}</td>
+              <td class="colone colone-items">{{rent['StartItemsCount']}}</td>
+              <td class="colone colone-name">{{rent['Client']['Name']}}</td>
               <td class="colone colone-edit">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -309,6 +325,7 @@
                 </svg>
               </td>
             </tr>
+            {% endfor %}
           </table>
         </div>
       </div>
