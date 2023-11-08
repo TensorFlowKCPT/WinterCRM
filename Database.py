@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import datetime
+import json
 
 class Database:
     def StartDataBase():
@@ -360,8 +361,10 @@ class Database:
                     'ID' : row[0],
                     'Start_Date' : datetime.strptime(row[1], "%Y-%m-%d"),
                     'Return_Date' : datetime.strptime(row[2], "%Y-%m-%d"),
-                    'StartItemsJSON' : row[3],
-                    'ReturnedItemsJSON' : row[4],
+                    'StartItems' : json.loads(row[3]),
+                    'StartItemsCount' : len(json.loads(row[3])),
+                    'ReturnedItems' : json.loads(row[4]),
+                    'ReturnedItemsCount' : len(json.loads(row[4])),
                     'Client' : Database.GetClientById(row[5]),
                     'Deposit' : row[6],
                     'Cost' : row[7],

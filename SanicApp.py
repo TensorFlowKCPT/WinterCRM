@@ -132,6 +132,14 @@ def rents_sort_key(item):
         item['Start_Date']  # По Start_Date
     )
 
+@app.post("/rents")
+async def addrent(request):
+    #Очень не факт что работает, фронта нет, не тестил
+    StartDate = request.json.get('StartDate')
+    ReturnDate = request.json.get('ReturnDate')
+    StartItems = request.json.get('StartItems')
+
+    Database.addRent(Start_Date=StartDate, Return_Date=ReturnDate, )
 @app.get("/rents")
 async def rents(request):
     data = {}
