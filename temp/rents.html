@@ -245,30 +245,13 @@
                 <option value="placeholder" disabled selected hidden>
                   Фильтр
                 </option>
-                  <option value="option1">Опция 1</option>
-                  <option value="option2">Опция 2</option>
+                <option value="option1">Опция 1</option>
+                <option value="option2">Опция 2</option>
               </select>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  style="padding-left:5px;"
-                  d="M4.18399 5.76804C4.2986 5.65778 4.45229 5.59753 4.6113 5.60053C4.77031 5.60353 4.92162 5.66953 5.03199 5.78404L7.99999 8.93444L10.968 5.78404C11.0219 5.72457 11.0873 5.67653 11.1601 5.64277C11.233 5.609 11.3119 5.59021 11.3921 5.5875C11.4724 5.58479 11.5524 5.59821 11.6273 5.62698C11.7023 5.65575 11.7707 5.69927 11.8286 5.75497C11.8864 5.81066 11.9325 5.87741 11.9641 5.95124C11.9956 6.02507 12.0121 6.10449 12.0124 6.18478C12.0127 6.26508 11.9969 6.34463 11.9659 6.41871C11.9349 6.49278 11.8894 6.55989 11.832 6.61604L8.43199 10.216C8.37602 10.2741 8.30892 10.3203 8.23469 10.3519C8.16047 10.3834 8.08064 10.3997 7.99999 10.3997C7.91934 10.3997 7.83951 10.3834 7.76529 10.3519C7.69106 10.3203 7.62396 10.2741 7.56799 10.216L4.16799 6.61604C4.05773 6.50144 3.99747 6.34774 4.00047 6.18873C4.00347 6.02972 4.06948 5.87841 4.18399 5.76804Z"
-                  fill="#64748B"
-                />
-              </svg>
             </div>
             <div class="rents__score">
               <!-- Вместо счет клиентов, нужно для заказов -->
-              <div class="rents-score">
-                Всего заказов:
-              </div>
+              <div class="rents-score">Всего заказов:</div>
               <div id="rentsCount" class="rents-score">
                 {{ data['lenRents'] }}
               </div>
@@ -285,21 +268,23 @@
               <th>Статус заказа</th>
               <th>Предметы</th>
               <th>Имя клиента</th>
-              <th><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M11 5H6C4.89543 5 4 5.89543 4 7V18C4 19.1046 4.89543 20 6 20H17C18.1046 20 19 19.1046 19 18V13M17.5858 3.58579C18.3668 2.80474 19.6332 2.80474 20.4142 3.58579C21.1953 4.36683 21.1953 5.63316 20.4142 6.41421L11.8284 15H9L9 12.1716L17.5858 3.58579Z"
-                  stroke="#6B7280"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg></th>
+              <th>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M11 5H6C4.89543 5 4 5.89543 4 7V18C4 19.1046 4.89543 20 6 20H17C18.1046 20 19 19.1046 19 18V13M17.5858 3.58579C18.3668 2.80474 19.6332 2.80474 20.4142 3.58579C21.1953 4.36683 21.1953 5.63316 20.4142 6.41421L11.8284 15H9L9 12.1716L17.5858 3.58579Z"
+                    stroke="#6B7280"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </th>
             </tr>
             <!-- БД для заказов -->
             {% for rent in data['Rents'] %}
@@ -335,29 +320,29 @@
           <div class="modal__header">
             <h2>Создать аренду</h2>
 
-          <svg
-            class="close"
-            id="closeModalBtn"
-            xmlns="http://www.w3.org/2000/svg"
-            width="39"
-            height="39"
-            viewBox="0 0 39 39"
-            fill="none"
-          >
-            <path
-              d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
-              fill="#DFDFE6"
-            />
-            <path
-              d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
-              fill="#23262F"
-            />
-            <path
-              d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
-              fill="#23262F"
-            />
-          </svg>
-        </div>
+            <svg
+              class="close"
+              id="closeModalBtn"
+              xmlns="http://www.w3.org/2000/svg"
+              width="39"
+              height="39"
+              viewBox="0 0 39 39"
+              fill="none"
+            >
+              <path
+                d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
+                fill="#DFDFE6"
+              />
+              <path
+                d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
+                fill="#23262F"
+              />
+              <path
+                d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
+                fill="#23262F"
+              />
+            </svg>
+          </div>
           <form id="addItemForm">
             <label>Инвентарь</label>
             <select name="itemsListBox" multiple size="number_of_options">
@@ -367,7 +352,9 @@
             </select>
             <label>Информация о клиенте</label>
             <select name="paymentMethod" required class="dropdownPayment">
-              <option value="" disabled selected hidden>Выберите клиента</option>
+              <option value="" disabled selected hidden>
+                Выберите клиента
+              </option>
               <option>Клиент 1</option>
             </select>
             <input
@@ -377,7 +364,9 @@
               required
             />
             <select name="paymentMethod" required class="dropdownPayment">
-              <option value="" disabled selected hidden>Выберите способ оплаты</option>
+              <option value="" disabled selected hidden>
+                Выберите способ оплаты
+              </option>
               <option value="creditCard">Банковская карта</option>
               <option value="cash">Наличные</option>
               <option value="bankTransfer">Банковский перевод</option>
@@ -385,21 +374,31 @@
             <div class="date-picker-container">
               <div>
                 <label for="rentalStartDate">Дата начала аренды</label>
-                <input type="date" id="rentalStartDate" name="rentalStartDate" required />
+                <input
+                  type="date"
+                  id="rentalStartDate"
+                  name="rentalStartDate"
+                  required
+                />
               </div>
-            
+
               <div>
                 <label for="rentalEndDate">Дата окончания аренды</label>
-                <input type="date" id="rentalEndDate" name="rentalEndDate" required />
+                <input
+                  type="date"
+                  id="rentalEndDate"
+                  name="rentalEndDate"
+                  required
+                />
               </div>
             </div>
             <label class="checkbox" for="checkbox">
-              <input class="checkbox__inp" type="checkbox" id="checkbox">
+              <input class="checkbox__inp" type="checkbox" id="checkbox" />
               <span class="checkbox__inner">
-                  Аренда оплачена (?предоплачена?)
+                Аренда оплачена (?предоплачена?)
               </span>
             </label>
-              <input type="submit" value="Добавить"/>
+            <input type="submit" value="Добавить" />
           </form>
         </div>
       </div>

@@ -230,28 +230,15 @@ section {
 
 /* Для "фильтра" и "сортировки" */
 .tasks-filter {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
     border-radius: var(--border-radius-rounded-md, 6px);
     border: 1px solid var(--gray-200, #E5E7EB);
     background: var(--White, #FFF);
-    padding: 4px 12px 4px 16px;
+    padding: 4px 5px;
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
     height: 32px;
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
-}
-
-.tasks__filter {
-    position: relative;
-}
-
-.tasks__filter svg {
-    position: absolute;
-    right: 3%;
-    top: 25%;
 }
 
 .tasks-sortirovka {
@@ -260,7 +247,7 @@ section {
 
 .tasks-color {
     text-align: center;
-    padding: 4px 4px 4px 0;
+    padding: 0;
 }
 
 .tasks__header {

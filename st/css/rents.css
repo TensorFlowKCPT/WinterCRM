@@ -61,6 +61,7 @@ main {
 .checkbox__inp:checked+.checkbox__inner::before {
     background-color: #3772FF;
 }
+
 .checkbox__inp:checked+.checkbox__inner::after {
     background-color: white;
     left: 27px;
@@ -113,13 +114,10 @@ main {
 
 /* Для "фильтра" */
 .rents-filter {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
     border-radius: var(--border-radius-rounded-md, 6px);
     border: 1px solid var(--gray-200, #E5E7EB);
     background: var(--White, #FFF);
-    padding: 4px 12px 4px 16px;
+    padding: 4px;
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
@@ -142,6 +140,11 @@ main {
 }
 
 /* Счет заказов */
+.rents__score {
+    display: flex;
+    gap: 8px;
+}
+
 .rents-score {
     color: var(--slate-500, #64748B);
     font-size: 14px;
@@ -222,37 +225,42 @@ tr {
     margin-bottom: 10px;
     cursor: pointer;
 }
+
 .date-picker-container {
     display: flex;
-    flex-direction: row; /* Изменили направление на горизонтальное */
-    justify-content: space-between; /* Распределяем пространство между элементами */
+    flex-direction: row;
+    /* Изменили направление на горизонтальное */
+    justify-content: space-between;
+    /* Распределяем пространство между элементами */
 }
 
 .date-picker-container div {
     display: flex;
-    flex-direction: column; /* Меняем направление внутреннего контейнера на вертикальное */
-    margin-right: 10px; /* Добавляем небольшой отступ между input */
+    flex-direction: column;
+    /* Меняем направление внутреннего контейнера на вертикальное */
+    margin-right: 10px;
+    /* Добавляем небольшой отступ между input */
 }
 
 .date-picker-container input[type="date"] {
     width: 375px;
 }
-    
+
 select[name="itemsListBox"] {
-   border-radius: 10px;
-   height: 120px;
-   width: 450px;
-   font-size: medium;
-   font-family: "Inter" sans-serif;
-   box-sizing: border-box;
-   background: #FCFCFD;
-   border-radius: 12px;
-   border: 2px #DFDFE6 solid;
-   justify-content: flex-start;
-   align-items: center;
-   gap: 8px;
-   display: inline-flex;
-  }
+    border-radius: 10px;
+    height: 120px;
+    width: 450px;
+    font-size: medium;
+    font-family: "Inter" sans-serif;
+    box-sizing: border-box;
+    background: #FCFCFD;
+    border-radius: 12px;
+    border: 2px #DFDFE6 solid;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    display: inline-flex;
+}
 
 #addItemForm input {
     width: 100%;
@@ -299,6 +307,7 @@ select[name="itemsListBox"] {
     align-items: center;
     width: 100%;
 }
+
 .delSelectedBtn {
     background: white;
     height: 32px;
@@ -313,7 +322,7 @@ select[name="itemsListBox"] {
 
 }
 
-.dropdownPayment{
+.dropdownPayment {
     width: 100%;
     box-sizing: border-box;
     padding: 16px;

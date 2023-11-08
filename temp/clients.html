@@ -244,25 +244,9 @@
                 <option value="placeholder" disabled selected hidden>
                   Фильтр
                 </option>
-                <optgroup>
-                  <option value="option1">Опция 1</option>
-                  <option value="option2">Опция 2</option>
-                </optgroup>
+                <option value="option1">Опция 1</option>
+                <option value="option2">Опция 2</option>
               </select>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M4.18399 5.76804C4.2986 5.65778 4.45229 5.59753 4.6113 5.60053C4.77031 5.60353 4.92162 5.66953 5.03199 5.78404L7.99999 8.93444L10.968 5.78404C11.0219 5.72457 11.0873 5.67653 11.1601 5.64277C11.233 5.609 11.3119 5.59021 11.3921 5.5875C11.4724 5.58479 11.5524 5.59821 11.6273 5.62698C11.7023 5.65575 11.7707 5.69927 11.8286 5.75497C11.8864 5.81066 11.9325 5.87741 11.9641 5.95124C11.9956 6.02507 12.0121 6.10449 12.0124 6.18478C12.0127 6.26508 11.9969 6.34463 11.9659 6.41871C11.9349 6.49278 11.8894 6.55989 11.832 6.61604L8.43199 10.216C8.37602 10.2741 8.30892 10.3203 8.23469 10.3519C8.16047 10.3834 8.08064 10.3997 7.99999 10.3997C7.91934 10.3997 7.83951 10.3834 7.76529 10.3519C7.69106 10.3203 7.62396 10.2741 7.56799 10.216L4.16799 6.61604C4.05773 6.50144 3.99747 6.34774 4.00047 6.18873C4.00347 6.02972 4.06948 5.87841 4.18399 5.76804Z"
-                  fill="#64748B"
-                />
-              </svg>
             </div>
             <div class="clients__score">
               <div id="clientsCount" class="clients-score">
@@ -273,31 +257,29 @@
 
           <div class="clients__right">
             <div class="clients__filter">
-              <button id="deleteSelected" class="delSelectedBtn">Удалить выбранных</button>
-              <button id="openModalBtn" class="mdlbutton">Добавить клиента</button>
+              <button id="deleteSelected" class="delSelectedBtn">
+                Удалить выбранных
+              </button>
+              <button id="openModalBtn" class="mdlbutton">
+                Добавить клиента
+              </button>
               <!-- Пример сортировки (id) -->
-              <select class="clients-filter clietns-sortirovka" id="sortirovka-filter">
-                <option value="default" selected hidden>Сортировка</option>
-                <optgroup>
-                  <option value="name">По имени</option>
-                  <option value="surname">По фамилии</option>
-                  <option value="lastname">По отчеству</option>
-                </optgroup>
-              </select>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
+              <select
+                class="clients-filter clietns-sortirovka"
+                id="sortirovka-filter"
               >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M4.18399 5.76804C4.2986 5.65778 4.45229 5.59753 4.6113 5.60053C4.77031 5.60353 4.92162 5.66953 5.03199 5.78404L7.99999 8.93444L10.968 5.78404C11.0219 5.72457 11.0873 5.67653 11.1601 5.64277C11.233 5.609 11.3119 5.59021 11.3921 5.5875C11.4724 5.58479 11.5524 5.59821 11.6273 5.62698C11.7023 5.65575 11.7707 5.69927 11.8286 5.75497C11.8864 5.81066 11.9325 5.87741 11.9641 5.95124C11.9956 6.02507 12.0121 6.10449 12.0124 6.18478C12.0127 6.26508 11.9969 6.34463 11.9659 6.41871C11.9349 6.49278 11.8894 6.55989 11.832 6.61604L8.43199 10.216C8.37602 10.2741 8.30892 10.3203 8.23469 10.3519C8.16047 10.3834 8.08064 10.3997 7.99999 10.3997C7.91934 10.3997 7.83951 10.3834 7.76529 10.3519C7.69106 10.3203 7.62396 10.2741 7.56799 10.216L4.16799 6.61604C4.05773 6.50144 3.99747 6.34774 4.00047 6.18873C4.00347 6.02972 4.06948 5.87841 4.18399 5.76804Z"
-                  fill="#64748B"
-                />
-              </svg>
+                <option
+                  value="default"
+                  class="clietns-sortirovka-text"
+                  selected
+                  hidden
+                >
+                  Сортировка
+                </option>
+                <option value="name">По имени</option>
+                <option value="surname">По фамилии</option>
+                <option value="lastname">По отчеству</option>
+              </select>
             </div>
           </div>
         </div>
@@ -313,15 +295,21 @@
             </tr>
             {% for item in data['Clients'] %}
             <tr data-id="{{item['ID']}}">
-                <td class="table-colon">{{item['FIO']}}</td>
-                <td class="table-colon table-colon2">{{item['Passport']}}</td>
-                <td class="table-colon">{{item['PhoneNumber']}}</td>
-                <td class="table-colon">
-                    <button class="delete-button" data-id="{{item['ID']}}">Удалить</button>
-                </td>
-                <td class="table-colon">
-                    <input type="checkbox" class="select-checkbox" data-id="{{item['ID']}}">
-                </td>
+              <td class="table-colon">{{item['FIO']}}</td>
+              <td class="table-colon table-colon2">{{item['Passport']}}</td>
+              <td class="table-colon">{{item['PhoneNumber']}}</td>
+              <td class="table-colon">
+                <button class="delete-button" data-id="{{item['ID']}}">
+                  Удалить
+                </button>
+              </td>
+              <td class="table-colon">
+                <input
+                  type="checkbox"
+                  class="select-checkbox"
+                  data-id="{{item['ID']}}"
+                />
+              </td>
             </tr>
             {% endfor %}
           </table>
