@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/slide_menu.css" />
     <link rel="stylesheet" href="/static/css/rents.css" />
+    <link rel="stylesheet" href="/static/css/modal-window.css" />
     <title>Заказы</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -258,7 +259,9 @@
             </div>
           </div>
           <div class="rents__right">
-            <button id="openModalBtn" class="mdlbutton">Добавить заказ</button>
+            <button id="openModalButton" class="mdlbutton">
+              Добавить заказ
+            </button>
           </div>
         </div>
 
@@ -315,95 +318,161 @@
         </div>
       </div>
 
-      <div id="myModal" class="modal">
-        <div class="modal__content">
-          <div class="modal__header">
-            <h2>Создать аренду</h2>
-
-            <svg
-              class="close"
-              id="closeModalBtn"
-              xmlns="http://www.w3.org/2000/svg"
-              width="39"
-              height="39"
-              viewBox="0 0 39 39"
-              fill="none"
-            >
-              <path
-                d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
-                fill="#DFDFE6"
-              />
-              <path
-                d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
-                fill="#23262F"
-              />
-              <path
-                d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
-                fill="#23262F"
-              />
-            </svg>
-          </div>
-          <form id="addItemForm">
-            <label>Инвентарь</label>
-            <select name="itemsListBox" multiple size="number_of_options">
-              <option value="option1">Option 1</option>
-              <option value="option2">Option 2</option>
-              <option value="Option3">Option 3</option>
-            </select>
-            <label>Информация о клиенте</label>
-            <select name="paymentMethod" required class="dropdownPayment">
-              <option value="" disabled selected hidden>
-                Выберите клиента
-              </option>
-              <option>Клиент 1</option>
-            </select>
-            <input
-              type="text"
-              placeholder="Номер телефона"
-              name="PhoneNumber"
-              required
-            />
-            <select name="paymentMethod" required class="dropdownPayment">
-              <option value="" disabled selected hidden>
-                Выберите способ оплаты
-              </option>
-              <option value="creditCard">Банковская карта</option>
-              <option value="cash">Наличные</option>
-              <option value="bankTransfer">Банковский перевод</option>
-            </select>
-            <div class="date-picker-container">
-              <div>
-                <label for="rentalStartDate">Дата начала аренды</label>
-                <input
-                  type="date"
-                  id="rentalStartDate"
-                  name="rentalStartDate"
-                  required
+      <div class="modal-container">
+        <div class="modal modal1">
+          <div class="modal_list__wrapper">
+            <div class="modal__list-header">
+              Инвентарь
+              <svg
+                class="close"
+                id="closeModalBtn"
+                xmlns="http://www.w3.org/2000/svg"
+                width="39"
+                height="39"
+                viewBox="0 0 39 39"
+                fill="none"
+              >
+                <path
+                  d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
+                  fill="#DFDFE6"
                 />
+                <path
+                  d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
+                  fill="#23262F"
+                />
+                <path
+                  d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
+                  fill="#23262F"
+                />
+              </svg>
+            </div>
+            <div class="modal__list-container">
+              <div class="modal__list_left">
+                <ul id="selectedItems"></ul>
+                <div id="addItemContainer">
+                  <select id="itemSelect">
+                    <option>Лыжи</option>
+                    <option>Сноуборд</option>
+                    <option>Коньки</option>
+                  </select>
+                  <button class="addItemButton" id="addItemButton">
+                    Добавить
+                  </button>
+                </div>
               </div>
-
-              <div>
-                <label for="rentalEndDate">Дата окончания аренды</label>
-                <input
-                  type="date"
-                  id="rentalEndDate"
-                  name="rentalEndDate"
-                  required
-                />
+              <div class="modal__list_right" id="itemInfoContainer">
+                <div id="itemInfo"></div>
               </div>
             </div>
-            <label class="checkbox" for="checkbox">
-              <input class="checkbox__inp" type="checkbox" id="checkbox" />
-              <span class="checkbox__inner">
-                Аренда оплачена (?предоплачена?)
-              </span>
-            </label>
-            <input type="submit" value="Добавить" />
-          </form>
+          </div>
+        </div>
+
+        <div class="modal modal2">
+          <div class="modal_pay__wrapper">
+            <div class="modal__pay-header">
+              Создать аренду
+              <svg
+                class="close"
+                id="closeModalBtn"
+                xmlns="http://www.w3.org/2000/svg"
+                width="39"
+                height="39"
+                viewBox="0 0 39 39"
+                fill="none"
+              >
+                <path
+                  d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
+                  fill="#DFDFE6"
+                />
+                <path
+                  d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
+                  fill="#23262F"
+                />
+                <path
+                  d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
+                  fill="#23262F"
+                />
+              </svg>
+            </div>
+
+            <form id="addItemForm">
+              <input type="text" placeholder="Название инвентаря" />
+              <svg
+                class="client-svg"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                  stroke="#87898E"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M20.5901 22C20.5901 18.13 16.7402 15 12.0002 15C7.26015 15 3.41016 18.13 3.41016 22"
+                  stroke="#87898E"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <select class="dropdownPayment" name="paymentMethod" required>
+                <option value="" disabled selected hidden>
+                  Выберите клиента
+                </option>
+                <option>Клиент 1</option>
+              </select>
+
+              <select name="paymentMethod" required class="dropdownPayment">
+                <option value="" disabled selected hidden>
+                  Выберите способ оплаты
+                </option>
+                <option value="creditCard">Банковская карта</option>
+                <option value="cash">Наличные</option>
+                <option value="bankTransfer">Банковский перевод</option>
+              </select>
+
+              <div class="date-picker-container">
+                <div>
+                  <label for="rentalStartDate">Дата начала аренды</label>
+                  <input
+                    type="date"
+                    id="rentalStartDate"
+                    name="rentalStartDate"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label for="rentalEndDate">Дата окончания аренды</label>
+                  <input
+                    type="date"
+                    id="rentalEndDate"
+                    name="rentalEndDate"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="checkbox__inner">
+                <div>Аренда оплачена (?предоплачена?)</div>
+
+                <label class="checkbox" for="checkbox">
+                  <input class="checkbox__inp" type="checkbox" id="checkbox" />
+                </label>
+              </div>
+              <!-- Поменял на создать -->
+              <input type="submit" value="Создать" />
+            </form>
+          </div>
         </div>
       </div>
-    </main>
 
-    <script src="/static/js/clients.js"></script>
+      <script src="/static/js/rents.js"></script>
+    </main>
   </body>
 </html>
