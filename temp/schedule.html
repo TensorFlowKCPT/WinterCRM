@@ -216,37 +216,32 @@
 
       <div class="schedule"></div>
       <div class="employees__wrapper">
-        {% for emp in data %}
-        <button class="buttonName">{{ emp }}</button>
-        {% endfor %}
-      </div>
-    </main>
-
-    <div style="display: none" class="status">
-      <input type="radio" id="option1" name="radioGroup" value="option1" />
-      <label style="background-color: rgb(207, 232, 255)" for="option1">Работает</label>
-
-      <input type="radio" id="option2" name="radioGroup" value="option2" />
-      <label style="background-color: rgb(255, 207, 207)" for="option2">Болеет</label>
-
-      <input type="radio" id="option3" name="radioGroup" value="option3" />
-      <label style="background-color: rgb(253, 255, 174)" for="option3">Отпуск</label>
-
+        <select class="dropdown">
+          <option value="placeholder" disabled selected hidden>
+            Выберите сотрудника
+          </option>
+            {% for emp in data %}
+                <option value="{{ emp }}">{{ emp }}</option>
+            {% endfor %}
+        </select>
+        <div style="display: none" class="status">
+          <input type="radio" id="option1" name="radioGroup" value="option1" />
+          <label style="background-color: rgb(207, 232, 255)" for="option1">Работает</label>
+    
+          <input type="radio" id="option2" name="radioGroup" value="option2" />
+          <label style="background-color: rgb(255, 207, 207)" for="option2">Болеет</label>
+    
+          <input type="radio" id="option3" name="radioGroup" value="option3" />
+          <label style="background-color: rgb(253, 255, 174)" for="option3">Отпуск</label>
+    
           <button id="saveButton">Сохранить</button>
         </div>
         <div>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Пароль"
-            required
-          />
+          <input type="password" id="password" name="password" placeholder="Пароль" required />
           <br />
           <button id="passwordButton" class="buttonName">Отправить</button>
           <script src="/static/js/schedule.js"></script>
         </div>
-      </div>
     </main>
   </body>
 </html>
