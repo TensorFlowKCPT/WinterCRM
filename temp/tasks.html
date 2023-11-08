@@ -248,12 +248,10 @@
                 <option value="placeholder" disabled selected hidden>
                   Сотрудник
                 </option>
-                <optgroup>
                   <option value="all">Все</option>
                   {%for employee in data['staff']%}
                   <option value="{{employee[1]}}">{{employee[1]}}</option>
                   {%endfor%}
-                </optgroup>
               </select>
               <select
                 class="tasks-filter tasks-color"
@@ -263,7 +261,6 @@
                 <option value="placeholder" disabled selected hidden>
                   Цвет
                 </option>
-                <optgroup>
                   <option value="all">Все</option>
                   <option value="red" style="background-color: #ff6868">
                     Красный
@@ -277,7 +274,6 @@
                   <option value="gray" style="background-color: #cccccc">
                     Серый
                   </option>
-                </optgroup>
               </select>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

@@ -356,6 +356,7 @@ class Database:
                 return None
             rows = [row for row in rows]
             output = []
+            current_date = datetime.now()
             for row in rows:
                 output.append({
                     'ID' : row[0],
@@ -368,7 +369,9 @@ class Database:
                     'Client' : Database.GetClientById(row[5]),
                     'Deposit' : row[6],
                     'Cost' : row[7],
-                    'IsPayed' : row[8]})
+                    'IsPayed' : row[8],
+                    'Expired': datetime.strptime(row[1], "%Y-%m-%d") < current_date
+                    })
             return output
     def getStaffName():
         with sqlite3.connect('database.db') as conn:

@@ -104,7 +104,13 @@ async def service(request):
     getClients = Database.getClients()
     getInventory = Database.getInventory()
     getService = Database.getService()
-    data = {"clients": getClients, 'inventory': getInventory, 'service':getService}
+    data = {}
+    if getClients:
+        data["clients"] = getClients
+    if getInventory:
+        data['inventory'] = getInventory
+    if getService:
+        data['service'] = getService
     template = env.get_template('service.html')
     render_template = template.render(data = data)
     return response.html(render_template)
@@ -133,13 +139,29 @@ def rents_sort_key(item):
     )
 
 @app.post("/rents")
-async def addrent(request):
+async def addRent(request):
     #Очень не факт что работает, фронта нет, не тестил
-    StartDate = request.json.get('StartDate')
-    ReturnDate = request.json.get('ReturnDate')
-    StartItems = request.json.get('StartItems')
-
-    Database.addRent(Start_Date=StartDate, Return_Date=ReturnDate, )
+    try:
+        StartDate = request.json.get('StartDate')
+        ReturnDate = request.json.get('ReturnDate')
+        StartItems = request.json.get('StartItems')
+        ReturnedItems = request.json.get('ReturnedItems')
+        ClientId = request.json.get('ClientId')
+        Deposit = request.json.get('Deposit')
+        Cost = request.json.get('Cost')
+        IsPayed = request.json.get('IsPayed')
+        Database.addRent(Start_Date=StartDate, 
+                         Return_Date=ReturnDate, 
+                         StartItems=StartItems, 
+                         ReturnedItems=ReturnedItems, 
+                         Client=ClientId, 
+                         Deposit=Deposit, 
+                         Cost=Cost, 
+                         IsPayed=IsPayed)
+    except:
+        return response.text("NOT OK", status=500)
+    return response.text('Ok', status=200)
+    
 @app.get("/rents")
 async def rents(request):
     data = {}
