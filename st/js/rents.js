@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const selectedItem = itemSelect.value;
 
     if (selectedItem) {
-      const listItem = document.createElement("li");
+      const listItem = document.createElement("div");
       listItem.textContent = selectedItem;
       selectedItems.appendChild(listItem);
 
@@ -83,12 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const addItemButton = document.getElementById("addItemButton");
 
 
-    addItemButton.addEventListener("click", function () {
-        const listItem = document.createElement("li");
-        listItem.textContent = Text;
-        selectedItems.appendChild(listItem);
-      }
-    );
+    
     const data = {
       creating_date: null,
       clients: null,
@@ -110,6 +105,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (response.ok) {
             // Обработка успешной отправки данных
             console.log("Данные успешно отправлены на сервер.");
+            const serviceList = document.getElementById('service_list')
+            const listItem = document.createElement("div");
+            listItem.textContent = Text;
+            serviceList.appendChild(listItem);
         } else {
             // Обработка ошибки отправки данных
             console.error("Ошибка при отправке данных на сервер.");
@@ -136,7 +135,12 @@ document.addEventListener('DOMContentLoaded', function () {
           document.getElementById("ItemSize").textContent = data['Size'];
           document.getElementById("ItemType").textContent = data['Type'];
           ItemId = data['ID'] 
-
+          const serviceList = document.getElementById('service_list')
+          data['Services'].forEach(element => {
+            var listItem = document.createElement("div");
+            listItem.textContent = element['Task'];
+            serviceList.appendChild(listItem);
+          });
           
       })
       .catch(error => {

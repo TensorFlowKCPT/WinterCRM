@@ -130,8 +130,6 @@ async def service_create(request):
     parts = request.json.get('parts')
     cost = request.json.get('cost')
     ispayed = request.json.get('ispayed')
-    if not clients:
-        clients = ""
     if not creating_date:
         creating_date = datetime.now().date()
     
@@ -152,7 +150,11 @@ async def addRent(request):
     #Очень не факт что работает, фронта нет, не тестил
     try:
         StartDate = request.json.get('StartDate')
+        if not StartDate:
+            StartDate = datetime.now().date()
         StartTime = request.json.get('StartTime')
+        if not StartTime:
+            StartTime = datetime.now().time()
         ReturnDate = request.json.get('ReturnDate')
         ReturnTime = request.json.get('ReturnTime')
         StartItems = request.json.get('StartItems')

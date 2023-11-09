@@ -148,6 +148,7 @@ class Database:
                     Deposit TEXT NOT NULL,
                     COST INT NOT NULL,
                     IsPayed BOOLEAN NOT NULL,
+                    PaymentMethod TEXT,
                     FOREIGN KEY (ID) REFERENCES Clients (Client)
                 )
             ''')
@@ -353,10 +354,10 @@ class Database:
             if not rows:
                 return None
             client = {
-                'ID' : rows[0][0],
-                'FIO' : rows[0][1],
-                'Passport' : rows[0][2],
-                'PhoneNumber' : rows[0][3]
+                'ID' : rows[0],
+                'FIO' : rows[1],
+                'Passport' : rows[2],
+                'PhoneNumber' : rows[3]
             }
             return client
         
@@ -529,7 +530,7 @@ class Database:
                 return None
             output = []
             for row in rows:
-                client = 'Нет'
+                client = {'ID': 0, 'FIO': 'Нет', 'Passport': 'Нет', 'PhoneNumber': 'Нет'}
                 if row[2]:
                     client = Database.GetClientById(row[2])
                 if row[3]:
