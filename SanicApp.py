@@ -6,6 +6,7 @@ from Database import Database
 import xml.etree.ElementTree as ET
 from bs4 import BeautifulSoup
 from datetime import datetime
+
 app = Sanic("WinterCRM")
 env = Environment(
     loader=FileSystemLoader('temp'),  # Папка с шаблонами
@@ -27,18 +28,22 @@ async def addConsumableType(request):
     Cost = request.form.get('Cost')
     Database.addConsumableType(Name,Cost)
     return response.json({'status':'ok'})
+
 @app.post("/sell-consumable")
 async def sellConsumable(request):
     Database.sellConsumable(request.json.get('id'))
     return response.json({'response':'OK'}, status = 200)
+
 @app.post("/add-consumable")
 async def addConsumable(request):
     Database.addConsumable(request.json.get('id'), 1)
     return response.json({'response':'OK'}, status = 200)
+
 @app.post("/del-consumable")
 async def deleteConsumable(request):
     Database.delConsumable(request.json.get('id'))
     return response.json({'response':'OK'}, status = 200)
+
 @app.get("/shop")
 async def shop(request):
     consumables = Database.getConsumables()
@@ -175,6 +180,9 @@ async def rents(request):
         Rents = sorted(data, key=rents_sort_key)
         data['Rents'] = Rents
         data['lenRents'] = len(Rents)
+    Clients = Database.getClients()
+    if Clients:
+        data['Clients'] = Clients
     template = env.get_template('rents.html')
     render_template = template.render(data = data)
     return response.html(render_template)
@@ -220,7 +228,6 @@ async def save(request):
     xmlpars = ET.fromstring(html_table)
     nameEmployees = xmlpars.find(".//h1")
     idEployees = Database.getIdEployee(nameEmployees.text.strip())
-    print(nameEmployees.text.strip())
     nameMonth = xmlpars.findall(".//h2")
     monthObject = xmlpars.findall(".//table")
 

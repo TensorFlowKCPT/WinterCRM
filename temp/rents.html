@@ -389,7 +389,9 @@
                 <option value="" disabled selected hidden>
                   Выберите клиента
                 </option>
-                <option>Клиент 1</option>
+                {%for client in data['Clients']%}
+                <option value="client['ID']">{{client['FIO']}}</option>
+                {%endfor%}
               </select>
 
               <select name="paymentMethod" required class="dropdownPayment">
@@ -461,12 +463,13 @@
             </svg>
             <table class="list">
               <tbody>
-                <tr class="list_content">
-                  <td>Лыжи</td>
+                {% for item in data['Inventory'] %}
+                <tr class="list_content" id="item['ID']">
+                  <td>{{item['Name']}}</td>
+                  <td>{{item['Type']}}</td>
+                  <td>{{item['Size']}}</td>
                 </tr>
-                <tr class="list_content">
-                  <td>Коньки</td>
-                </tr>
+                {%endfor%}
               </tbody>
             </table>
           </div>
