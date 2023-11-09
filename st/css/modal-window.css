@@ -223,7 +223,7 @@
     border-collapse: none;
 }
 
-.list_content td {
+.list_content {
     align-items: center;
     padding: 12px 16px;
     background: var(--White, #FFF);
@@ -232,7 +232,7 @@
     font-weight: normal;
 }
 
-.list_content td:hover {
+.list_content:hover {
     background-color: #b8b8b8;
 }
 
