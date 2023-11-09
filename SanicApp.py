@@ -169,8 +169,7 @@ async def addRent(request):
 
 @app.get("/getInventoryData")
 async def InventoryData(request):
-    request.args.get('ID')
-    Database.getInventory
+    return response.json(Database.getInventoryById(request.args.get('ID')))
 
 @app.get("/rents")
 async def rents(request):
