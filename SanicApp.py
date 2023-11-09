@@ -149,17 +149,18 @@ def rents_sort_key(item):
 async def addRent(request):
     #Очень не факт что работает, фронта нет, не тестил
     try:
-        StartDate = request.json.get('StartDate')
+        StartDate = request.json.get('Start_Date')
         if not StartDate:
             StartDate = datetime.now().date()
-        StartTime = request.json.get('StartTime')
+        StartTime = request.json.get('Start_Time')
+        print(StartTime)
         if not StartTime:
             StartTime = datetime.now().time()
-        ReturnDate = request.json.get('ReturnDate')
-        ReturnTime = request.json.get('ReturnTime')
+        ReturnDate = request.json.get('Return_Date')
+        ReturnTime = request.json.get('Return_Time')
         StartItems = request.json.get('StartItems')
         ReturnedItems = request.json.get('ReturnedItems')
-        ClientId = request.json.get('ClientId')
+        ClientId = request.json.get('Client')
         Deposit = request.json.get('Deposit')
         Cost = request.json.get('Cost')
         IsPayed = request.json.get('IsPayed')

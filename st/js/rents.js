@@ -183,7 +183,7 @@ document.getElementById('addItemForm').addEventListener('submit', function (even
       Return_Time: document.getElementById('rentalEndTime').value,
       StartItems: idInventoryArray,
       Client: document.querySelector('.dropdownPayment').value,
-      paymentMethod: document.querySelector('.date-picker-container').value,
+      paymentMethod: document.querySelector('.dropdownPayment').value,
       Deposit: document.getElementById('deposit').value,
       IsPayed: document.getElementById('isPayed').value,
       Cost: document.querySelector('.itemsSum').value

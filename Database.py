@@ -361,9 +361,9 @@ class Database:
             }
             return client
         
-    def addRent(Start_Date, Start_Time, Return_Date, Return_Time, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:int, IsPayed:bool):
+    def addRent(Start_Date, Start_Time, Return_Date, Return_Time, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:int, IsPayed:bool, paymentMethod: str):
         with sqlite3.connect('database.db') as conn:
-            conn.execute('INSERT INTO Rents (Start_Date, Start_Time, Return_Date, Return_Time, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed) VALUES (?,?,?,?,?,?,?,?,?,?)', (Start_Date, Start_Time, Return_Date,Return_Time, StartItems, ReturnedItems, Client, Deposit, Cost, IsPayed,))
+            conn.execute('INSERT INTO Rents (Start_Date, Start_Time, Return_Date, Return_Time, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed, paymentMethod) VALUES (?,?,?,?,?,?,?,?,?,?,?)', (Start_Date, Start_Time, Return_Date,Return_Time, StartItems, ReturnedItems, Client, Deposit, Cost, IsPayed, paymentMethod))
         return
     
     def getRents():
