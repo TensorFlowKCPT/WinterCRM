@@ -161,13 +161,15 @@ async def addRent(request):
         Deposit = request.json.get('Deposit')
         Cost = request.json.get('Cost')
         IsPayed = request.json.get('IsPayed')
+        paymentMethod = request.json.get('paymentMethod')
         Database.addRent(Start_Date=StartDate,
                          Start_Time=StartTime,
                          Return_Date=ReturnDate,
                          Return_Time=ReturnTime,
                          StartItems=StartItems, 
                          ReturnedItems=ReturnedItems, 
-                         Client=ClientId, 
+                         Client=ClientId,
+                         paymentMethod=paymentMethod,
                          Deposit=Deposit, 
                          Cost=Cost, 
                          IsPayed=IsPayed)

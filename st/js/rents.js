@@ -157,3 +157,49 @@ document.querySelectorAll(".close3").forEach(function(element) {
         document.querySelector(".service-modal").style.display = "none";
     });
 });
+
+document.getElementById('addItemForm').addEventListener('submit', function (event) {
+    event.preventDefault(); // Предотвращаем стандартную отправку формы
+
+  var table = document.querySelector('.table__inventory');
+  var rows = table.querySelectorAll('tr');
+  var idInventoryArray = [];
+  rows.forEach(function (row) {
+    var idInventory = row.getAttribute('id_inventory');
+    if (idInventory !== null && idInventory !== undefined) {
+      idInventoryArray.push(idInventory);
+    }
+  });
+
+    // Получаем данные формы
+    var formData = {
+      Start_Date: document.getElementById('rentalStartDate').value,
+      Start_Time: document.getElementById('rentalStartTime').value,
+      Return_Date: document.getElementById('rentalEndDate').value,
+      Return_Time: document.getElementById('rentalEndTime').value,
+      StartItems: idInventoryArray,
+      Client: document.querySelector('.dropdownPayment').value,
+      paymentMethod: document.querySelector('.date-picker-container').value,
+      Deposit: document.getElementById('deposit').value,
+      IsPayed: document.getElementById('isPayed').value,
+      Cost: document.querySelector('.itemsSum').value
+    };
+    console.log(formData)
+    // Отправляем данные на сервер Sanic с использованием fetch
+    fetch('/rents', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Успех:', data);
+        // Обрабатываем успех, если необходимо
+      })
+      .catch((error) => {
+        console.error('Ошибка:', error);
+        // Обрабатываем ошибки, если необходимо
+      });
+  });

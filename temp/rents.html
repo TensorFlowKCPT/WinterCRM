@@ -403,7 +403,7 @@
                   Выберите клиента
                 </option>
                 {%for client in data['Clients']%}
-                <option value="client['ID']">{{client['FIO']}}</option>
+                <option value="{{ client['ID'] }}">{{client['FIO']}}</option>
                 {%endfor%}
               </select>
 
@@ -427,11 +427,11 @@
                   />
                 </div>
                 <div class="date-picker">
-                  <label for="rentalStartDate">Время начала аренды</label>
+                  <label for="rentalStartTime">Время начала аренды</label>
                   <input
                     type="time"
-                    id="rentalStartDate"
-                    name="rentalStartDate"
+                    id="rentalStartTime"
+                    name="rentalStartTime"
                     required
                   />
                 </div>
@@ -444,13 +444,36 @@
                     required
                   />
                 </div>
+                <div class="date-picker">
+                  <label for="rentalEndTime">Время окончания аренды</label>
+                  <input
+                    type="time"
+                    id="rentalEndTime"
+                    name="rentalEndTime"
+                    required
+                  />
+                </div>
+                <div class="date-picker">
+                  <label for="isPayed">Оплачено?</label>
+                  <input
+                    type="checkbox"
+                    id="isPayed"
+                    name="isPayed"
+                    required
+                  />
+                </div>
+                <div class="date-picker">
+                  <label for="deposit">Залог</label>
+                  <input
+                    type="text"
+                    id="deposit"
+                    name="deposit"
+                    required
+                  />
+                </div>
               </div>
-              <!-- Для суммы -->
-              <div class="itemsSum">Сумма</div>
-
-              <!-- Позже сделаю -->
-              <div class="checkbox_arenda"></div>
-              <!-- Поменял на создать -->
+              <input type="number" class="itemsSum" name="" id="">
+>
               <input type="submit" value="Создать" />
             </form>
           </div>
