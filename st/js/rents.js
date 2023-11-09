@@ -36,18 +36,29 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// Для двух модальных окон
+// Для первой модального окна
 document.getElementById("openModalButton").addEventListener("click", function() {
     document.querySelector(".modal-container").style.display = "flex";
-    document.querySelector(".modal.modal1").style.display = "block";
-    document.querySelector(".modal.modal2").style.display = "block";
+    document.querySelector(".modal").style.display = "block";
 });
 
 document.querySelectorAll(".close").forEach(function(element) {
     element.addEventListener("click", function() {
         document.querySelector(".modal-container").style.display = "none";
-        document.querySelector(".modal.modal1").style.display = "none";
-        document.querySelector(".modal.modal2").style.display = "none";
+        document.querySelector(".modal").style.display = "none";
+    });
+});
+
+// Для первой модального окна
+document.getElementById("addItemButton").addEventListener("click", function() {
+    document.querySelector(".modal-container-2").style.display = "flex";
+    document.querySelector(".modal2").style.display = "block";
+});
+
+document.querySelectorAll(".close").forEach(function(element) {
+    element.addEventListener("click", function() {
+        document.querySelector(".modal-container-2").style.display = "none";
+        document.querySelector(".modal2").style.display = "none";
     });
 });
 
