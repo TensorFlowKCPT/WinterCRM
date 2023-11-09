@@ -22,18 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Обработчик выбора элемента из списка
-  itemSelect.addEventListener("change", function () {
-    const selectedItem = itemSelect.value;
+  
 
-    if (selectedItem) {
-      // Добавьте информацию о товаре в информационный контейнер
-      const itemInfo = document.createElement("div");
-      itemInfo.textContent = "Информация о " + selectedItem;
-      itemInfoContainer.innerHTML = "";
-      itemInfoContainer.appendChild(itemInfo);
-    }
-  });
 });
 
 // Для первой модального окна
@@ -70,12 +60,37 @@ document.addEventListener('DOMContentLoaded', function () {
           var productName = this.cells[0].textContent;
           var productId = this.id;
 
+          // Создание новой строки в таблице с добавлением атрибута id_inventory
           var tableInventory = document.querySelector('.table__inventory');
-          var element = document.createElement('tr')
-          element.textContent = productName
-          element.setAttribute('id_inventory', productId)
-          tableInventory.appendChild(element)
+          var element = document.createElement('tr');
+          element.textContent = productName;
+          element.setAttribute('id_inventory', productId);
+          tableInventory.appendChild(element);
+
+          // Добавление обработчика события для новой строки
+          element.addEventListener('click', function() {
+              // Вызов функции отправки запроса
+              sendRequest(productId);
+          });
+      });
+  }
+
+  // Функция отправки запроса
+  function sendRequest(itemId) {
+      fetch('/getInventoryData?ID=' + itemId, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data);
+      })
+      .catch(error => {
+          console.error('Error:', error);
       });
   }
 });
+
 
