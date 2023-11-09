@@ -139,7 +139,9 @@ class Database:
                 CREATE TABLE IF NOT EXISTS Rents (
                     ID INTEGER PRIMARY KEY,
                     Start_Date DATE NOT NULL,
+                    Start_Time TIME NOT NULL,
                     Return_Date DATE,
+                    Return_Time TIME,
                     StartItemsJSON TEXT NOT NULL,
                     ReturnedItemsJSON TEXT,
                     Client INT NOT NULL,
@@ -358,10 +360,9 @@ class Database:
             }
             return client
         
-    def addRent(Start_Date:datetime, Return_Date:datetime, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:str, IsPayed:bool):
-        
+    def addRent(Start_Date, Start_Time, Return_Date, Return_Time, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:int, IsPayed:bool):
         with sqlite3.connect('database.db') as conn:
-            conn.execute('INSERT INTO Rents (Start_Date, Return_Date, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed) VALUES (?,?,?,?,?,?,?,?)', ())
+            conn.execute('INSERT INTO Rents (Start_Date, Start_Time, Return_Date, Return_Time, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed) VALUES (?,?,?,?,?,?,?,?)', (Start_Date, Start_Time, Return_Date,Return_Time, StartItems, ReturnedItems, Client, Deposit, Cost, IsPayed,))
         return
     
     def getRents():
@@ -376,17 +377,19 @@ class Database:
             for row in rows:
                 output.append({
                     'ID' : row[0],
-                    'Start_Date' : datetime.strptime(row[1], "%Y-%m-%d"),
-                    'Return_Date' : datetime.strptime(row[2], "%Y-%m-%d"),
-                    'StartItems' : json.loads(row[3]),
-                    'StartItemsCount' : len(json.loads(row[3])),
-                    'ReturnedItems' : json.loads(row[4]),
-                    'ReturnedItemsCount' : len(json.loads(row[4])),
-                    'Client' : Database.GetClientById(row[5]),
-                    'Deposit' : row[6],
-                    'Cost' : row[7],
-                    'IsPayed' : row[8],
-                    'Expired': datetime.strptime(row[1], "%Y-%m-%d") < current_date
+                    'Start_Date' : row[1],
+                    'Start_Time' : row[2],
+                    'Return_Date' : row[3],
+                    'Return_Time' : row[4],
+                    'StartItems' : json.loads(row[5]),
+                    'StartItemsCount' : len(json.loads(row[5])),
+                    'ReturnedItems' : json.loads(row[6]),
+                    'ReturnedItemsCount' : len(json.loads(row[6])),
+                    'Client' : Database.GetClientById(row[7]),
+                    'Deposit' : row[8],
+                    'Cost' : row[9],
+                    'IsPayed' : row[10],
+                    'Expired': datetime.strptime(row[3], "%Y-%m-%d") < current_date
                     })
             return output
     def getStaffName():
@@ -531,9 +534,4 @@ class Database:
                 return rows
             return None
 
-
-
-            
-
 Database.StartDataBase()
-Database.getRents()

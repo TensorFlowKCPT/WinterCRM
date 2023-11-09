@@ -147,24 +147,28 @@ async def addRent(request):
     #Очень не факт что работает, фронта нет, не тестил
     try:
         StartDate = request.json.get('StartDate')
+        StartTime = request.json.get('StartTime')
         ReturnDate = request.json.get('ReturnDate')
+        ReturnTime = request.json.get('ReturnTime')
         StartItems = request.json.get('StartItems')
         ReturnedItems = request.json.get('ReturnedItems')
         ClientId = request.json.get('ClientId')
         Deposit = request.json.get('Deposit')
         Cost = request.json.get('Cost')
         IsPayed = request.json.get('IsPayed')
-        Database.addRent(Start_Date=StartDate, 
-                         Return_Date=ReturnDate, 
+        Database.addRent(Start_Date=StartDate,
+                         Start_Time=StartTime,
+                         Return_Date=ReturnDate,
+                         Return_Time=ReturnTime,
                          StartItems=StartItems, 
                          ReturnedItems=ReturnedItems, 
                          Client=ClientId, 
                          Deposit=Deposit, 
                          Cost=Cost, 
                          IsPayed=IsPayed)
-    except:
-        return response.text("NOT OK", status=500)
-    return response.text('Ok', status=200)
+    except Exception as exception:
+        return response.json({'error':str(exception)}, status=500)
+    return response.json({'status':'Ok'}, status=200)
 
 @app.get("/getInventoryData")
 async def InventoryData(request):
@@ -187,7 +191,7 @@ async def rents(request):
     data['lenRents'] = 0
     if Rents:
         Rents = sorted(data, key=rents_sort_key)
-        data['Rents'] = Rents
+        data['Rents'] = list(filter(lambda item: item['Expired'] == False, Rents))
         data['lenRents'] = len(Rents)
     Clients = Database.getClients()
     if Clients:
