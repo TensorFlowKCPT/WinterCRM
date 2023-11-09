@@ -349,6 +349,9 @@
               </div>
               <div class="modal__list-container">
                 <div class="modal__list_left">
+                  <table class="table__inventory">
+                    
+                  </table>
                   <button class="addItemButton" id="addItemButton">
                     Добавить
                   </button>
@@ -464,7 +467,7 @@
             <table class="list">
               <tbody>
                 {% for item in data['Inventory'] %}
-                <tr class="list_content" id="item['ID']">
+                <tr class="list_content"  id="{{item['ID']}}">
                   <td>{{item['Name']}}</td>
                   <td>{{item['Type']}}</td>
                   <td>{{item['Size']}}</td>
