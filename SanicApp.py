@@ -142,7 +142,6 @@ def rents_sort_key(item):
         item['IsPayed'],  # По IsPayed
         item['Start_Date']  # По Start_Date
     )
-
 @app.post("/rents")
 async def addRent(request):
     #Очень не факт что работает, фронта нет, не тестил
@@ -169,7 +168,13 @@ async def addRent(request):
 
 @app.get("/getInventoryData")
 async def InventoryData(request):
-    return response.json(Database.getInventoryById(request.args.get('ID')))
+    inventory = Database.getInventoryById(request.args.get('ID'))
+    if not inventory:
+        return response.json(None)
+    services = Database.getServicesForInventory(request.args.get('ID'))
+    if services:
+        inventory['Services'] = services
+    return response.json(inventory)
 
 @app.get("/rents")
 async def rents(request):
