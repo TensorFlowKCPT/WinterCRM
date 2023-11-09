@@ -1,3 +1,5 @@
+// При нажатии 
+
 // Для логики при нажати кнопки
 document.addEventListener("DOMContentLoaded", function () {
   const addItemButton = document.getElementById("addItemButton");
@@ -86,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(response => response.json())
       .then(data => {
           console.log(data);
+          document.querySelector(".pole-container").style.display = "flex";
       })
       .catch(error => {
           console.error('Error:', error);
@@ -93,4 +96,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
+// Для сервиса
+document.getElementById("addServiceButton").addEventListener("click", function() {
+    document.querySelector(".service-container").style.display = "flex";
+    document.querySelector(".service-modal").style.display = "block";
+});
 
+document.querySelectorAll(".close3").forEach(function(element) {
+    element.addEventListener("click", function() {
+        document.querySelector(".service-container").style.display = "none";
+        document.querySelector(".service-modal").style.display = "none";
+    });
+});
