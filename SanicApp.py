@@ -153,7 +153,6 @@ async def addRent(request):
         if not StartDate:
             StartDate = datetime.now().date()
         StartTime = request.json.get('Start_Time')
-        print(StartTime)
         if not StartTime:
             StartTime = datetime.now().time()
         ReturnDate = request.json.get('Return_Date')
