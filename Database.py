@@ -309,7 +309,23 @@ class Database:
         with sqlite3.connect('database.db') as conn:
             conn.execute('DELETE FROM WinterInventory WHERE ID = ?', (id,))
             conn.commit()
-
+    def getInventoryById(id):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT * FROM WinterInventory WHERE NOT Sold = True AND ID = ?',(id,))
+            rows = cursor.fetchone()
+            if not rows:
+                return None
+            rows = [row for row in rows]
+            output = {}
+            cursor = conn.execute('SELECT Name FROM WinterInventoryTypes WHERE ID = ?', (rows[2],))
+            output={
+                'ID' : rows[0],
+                'Name' : rows[1],
+                'Type' : cursor.fetchone()[0],
+                'Rented' : rows[3],
+                'Size' : rows[4]
+                }
+            return output
     def getInventory():
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('SELECT * FROM WinterInventory WHERE NOT Sold = True')
@@ -480,8 +496,28 @@ class Database:
 
     def createService(creating_date: str, id_client: int, id_inventory:int, task: str, parts: int, cost: int, isPayed: bool):
         with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute("INSERT INTO Service (Creation_Date, Client_Id, Inventory_Id, Task, Parts, Cost, IsPayed) VALUES (?, ?, ?, ?, ?, ?, ?);", (creating_date, id_client, id_inventory, task, parts, cost, isPayed))\
-        
+            cursor = conn.execute("INSERT INTO Service (Creation_Date, Client_Id, Inventory_Id, Task, Parts, Cost, IsPayed) VALUES (?, ?, ?, ?, ?, ?, ?);", (creating_date, id_client, id_inventory, task, parts, cost, isPayed))
+    def getServicesForInventory(InventoryId):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT * FROM Service WHERE Inventory_Id = ?',(InventoryId,))
+            rows = cursor.fetchall()
+            if not rows:
+                return None
+            rows = [row for row in rows]
+            output = []
+            for row in rows:
+                output.append({
+                        'ID':row[0],
+                        'Creation_Date':row[1],
+                        'Client_Id':row[2],
+                        'Inventory_Id':row[3],
+                        'Task':row[4],
+                        'Parts':row[5],
+                        'Cost':row[6],
+                        'IsPayed':row[7]
+                    })
+            return output
+                 
     def getService():
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('''

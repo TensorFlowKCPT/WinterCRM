@@ -55,7 +55,7 @@ document.getElementById("addItemButton").addEventListener("click", function() {
     document.querySelector(".modal2").style.display = "block";
 });
 
-document.querySelectorAll(".close").forEach(function(element) {
+document.querySelectorAll(".close2").forEach(function(element) {
     element.addEventListener("click", function() {
         document.querySelector(".modal-container-2").style.display = "none";
         document.querySelector(".modal2").style.display = "none";
