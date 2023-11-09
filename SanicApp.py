@@ -200,7 +200,7 @@ async def rents(request):
     Rents = Database.getRents()
     data['lenRents'] = 0
     if Rents:
-        Rents = sorted(data, key=rents_sort_key)
+        #Rents = sorted(data, key=rents_sort_key)
         data['Rents'] = list(filter(lambda item: item['Expired'] == False, Rents))
         data['lenRents'] = len(Rents)
     Clients = Database.getClients()

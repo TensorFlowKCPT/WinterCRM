@@ -363,7 +363,7 @@ class Database:
         
     def addRent(Start_Date, Start_Time, Return_Date, Return_Time, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:int, IsPayed:bool, paymentMethod: str):
         with sqlite3.connect('database.db') as conn:
-            conn.execute('INSERT INTO Rents (Start_Date, Start_Time, Return_Date, Return_Time, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed, paymentMethod) VALUES (?,?,?,?,?,?,?,?,?,?,?)', (Start_Date, Start_Time, Return_Date,Return_Time, StartItems, ReturnedItems, Client, Deposit, Cost, IsPayed, paymentMethod))
+            conn.execute('INSERT INTO Rents (Start_Date, Start_Time, Return_Date, Return_Time, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed, paymentMethod) VALUES (?,?,?,?,?,?,?,?,?,?,?)', (Start_Date, Start_Time, Return_Date, Return_Time, json.dumps(StartItems), json.dumps(ReturnedItems), Client, Deposit, Cost, IsPayed, paymentMethod))
         return
     
     def getRents():
@@ -376,6 +376,11 @@ class Database:
             output = []
             current_date = datetime.now()
             for row in rows:
+                if row[6]:
+                    returnedItems = json.loads(row[6])
+                returnedItemsLen = 0
+                if returnedItems:
+                   returnedItemsLen = len(returnedItems)
                 output.append({
                     'ID' : row[0],
                     'Start_Date' : row[1],
@@ -384,8 +389,8 @@ class Database:
                     'Return_Time' : row[4],
                     'StartItems' : json.loads(row[5]),
                     'StartItemsCount' : len(json.loads(row[5])),
-                    'ReturnedItems' : json.loads(row[6]),
-                    'ReturnedItemsCount' : len(json.loads(row[6])),
+                    'ReturnedItems' : returnedItems,
+                    'ReturnedItemsCount' : returnedItemsLen,
                     'Client' : Database.GetClientById(row[7]),
                     'Deposit' : row[8],
                     'Cost' : row[9],
