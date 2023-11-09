@@ -309,7 +309,24 @@ class Database:
         with sqlite3.connect('database.db') as conn:
             conn.execute('DELETE FROM WinterInventory WHERE ID = ?', (id,))
             conn.commit()
-
+    def getInventoryById(id):
+        with sqlite3.connect('database.db') as conn:
+            cursor = conn.execute('SELECT * FROM WinterInventory WHERE NOT Sold = True WHERE ID = ?',(id,))
+            rows = cursor.fetchone()
+            if not rows:
+                return None
+            rows = [row for row in rows]
+            output = {}
+            row = rows[0]
+            cursor = conn.execute('SELECT Name FROM WinterInventoryTypes WHERE ID = ?', (row[2],))
+            output={
+                'ID' : row[0],
+                'Name' : row[1],
+                'Type' : cursor.fetchone()[0],
+                'Rented' : row[3],
+                'Size' : row[4]
+                }
+            return output
     def getInventory():
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('SELECT * FROM WinterInventory WHERE NOT Sold = True')

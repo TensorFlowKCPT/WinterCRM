@@ -166,7 +166,12 @@ async def addRent(request):
     except:
         return response.text("NOT OK", status=500)
     return response.text('Ok', status=200)
-    
+
+@app.get("/getInventoryData")
+async def InventoryData(request):
+    request.args.get('ID')
+    Database.getInventory
+
 @app.get("/rents")
 async def rents(request):
     data = {}
