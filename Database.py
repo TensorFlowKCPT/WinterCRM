@@ -156,7 +156,7 @@ class Database:
                 CREATE TABLE IF NOT EXISTS Service (
                     ID INTEGER PRIMARY KEY AUTOINCREMENT,
                     Creation_Date DATE not null,
-                    Client_Id INT not null,
+                    Client_Id INT,
                     Inventory_Id INT not null,
                     Task text not null,
                     Parts int,
@@ -523,15 +523,28 @@ class Database:
                  
     def getService():
         with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('''
-    SELECT s.ID, s.Creation_Date, c.FIO AS Client_Name, wi.Name AS Inventory_Name, s.Task, s.Parts, s.Cost, s.IsPayed
-    FROM Service AS s
-    JOIN Clients AS c ON s.Client_Id = c.ID
-    JOIN WinterInventory AS wi ON s.Inventory_Id = wi.ID
-''')
+            cursor = conn.execute('SELECT * FROM Service')
             rows = cursor.fetchall()
-            if rows:
-                return rows
-            return None
+            if not rows:
+                return None
+            output = []
+            for row in rows:
+                client = 'Нет'
+                if row[2]:
+                    client = Database.GetClientById(row[2])
+                if row[3]:
+                    inventory = Database.getInventoryById(row[3])
+                output.append({
+                        'ID':row[0],
+                        'Creation_Date':row[1],
+                        'Client': client,
+                        'Inventory': inventory,
+                        'Task':row[4],
+                        'Parts':row[5],
+                        'Cost':row[6],
+                        'IsPayed':row[7]
+                    })
+            
+            return output
 
 Database.StartDataBase()

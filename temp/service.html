@@ -19,17 +19,17 @@
 
       <tr>
         {% for service in data["service"] %}
-        <th>{{ service[1] }}</th>
-        <th>{{ service[2] }}</th>
-        <th>{{ service[3] }}</th>
-        <th>{{ service[4] }}</th>
-        <th>{{ service[5] }}</th>
-        <th>{{ service[6] }}</th>
+        <th>{{ service['Creation_Date'] }}</th>
+        <th>{{ service['Client']['FIO'] }}</th>
+        <th>{{ service['Inventory']['Name'] }}</th>
+        <th>{{ service['Task'] }}</th>
+        <th>{{ service['Parts'] }}</th>
+        <th>{{ service['Cost'] }}</th>
         <th>
           <input
             {%
             if
-            service[7]
+            service['IsPayed']
             %}checked{%
             endif
             %}

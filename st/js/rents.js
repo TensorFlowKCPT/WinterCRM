@@ -76,8 +76,51 @@ document.addEventListener('DOMContentLoaded', function () {
           });
       });
   }
+  var ItemId = null
+  document.getElementById("addServiceForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+    const Text = event.target.ToDo.value;
+    const addItemButton = document.getElementById("addItemButton");
 
+
+    addItemButton.addEventListener("click", function () {
+        const listItem = document.createElement("li");
+        listItem.textContent = Text;
+        selectedItems.appendChild(listItem);
+      }
+    );
+    const data = {
+      creating_date: null,
+      clients: null,
+      inventory: ItemId,
+      task: Text,
+      parts: 0,
+      cost: 0,
+      ispayed: false
+    }
+    // Отправьте данные на сервер с использованием Fetch API
+    fetch("/service_create", {
+      method: "POST",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            // Обработка успешной отправки данных
+            console.log("Данные успешно отправлены на сервер.");
+        } else {
+            // Обработка ошибки отправки данных
+            console.error("Ошибка при отправке данных на сервер.");
+        }
+    })
+    .catch(error => {
+        console.error("Произошла ошибка: " + error);
+    });
+    })
   // Функция отправки запроса
+
   function sendRequest(itemId) {
       fetch('/getInventoryData?ID=' + itemId, {
           method: 'GET',
@@ -89,6 +132,12 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(data => {
           console.log(data);
           document.querySelector(".pole-container").style.display = "flex";
+          document.getElementById("ItemName").textContent = data['Name'];
+          document.getElementById("ItemSize").textContent = data['Size'];
+          document.getElementById("ItemType").textContent = data['Type'];
+          ItemId = data['ID'] 
+
+          
       })
       .catch(error => {
           console.error('Error:', error);

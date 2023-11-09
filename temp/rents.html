@@ -361,9 +361,9 @@
             <!-- Второе поле -->
             <div class="pole-container" id="pole-container">
               <div class="pole-1">
-                <div class="pole__name">Название: <span>Писюн</span></div>
-                <div class="pole__size">Размер: <span>5см</span></div>
-                <div class="pole__type">Тип: <span>"Сноуборд"</span></div>
+                <div class="pole__name">Название: <span id="ItemName">Писюн</span></div>
+                <div class="pole__size">Размер: <span id="ItemSize">5см</span></div>
+                <div class="pole__type">Тип: <span id="ItemType">"Сноуборд"</span></div>
               </div>
               <div class="modal__list-container">
                 <div class="modal__list_left">
@@ -523,8 +523,8 @@
             />
           </svg>
           <div class="service__wrapper">
-            <form action="">
-              <input type="text" placeholder="Что нужно сделать?" />
+            <form id="addServiceForm" action="">
+              <input type="text" name="ToDo" id="ToDo" placeholder="Что нужно сделать?" />
               <input type="submit" value="Добавить" />
             </form>
           </div>

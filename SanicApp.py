@@ -116,6 +116,7 @@ async def service(request):
         data['inventory'] = getInventory
     if getService:
         data['service'] = getService
+    
     template = env.get_template('service.html')
     render_template = template.render(data = data)
     return response.html(render_template)
@@ -129,7 +130,11 @@ async def service_create(request):
     parts = request.json.get('parts')
     cost = request.json.get('cost')
     ispayed = request.json.get('ispayed')
-
+    if not clients:
+        clients = ""
+    if not creating_date:
+        creating_date = datetime.now().date()
+    
     Database.createService(creating_date=creating_date, id_client=clients, id_inventory=inventory, task=task, parts=parts, cost=cost, isPayed=ispayed)
     return text("норм")
 
