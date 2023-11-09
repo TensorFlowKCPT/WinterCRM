@@ -130,8 +130,6 @@ async def service_create(request):
     parts = request.json.get('parts')
     cost = request.json.get('cost')
     ispayed = request.json.get('ispayed')
-    if not clients:
-        clients = ""
     if not creating_date:
         creating_date = datetime.now().date()
     

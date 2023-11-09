@@ -83,12 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const addItemButton = document.getElementById("addItemButton");
 
 
-    addItemButton.addEventListener("click", function () {
-        const listItem = document.createElement("li");
-        listItem.textContent = Text;
-        selectedItems.appendChild(listItem);
-      }
-    );
+    
     const data = {
       creating_date: null,
       clients: null,
@@ -110,6 +105,10 @@ document.addEventListener('DOMContentLoaded', function () {
         if (response.ok) {
             // Обработка успешной отправки данных
             console.log("Данные успешно отправлены на сервер.");
+            const 
+            const listItem = document.createElement("li");
+            listItem.textContent = Text;
+            selectedItems.appendChild(listItem);
         } else {
             // Обработка ошибки отправки данных
             console.error("Ошибка при отправке данных на сервер.");
