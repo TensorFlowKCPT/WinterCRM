@@ -150,7 +150,11 @@ async def addRent(request):
     #Очень не факт что работает, фронта нет, не тестил
     try:
         StartDate = request.json.get('StartDate')
+        if not StartDate:
+            StartDate = datetime.now().date()
         StartTime = request.json.get('StartTime')
+        if not StartTime:
+            StartTime = datetime.now().time()
         ReturnDate = request.json.get('ReturnDate')
         ReturnTime = request.json.get('ReturnTime')
         StartItems = request.json.get('StartItems')
@@ -165,9 +169,9 @@ async def addRent(request):
                          Return_Time=ReturnTime,
                          StartItems=StartItems, 
                          ReturnedItems=ReturnedItems, 
-                         Client=ClientId, 
-                         Deposit=Deposit, 
-                         Cost=Cost, 
+                         Client=ClientId,
+                         Deposit=Deposit,
+                         Cost=Cost,
                          IsPayed=IsPayed)
     except Exception as exception:
         return response.json({'error':str(exception)}, status=500)

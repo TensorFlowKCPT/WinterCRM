@@ -148,6 +148,7 @@ class Database:
                     Deposit TEXT NOT NULL,
                     COST INT NOT NULL,
                     IsPayed BOOLEAN NOT NULL,
+                    PaymentMethod TEXT,
                     FOREIGN KEY (ID) REFERENCES Clients (Client)
                 )
             ''')
