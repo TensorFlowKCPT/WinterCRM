@@ -592,7 +592,8 @@ class Database:
                     'Deposit' : row[8],
                     'Cost' : row[9],
                     'IsPayed' : row[10],
-                    'Expired': return_datetime < current_date
+                    'Expired': return_datetime < current_date,
+                    'paymentMethod' : row[11]
                     })
             return output[0]
 

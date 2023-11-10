@@ -84,13 +84,36 @@ document.addEventListener('DOMContentLoaded', function () {
 
       element.textContent = productName;
       element.setAttribute('id_inventory', productId);
+      element.className = 'inventory-for-rent'
       element.dataset.info = JSON.stringify(info)
       element.appendChild(btn);
       tableInventory.appendChild(element);
       this.style.display='none'
+      document.querySelectorAll('.inventory-for-rent').forEach(function(element){
+        element.addEventListener('click', function() {
+          document.getElementById('pole-container').style.display='flex'
+          var info=JSON.parse(element.dataset.info)
+          document.getElementById('ItemName').textContent = info.Name
+          document.getElementById('ItemSize').textContent = info.Size
+          document.getElementById('ItemType').textContent = info.Type
+        });
+      });
     });
   }
 });
+var ItemId = null
+document.querySelectorAll('.inventory-for-rent').forEach(function(element){
+  element.addEventListener('click', function() {
+    document.getElementById('pole-container').style.display='flex'
+    document.getElementById('pole-1').style.display='block'
+    var info=JSON.parse(element.dataset.info)
+    document.getElementById('ItemName').textContent = info.Name
+    document.getElementById('ItemSize').textContent = info.Size
+    document.getElementById('ItemType').textContent = info.Type
+    ItemId = info.ID
+  });
+});
+
 
 function deleteRow(button) {
   // Получаем родительский элемент <tr>
@@ -100,7 +123,6 @@ function deleteRow(button) {
   row.parentNode.removeChild(row);
 }
 
-  var ItemId = null
   document.getElementById("addServiceForm").addEventListener("submit", function (event) {
     event.preventDefault();
     const Text = event.target.ToDo.value;
@@ -142,37 +164,6 @@ function deleteRow(button) {
         console.error("Произошла ошибка: " + error);
     });
     })
-  // Функция отправки запроса
-
-  function sendRequest(itemId) {
-      fetch('/getInventoryData?ID=' + itemId, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-      })
-      .then(response => response.json())
-      .then(data => {
-          console.log(data);
-          document.querySelector(".pole-container").style.display = "flex";
-          document.getElementById("ItemName").textContent = data['Name'];
-          document.getElementById("ItemSize").textContent = data['Size'];
-          document.getElementById("ItemType").textContent = data['Type'];
-          ItemId = data['ID'] 
-          const serviceList = document.getElementById('service_list')
-          data['Services'].forEach(element => {
-            var listItem = document.createElement("div");
-            listItem.textContent = element['Task'];
-            serviceList.appendChild(listItem);
-          });
-          
-      })
-      .catch(error => {
-          console.error('Error:', error);
-      });
-  }
-
-
 // Для сервиса
 document.getElementById("addServiceButton").addEventListener("click", function() {
     document.querySelector(".service-container").style.display = "flex";
@@ -224,7 +215,7 @@ document.getElementById('addItemForm').addEventListener('submit', function (even
       .then(response => response.json())
       .then(data => {
         console.log('Успех:', data);
-        // Обрабатываем успех, если необходимо
+        location.reload()
       })
       .catch((error) => {
         console.error('Ошибка:', error);
