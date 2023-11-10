@@ -59,7 +59,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   for (var i = 0; i < rows.length; i++) {
     rows[i].addEventListener('click', function () {
-      var info = JSON.parse(this.dataset.info.replace(/'/g, '"'))
+      console.log(this.dataset.info.replace(/'/g, '"').replace(/None/g, "null").replace(/False/g,"false").replace(/True/g,"true"))
+      var info = JSON.parse(this.dataset.info.replace(/'/g, '"').replace(/None/g, "null").replace(/False/g,"false").replace(/True/g,"true"))
+      console.log(info)
       var productName = info.Name;
       var productId = info.ID;
       
@@ -72,10 +74,19 @@ document.addEventListener('DOMContentLoaded', function () {
       // Добавление обработчика событий для кнопки "Удалить"
       btn.addEventListener('click', function() {
         // Удаление родительского tr
-        tableInventory.removeChild(element);
+        this.remove()
+        document.querySelectorAll('.list_content').forEach(function(element) {
+          if (parseInt(element.id) === productId) {
 
+              element.style.display='table-row'
+          }
+      });
+        document.getElementById('pole-container').style.display='none'
+        tableInventory.removeChild(element);
+        
         document.querySelectorAll('.list_content').forEach(function(element) {
             if (parseInt(element.id) === productId) {
+
                 element.style.display='table-row'
             }
         });
@@ -86,8 +97,9 @@ document.addEventListener('DOMContentLoaded', function () {
       element.setAttribute('id_inventory', productId);
       element.className = 'inventory-for-rent'
       element.dataset.info = JSON.stringify(info)
-      element.appendChild(btn);
+      btn.setAttribute('id_inventory', productId)
       tableInventory.appendChild(element);
+      tableInventory.appendChild(btn);
       this.style.display='none'
       document.querySelectorAll('.inventory-for-rent').forEach(function(element){
         element.addEventListener('click', function() {
@@ -96,11 +108,15 @@ document.addEventListener('DOMContentLoaded', function () {
           document.getElementById('ItemName').textContent = info.Name
           document.getElementById('ItemSize').textContent = info.Size
           document.getElementById('ItemType').textContent = info.Type
-          info.
+          
           const serviceList = document.getElementById('service_list')
-          const listItem = document.createElement("div");
-          listItem.textContent = Text;
-          serviceList.appendChild(listItem);
+          serviceList.innerHTML = '';
+          info.Services.forEach(function(service) {
+            var listItem = document.createElement("tr");
+            listItem.innerText = service.Task;
+            serviceList.appendChild(listItem);
+        });
+          
         });
       });
     });
@@ -145,9 +161,20 @@ function deleteRow(button) {
             // Обработка успешной отправки данных
             console.log("Данные успешно отправлены на сервер.");
             const serviceList = document.getElementById('service_list')
-            const listItem = document.createElement("div");
-            listItem.textContent = Text;
+            const listItem = document.createElement("tr");
+            listItem.innerText = Text;
             serviceList.appendChild(listItem);
+            document.querySelectorAll('.inventory-for-rent').forEach(function(element) {
+              if (parseInt(element.getAttribute('id_inventory')) === ItemId) {
+                var info = JSON.parse(element.dataset.info);
+        
+                if (!info.hasOwnProperty('Services')) {
+                    info.Services = [];
+                }
+                info.Services.push({ Task: Text });
+                element.dataset.info = JSON.stringify(info);
+            }
+            });
         } else {
             // Обработка ошибки отправки данных
             console.error("Ошибка при отправке данных на сервер.");
