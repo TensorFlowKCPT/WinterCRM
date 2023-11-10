@@ -394,7 +394,7 @@
                 </select>
               </div>
               <div class="create__service_item">
-                <label for="inventory">Инвентрарь</label>
+                <label for="inventory">Инвентарь</label>
                 <select name="inventory" id="">
                   {% for client in data['inventory'] %}
                   <option value="{{ client['ID'] }}">
@@ -403,21 +403,23 @@
                   {% endfor %}
                 </select>
               </div>
-              <div>
+              <div class="create__service_item">
                 <label for="task">Что нужно сделать?</label>
                 <input class="item" type="text" name="task" id="" />
               </div>
-              <div>
+              <div class="create__service_item">
                 <label for="parts">Запчасти</label>
                 <input class="item" type="number" name="parts" id="" />
               </div>
-              <div>
+              <div class="create__service_item">
                 <label for="cost">Сумма</label>
                 <input class="item" type="number" name="cost" id="" />
               </div>
-              <div>
+              <div class="create__service_item-2">
+                <label for="ispayed">Оплата</label>
                 <label class="switch" for="ispayed">
                   <input
+                    for="ispayed"
                     class="switch-input"
                     type="checkbox"
                     name="ispayed"
