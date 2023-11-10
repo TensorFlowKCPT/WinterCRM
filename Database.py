@@ -390,20 +390,20 @@ class Database:
                    returnedItemsLen = len(returnedItems)
                 return_datetime = datetime.strptime(f"{row[3]} {row[4]}", "%Y-%m-%d %H:%M")
                 output.append({
-                    'ID' : row[0],
-                    'Start_Date' : row[1],
-                    'Start_Time' : row[2],
-                    'Return_Date' : row[3],
-                    'Return_Time' : row[4],
-                    'StartItems' : json.loads(row[5]),
-                    'StartItemsCount' : len(json.loads(row[5])),
-                    'ReturnedItems' : returnedItems,
-                    'ReturnedItemsCount' : returnedItemsLen,
-                    'Client' : Database.GetClientById(row[7]),
-                    'Deposit' : row[8],
-                    'Cost' : row[9],
-                    'IsPayed' : row[10],
-                    'Expired': return_datetime < current_date
+                    "ID" : row[0],
+                    "Start_Date" : row[1],
+                    "Start_Time" : row[2],
+                    "Return_Date" : row[3],
+                    "Return_Time" : row[4],
+                    "StartItems" : json.loads(row[5]),
+                    "StartItemsCount" : len(json.loads(row[5])),
+                    "ReturnedItems" : returnedItems,
+                    "ReturnedItemsCount" : returnedItemsLen,
+                    "Client" : Database.GetClientById(row[7]),
+                    "Deposit" : row[8],
+                    "Cost" : row[9],
+                    "IsPayed" : row[10],
+                    "Expired": return_datetime < current_date
                     })
             return output
          

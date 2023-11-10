@@ -489,7 +489,7 @@
             <table class="list">
               <tbody>
                 {% for item in data['Inventory'] %}
-                <tr class="list_content" id="{{item['ID']}}">
+                <tr data-info="{{ item }}" class="list_content" id="{{item['ID']}}">
                   <td>{{item['Name']}}</td>
                   <td>{{item['Type']}}</td>
                   <td>{{item['Size']}}</td>
