@@ -294,7 +294,7 @@
             </tr>
             <!-- БД для заказов -->
             {% for rent in data['Rents'] %}
-            <tr data-info="{{ rent }}" data-expired="{{ rent['Expired'] }}" {% if rent['Expired'] %} style="background-color: rgb(255, 145, 145);"  {%endif%} id="{{rent['ID']}}">
+            <tr data-info="{{ rent }}" onclick=editModal() data-expired="{{ rent['Expired'] }}" {% if rent['Expired'] %} style="background-color: rgb(255, 145, 145);"  {%endif%} id="{{rent['ID']}}">
               <td class="colone">{{rent['IsPayed']}}</td>
               <td class="colone colone-items">{{rent['StartItemsCount']}}</td>
               <td class="colone colone-name">{{rent['Client']['FIO']}}</td>

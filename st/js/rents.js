@@ -266,3 +266,9 @@ document.querySelector(".rents__search-input").addEventListener("input", functio
       }
   }
 });
+
+function editModal() {
+  var modal = document.querySelector('.modal-container');
+  modal.style.display = 'flex';
+  document.querySelector(".modal").style.display = "block";
+}
