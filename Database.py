@@ -371,8 +371,11 @@ class Database:
     def addRent(Start_Date, Start_Time, Return_Date, Return_Time, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:int, IsPayed:bool, paymentMethod: str):
         itemsdump = []
         for item in StartItems:
+            
             itemsdump.append(Database.getInventoryById(item))
         with sqlite3.connect("database.db") as conn:
+            for item in StartItems:
+                conn.execute("UPDATE WinterInventory SET Rented = ? WHERE ID = ?",(True,item,))
             conn.execute("INSERT INTO Rents (Start_Date, Start_Time, Return_Date, Return_Time, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed, paymentMethod) VALUES (?,?,?,?,?,?,?,?,?,?,?)", (Start_Date, Start_Time, Return_Date, Return_Time, json.dumps(itemsdump), json.dumps(ReturnedItems), Client, Deposit, Cost, IsPayed, paymentMethod))
         return
     

@@ -188,7 +188,7 @@ async def rents(request):
     data = {}
     Inventory = Database.getInventory()
     if Inventory:
-        NotRentedInventory = list(filter(lambda item: item['Rented'] == 'false', Inventory))
+        NotRentedInventory = list(filter(lambda item: item['Rented'] == False or item['Rented'] == 'false', Inventory))
         data['Inventory'] = NotRentedInventory
     Rents = Database.getRents()
     

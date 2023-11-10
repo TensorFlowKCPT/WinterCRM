@@ -38,6 +38,9 @@ document.querySelectorAll(".close").forEach(function(element) {
     element.addEventListener("click", function() {
         document.querySelector(".modal-container").style.display = "none";
         document.querySelector(".modal").style.display = "none";
+        document.querySelector(".table__inventory").innerHTML = '';
+        document.getElementById('pole-container').style.display = "none";
+        location.reload()
     });
 });
 
@@ -247,7 +250,7 @@ document.getElementById('addItemForm').addEventListener('submit', function (even
 
     const selectedOption = select.value;
     //console.log(selectedOption)
-    const rows = document.querySelectorAll("table tr");
+    const rows = table.querySelectorAll("table tr");
 
     for (let i = 1; i < rows.length; i++) {
         const row = rows[i];

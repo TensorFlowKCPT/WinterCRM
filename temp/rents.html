@@ -487,7 +487,7 @@
               />
             </svg>
             <table class="list">
-              <tbody>
+              <tbody id="maintable">
                 {% for item in data['Inventory'] %}
                 <tr data-info="{{ item }}" class="list_content" id="{{item['ID']}}">
                   <td>{{item['Name']}}</td>
