@@ -59,9 +59,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   for (var i = 0; i < rows.length; i++) {
     rows[i].addEventListener('click', function () {
-      var productName = this.cells[0].textContent;
-      var productId = this.id;
-      console.log(JSON.parse(this.dataset.info))
+      var info = JSON.parse(this.dataset.info.replace(/'/g, '"'))
+      var productName = info.Name;
+      var productId = info.ID;
+      
       // Создание новой строки в таблице с добавлением атрибута id_inventory
       var tableInventory = document.querySelector('.table__inventory');
       var element = document.createElement('tr');
@@ -72,12 +73,21 @@ document.addEventListener('DOMContentLoaded', function () {
       btn.addEventListener('click', function() {
         // Удаление родительского tr
         tableInventory.removeChild(element);
+
+        document.querySelectorAll('.list_content').forEach(function(element) {
+            if (parseInt(element.id) === productId) {
+                element.style.display='table-row'
+            }
+        });
+          
       });
 
       element.textContent = productName;
       element.setAttribute('id_inventory', productId);
+      element.dataset.info = JSON.stringify(info)
       element.appendChild(btn);
       tableInventory.appendChild(element);
+      this.style.display='none'
     });
   }
 });
@@ -85,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function deleteRow(button) {
   // Получаем родительский элемент <tr>
   var row = button.parentNode.parentNode;
-  
+  console.log(JSON.parse(row.dataset.info).ID)
   // Удаляем строку
   row.parentNode.removeChild(row);
 }
