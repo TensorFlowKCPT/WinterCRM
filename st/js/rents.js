@@ -207,3 +207,38 @@ document.getElementById('addItemForm').addEventListener('submit', function (even
         // Обрабатываем ошибки, если необходимо
       });
   });
+  function filterRents() {
+    const select = document.getElementById("clients-filter");
+
+    const selectedOption = select.value;
+    //console.log(selectedOption)
+    const rows = document.querySelectorAll("table tr");
+
+    for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const isExpired = row.dataset.expired;
+        console.log(isExpired)
+        if ((selectedOption === "all" || selectedOption === isExpired)) {
+            row.style.display = "table-row";
+        } else {
+            row.style.display = "none";
+        }
+    }
+}
+document.querySelector(".rents__search-input").addEventListener("input", function () {
+  var searchInput = this.value.toLowerCase();
+  var rows = document.querySelectorAll("tbody tr");
+  
+  for (var i = 1; i < rows.length; i++) {  // Начинаем с 1, чтобы пропустить строку с заголовками
+      var cells = rows[i].querySelectorAll(".table-colon");
+      var match = false;
+      var dataInfo = rows[i].getAttribute("data-info").toLowerCase();
+      var match = dataInfo.includes(searchInput);
+
+      if (match) {
+          rows[i].style.display = "";
+      } else {
+          rows[i].style.display = "none";
+      }
+  }
+});

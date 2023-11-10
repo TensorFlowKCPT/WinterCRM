@@ -139,22 +139,16 @@ async def service_create(request):
 #endregion
 
 #region /rents
-def rents_sort_key(item):
-    return (
-        item['Return_Date'] or datetime(1900, 1, 1),  # Сортировка по Return_Date, "None" ставится в начало
-        item['IsPayed'],  # По IsPayed
-        item['Start_Date']  # По Start_Date
-    )
 @app.post("/rents")
 async def addRent(request):
     #Очень не факт что работает, фронта нет, не тестил
     try:
         StartDate = request.json.get('Start_Date')
         if not StartDate:
-            StartDate = datetime.now().date()
+            StartDate = datetime.now().date().strftime("%Y-%m-%d")
         StartTime = request.json.get('Start_Time')
         if not StartTime:
-            StartTime = datetime.now().time()
+            StartTime = datetime.now().time().strftime("%H:%M:%S")
         ReturnDate = request.json.get('Return_Date')
         ReturnTime = request.json.get('Return_Time')
         StartItems = request.json.get('StartItems')
@@ -197,10 +191,10 @@ async def rents(request):
         NotRentedInventory = list(filter(lambda item: item['Rented'] == 'false', Inventory))
         data['Inventory'] = NotRentedInventory
     Rents = Database.getRents()
+    
     data['lenRents'] = 0
     if Rents:
-        #Rents = sorted(data, key=rents_sort_key)
-        data['Rents'] = list(filter(lambda item: item['Expired'] == False, Rents))
+        data['Rents'] = Rents
         data['lenRents'] = len(Rents)
     Clients = Database.getClients()
     if Clients:
