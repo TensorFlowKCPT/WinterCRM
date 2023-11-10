@@ -58,24 +58,38 @@ document.addEventListener('DOMContentLoaded', function () {
   var rows = document.getElementsByClassName('list_content');
 
   for (var i = 0; i < rows.length; i++) {
-      rows[i].addEventListener('click', function () {
-          var productName = this.cells[0].textContent;
-          var productId = this.id;
+    rows[i].addEventListener('click', function () {
+      var productName = this.cells[0].textContent;
+      var productId = this.id;
 
-          // Создание новой строки в таблице с добавлением атрибута id_inventory
-          var tableInventory = document.querySelector('.table__inventory');
-          var element = document.createElement('tr');
-          element.textContent = productName;
-          element.setAttribute('id_inventory', productId);
-          tableInventory.appendChild(element);
-
-          // Добавление обработчика события для новой строки
-          element.addEventListener('click', function() {
-              // Вызов функции отправки запроса
-              sendRequest(productId);
-          });
+      // Создание новой строки в таблице с добавлением атрибута id_inventory
+      var tableInventory = document.querySelector('.table__inventory');
+      var element = document.createElement('tr');
+      var btn = document.createElement('button');
+      btn.textContent = "Удалить";
+      
+      // Добавление обработчика событий для кнопки "Удалить"
+      btn.addEventListener('click', function() {
+        // Удаление родительского tr
+        tableInventory.removeChild(element);
       });
+
+      element.textContent = productName;
+      element.setAttribute('id_inventory', productId);
+      element.appendChild(btn);
+      tableInventory.appendChild(element);
+    });
   }
+});
+
+function deleteRow(button) {
+  // Получаем родительский элемент <tr>
+  var row = button.parentNode.parentNode;
+  
+  // Удаляем строку
+  row.parentNode.removeChild(row);
+}
+
   var ItemId = null
   document.getElementById("addServiceForm").addEventListener("submit", function (event) {
     event.preventDefault();
@@ -147,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
           console.error('Error:', error);
       });
   }
-});
+
 
 // Для сервиса
 document.getElementById("addServiceButton").addEventListener("click", function() {
