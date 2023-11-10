@@ -320,6 +320,7 @@ class Database:
                 return None
             rows = [row for row in rows]
             output = {}
+            
             cursor = conn.execute('SELECT Name FROM WinterInventoryTypes WHERE ID = ?', (rows[2],))
             output={
                 'ID' : rows[0],
@@ -328,6 +329,9 @@ class Database:
                 'Rented' : rows[3],
                 'Size' : rows[4]
                 }
+            services = Database.getServicesForInventory(rows[0])
+            if services:
+                output['services'] = services
             return output
     def getInventory():
         with sqlite3.connect('database.db') as conn:
@@ -362,8 +366,11 @@ class Database:
             return client
         
     def addRent(Start_Date, Start_Time, Return_Date, Return_Time, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:int, IsPayed:bool, paymentMethod: str):
+        itemsdump = []
+        for item in StartItems:
+            itemsdump.append(Database.getInventoryById(item))
         with sqlite3.connect('database.db') as conn:
-            conn.execute('INSERT INTO Rents (Start_Date, Start_Time, Return_Date, Return_Time, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed, paymentMethod) VALUES (?,?,?,?,?,?,?,?,?,?,?)', (Start_Date, Start_Time, Return_Date, Return_Time, json.dumps(StartItems), json.dumps(ReturnedItems), Client, Deposit, Cost, IsPayed, paymentMethod))
+            conn.execute('INSERT INTO Rents (Start_Date, Start_Time, Return_Date, Return_Time, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed, paymentMethod) VALUES (?,?,?,?,?,?,?,?,?,?,?)', (Start_Date, Start_Time, Return_Date, Return_Time, json.dumps(itemsdump), json.dumps(ReturnedItems), Client, Deposit, Cost, IsPayed, paymentMethod))
         return
     
     def getRents():
@@ -381,6 +388,7 @@ class Database:
                 returnedItemsLen = 0
                 if returnedItems:
                    returnedItemsLen = len(returnedItems)
+                return_datetime = datetime.strptime(f"{row[3]} {row[4]}", "%Y-%m-%d %H:%M")
                 output.append({
                     'ID' : row[0],
                     'Start_Date' : row[1],
@@ -395,9 +403,10 @@ class Database:
                     'Deposit' : row[8],
                     'Cost' : row[9],
                     'IsPayed' : row[10],
-                    'Expired': datetime.strptime(row[3], "%Y-%m-%d") < current_date
+                    'Expired': return_datetime < current_date
                     })
             return output
+         
     def getStaffName():
         with sqlite3.connect('database.db') as conn:
             cursor = conn.execute('SELECT Name FROM Employees ')
