@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
     rows[i].addEventListener('click', function () {
       var productName = this.cells[0].textContent;
       var productId = this.id;
-
+      console.log(JSON.parse(this.dataset.info))
       // Создание новой строки в таблице с добавлением атрибута id_inventory
       var tableInventory = document.querySelector('.table__inventory');
       var element = document.createElement('tr');
