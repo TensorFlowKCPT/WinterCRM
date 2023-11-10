@@ -4,38 +4,38 @@ import json
 
 class Database:
     def StartDataBase():
-        with sqlite3.connect('database.db') as conn:
-            conn.execute('''CREATE TABLE IF NOT EXISTS Clients (
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("""CREATE TABLE IF NOT EXISTS Clients (
                         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         FIO TEXT NOT NULL,
                         Passport TEXT NOT NULL,
                         PhoneNumber TEXT NOT NULL
                      )
-                 ''')
+                 """)
             
-            conn.execute('''CREATE TABLE IF NOT EXISTS WinterInventoryTypes (
+            conn.execute("""CREATE TABLE IF NOT EXISTS WinterInventoryTypes (
                         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         Name TEXT NOT NULL
                      )
-                 ''')
+                 """)
             
             data_to_insert = [
-                ('Сноуборд',),
-                ('Ботинки',),
-                ('Лыжи',),
-                ('г/л Ботинки',),
-                ('Шлема',),
-                ('Лыжные Чехлы',),
-                ('Маски',),
-                ('Палки',)
+                ("Сноуборд",),
+                ("Ботинки",),
+                ("Лыжи",),
+                ("г/л Ботинки",),
+                ("Шлема",),
+                ("Лыжные Чехлы",),
+                ("Маски",),
+                ("Палки",)
             ]
             
             for item in data_to_insert:
-                cursor = conn.execute('SELECT ID FROM WinterInventoryTypes WHERE Name = ?', item).fetchone()
+                cursor = conn.execute("SELECT ID FROM WinterInventoryTypes WHERE Name = ?", item).fetchone()
                 if not cursor:
-                    conn.execute('INSERT OR IGNORE INTO WinterInventoryTypes (Name) VALUES (?)', item)
+                    conn.execute("INSERT OR IGNORE INTO WinterInventoryTypes (Name) VALUES (?)", item)
 
-            conn.execute('''CREATE TABLE IF NOT EXISTS WinterInventory (
+            conn.execute("""CREATE TABLE IF NOT EXISTS WinterInventory (
                         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         Name TEXT NOT NULL,
                         Type INTEGER NOT NULL,
@@ -44,48 +44,48 @@ class Database:
                         Sold BOOLEAN,
                         FOREIGN KEY (ID) REFERENCES WinterInventoryTypes (Type)
                      )
-                 ''')
-            conn.execute('''CREATE TABLE IF NOT EXISTS Consumables(
+                 """)
+            conn.execute("""CREATE TABLE IF NOT EXISTS Consumables(
                         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         Name TEXT NOT NULL,
                         Cost INTEGER NOT NULL,
                         Left INTEGER NOT NULL
             )
-            ''')
-            conn.execute('''CREATE TABLE IF NOT EXISTS Shop(
+            """)
+            conn.execute("""CREATE TABLE IF NOT EXISTS Shop(
                         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         ConsumableId INTEGER NOT NULL,
                         FOREIGN KEY (ID) REFERENCES Consumables (ConsumableId)
             )
-            ''')
-            conn.execute('''CREATE TABLE IF NOT EXISTS SoldInventory (
+            """)
+            conn.execute("""CREATE TABLE IF NOT EXISTS SoldInventory (
                         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         InventoryID INT NOT NULL,
                         Cost INT NOT NULL,
                         Comment TEXT,
                         FOREIGN KEY (ID) REFERENCES WinterInventory (InventoryID)
                      )
-                 ''')
+                 """)
             
-            conn.execute('''
+            conn.execute("""
                 CREATE TABLE IF NOT EXISTS Employees (
                     ID INTEGER PRIMARY KEY,
                     Name TEXT NOT NULL
                 )
-            ''')
+            """)
             data_to_employees = [
-                ('Александр',),
-                ('Валерий',),
-                ('Никита',),
-                ('Егор',),
-                ('Люба',)
+                ("Александр",),
+                ("Валерий",),
+                ("Никита",),
+                ("Егор",),
+                ("Люба",)
             ]
 
             for item in data_to_employees:
-                cursor = conn.execute('SELECT ID FROM Employees WHERE Name = ?', item).fetchone()
+                cursor = conn.execute("SELECT ID FROM Employees WHERE Name = ?", item).fetchone()
                 if not cursor:
-                    conn.execute('INSERT OR IGNORE INTO Employees (Name) VALUES (?)', item)
-            conn.execute('''
+                    conn.execute("INSERT OR IGNORE INTO Employees (Name) VALUES (?)", item)
+            conn.execute("""
                 CREATE TABLE IF NOT EXISTS Shop (
                     ID INTEGER PRIMARY KEY,
                     Task TEXT NOT NULL,
@@ -94,8 +94,8 @@ class Database:
                     Status BOOLEAN NOT NULL,
                     FOREIGN KEY (ID) REFERENCES Employees (Performer)
                 )
-            ''')
-            conn.execute('''
+            """)
+            conn.execute("""
                 CREATE TABLE IF NOT EXISTS Tasks (
                     ID INTEGER PRIMARY KEY,
                     Task TEXT NOT NULL,
@@ -105,26 +105,26 @@ class Database:
                     Color TEXT,
                     FOREIGN KEY (ID) REFERENCES Employees (Performer)
                 )
-            ''')
+            """)
 
-            conn.execute('''
+            conn.execute("""
                 CREATE TABLE IF NOT EXISTS Work_status (
                     ID INTEGER PRIMARY KEY,
                     Status TEXT NOT NULL
                 )
-            ''')
+            """)
             data_to_insert = [
-                ('Работает',),
-                ('Больничный',),
-                ('Отпуск',)
+                ("Работает",),
+                ("Больничный",),
+                ("Отпуск",)
             ]
 
             for item in data_to_insert:
-                cursor = conn.execute('SELECT ID FROM Work_status WHERE Status = ?', item).fetchone()
+                cursor = conn.execute("SELECT ID FROM Work_status WHERE Status = ?", item).fetchone()
                 if not cursor:
-                    conn.execute('INSERT OR IGNORE INTO Work_status (Status) VALUES (?)', item)
+                    conn.execute("INSERT OR IGNORE INTO Work_status (Status) VALUES (?)", item)
 
-            conn.execute('''
+            conn.execute("""
                 CREATE TABLE IF NOT EXISTS Employee_schedule (
                     ID INTEGER PRIMARY KEY,
                     Employee_id INTEGER NOT NULL,
@@ -133,9 +133,9 @@ class Database:
                     FOREIGN KEY (ID) REFERENCES Employees (Employee_id),
                     FOREIGN KEY (ID) REFERENCES Work_status (Status_id)
                 )
-            ''')
+            """)
 
-            conn.execute('''
+            conn.execute("""
                 CREATE TABLE IF NOT EXISTS Rents (
                     ID INTEGER PRIMARY KEY,
                     Start_Date DATE NOT NULL,
@@ -151,9 +151,9 @@ class Database:
                     PaymentMethod TEXT,
                     FOREIGN KEY (ID) REFERENCES Clients (Client)
                 )
-            ''')
+            """)
 
-            conn.execute('''
+            conn.execute("""
                 CREATE TABLE IF NOT EXISTS Service (
                     ID INTEGER PRIMARY KEY AUTOINCREMENT,
                     Creation_Date DATE not null,
@@ -166,17 +166,17 @@ class Database:
                     FOREIGN KEY (ID) REFERENCES Clients (Client_Id),
                     FOREIGN KEY (ID) REFERENCES WinterInventory (Inventory_Id)
                 )
-            ''')
+            """)
     
 
     def sellConsumable(id):
-        with sqlite3.connect('database.db') as conn:
-            conn.execute('UPDATE Consumables SET "Left" = "Left" - 1 WHERE id = ?', (id,))
-            conn.execute('INSERT INTO Shop (ConsumableId) VALUES (?)', (id,))
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("UPDATE Consumables SET 'Left' = 'Left' - 1 WHERE id = ?", (id,))
+            conn.execute("INSERT INTO Shop (ConsumableId) VALUES (?)", (id,))
 
     def getConsumableById(id):
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM Consumables WHERE id = ?')
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM Consumables WHERE id = ?")
             rows = cursor.fetchone()
             if not rows:
                 return None
@@ -184,32 +184,32 @@ class Database:
             output = {}
             row = rows[0]
             output={
-                'ID' : row[0],
-                'Name': row[1],
-                'Cost' : row[2],
-                'Left' : row[3]}
-            cursor = conn.execute('SELECT Count() FROM Shop WHERE ConsumableId = ?',(id,))
+                "ID" : row[0],
+                "Name": row[1],
+                "Cost" : row[2],
+                "Left" : row[3]}
+            cursor = conn.execute("SELECT Count() FROM Shop WHERE ConsumableId = ?",(id,))
             rows = cursor.fetchone()
             if not rows:
                 return output
             rows = [row for row in rows]
-            output['Sold'] = row[0]
+            output["Sold"] = row[0]
             return output
     def addConsumable(id, howMany):
-        with sqlite3.connect('database.db') as conn:
-            conn.execute('UPDATE Consumables SET "Left" = "Left" + ? WHERE id = ?', (howMany,id,))
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("UPDATE Consumables SET 'Left' = 'Left' + ? WHERE id = ?", (howMany,id,))
         return
     def addConsumableType(name, cost):
-        with sqlite3.connect('database.db') as conn:
-            conn.execute('INSERT INTO Consumables (Name,Cost,Left) VALUES (?,?,?)', (name, cost, 0,))
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("INSERT INTO Consumables (Name,Cost,Left) VALUES (?,?,?)", (name, cost, 0,))
         return
     def delConsumable(id):
-        with sqlite3.connect('database.db') as conn:
-            conn.execute('DELETE FROM Consumables WHERE ID = ?', (id,))
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("DELETE FROM Consumables WHERE ID = ?", (id,))
             conn.commit()
     def getConsumables():
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM Consumables')
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM Consumables")
             rows = cursor.fetchall()
             if not rows:
                 return None
@@ -217,24 +217,24 @@ class Database:
             output = []
             for row in rows:
                 output.append({
-                    'ID' : row[0],
-                    'Name': row[1],
-                    'Cost' : row[2],
-                    'Left' : row[3]})
+                    "ID" : row[0],
+                    "Name": row[1],
+                    "Cost" : row[2],
+                    "Left" : row[3]})
             
             for consumable in output:
-                cursor = conn.execute('SELECT Count() FROM Shop WHERE ConsumableId = ?',(consumable['ID'],))
+                cursor = conn.execute("SELECT Count() FROM Shop WHERE ConsumableId = ?",(consumable["ID"],))
                 rows = cursor.fetchone()
                 if not rows:
                     return output
                 rows = [row for row in rows]
-                consumable['Sold'] = rows[0]
+                consumable["Sold"] = rows[0]
             return output
 
 
     def getClientRents(id):
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM Rents WHERE Client = ?',(id,))
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM Rents WHERE Client = ?",(id,))
             rows = cursor.fetchall()
             if not rows:
                 return None
@@ -242,20 +242,20 @@ class Database:
             output = []
             for row in rows:
                 output.append({
-                    'ID' : row[0],
-                    'Start_Date' : datetime.strptime(row[1], "%Y-%m-%d"),
-                    'Return_Date' : datetime.strptime(row[2], "%Y-%m-%d"),
-                    'StartItemsJSON' : row[3],
-                    'ReturnedItemsJSON' : row[4],
-                    'Client' : Database.GetClientById(row[5]),
-                    'Deposit' : row[6],
-                    'Cost' : row[7],
-                    'IsPayed' : row[8]})
+                    "ID" : row[0],
+                    "Start_Date" : datetime.strptime(row[1], "%Y-%m-%d"),
+                    "Return_Date" : datetime.strptime(row[2], "%Y-%m-%d"),
+                    "StartItemsJSON" : row[3],
+                    "ReturnedItemsJSON" : row[4],
+                    "Client" : Database.GetClientById(row[5]),
+                    "Deposit" : row[6],
+                    "Cost" : row[7],
+                    "IsPayed" : row[8]})
             return output
 
     def getClients():
-        with sqlite3.connect('database.db') as conn:
-           cursor = conn.execute('SELECT * FROM Clients')
+        with sqlite3.connect("database.db") as conn:
+           cursor = conn.execute("SELECT * FROM Clients")
            rows = cursor.fetchall()
            if not rows:
                return None
@@ -263,105 +263,105 @@ class Database:
            output = []
            for row in rows:
                output.append({
-                   'ID' : row[0],
-                   'FIO' : row[1],
-                   'Passport' : row[2],
-                   'PhoneNumber' : row[3]})
+                   "ID" : row[0],
+                   "FIO" : row[1],
+                   "Passport" : row[2],
+                   "PhoneNumber" : row[3]})
            return output
 
     def delClientById(id):
-        with sqlite3.connect('database.db') as conn:
-            conn.execute('DELETE FROM Clients WHERE ID = ?', (id,))
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("DELETE FROM Clients WHERE ID = ?", (id,))
             conn.commit()
 
     def addClient(fio, passport, phone_number):
-        with sqlite3.connect('database.db') as conn:
+        with sqlite3.connect("database.db") as conn:
             cursor = conn.cursor()
-            cursor.execute('INSERT INTO Clients (FIO, Passport, PhoneNumber) VALUES (?,?,?)', (fio, passport, phone_number,))
+            cursor.execute("INSERT INTO Clients (FIO, Passport, PhoneNumber) VALUES (?,?,?)", (fio, passport, phone_number,))
             conn.commit()
 
             newid = cursor.lastrowid
         return newid
 
     def getInventoryTypes():
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT ID, Name FROM WinterInventoryTypes')
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT ID, Name FROM WinterInventoryTypes")
             rows = cursor.fetchall()
             output = []
             if rows:
                 rows = [row for row in rows]
                 for row in rows:
                     output.append({
-                        'ID' : row[0],
-                        'Name' : row[1]})
+                        "ID" : row[0],
+                        "Name" : row[1]})
                 return output
             return None
         
     def addInventory(name:str, type: int, rented: bool, size: int):
-        with sqlite3.connect('database.db') as conn:
-            conn.execute('INSERT INTO WinterInventory (Name, Type, Rented, Size, Sold) VALUES (?,?,?,?,?)', (name, type, rented, size, False,))
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("INSERT INTO WinterInventory (Name, Type, Rented, Size, Sold) VALUES (?,?,?,?,?)", (name, type, rented, size, False,))
             conn.commit()
 
     def sellInventory(id, Cost, Comment):
-        with sqlite3.connect('database.db') as conn:
-            conn.execute('INSERT INTO SoldInventory (InventoryID,Cost,Comment) VALUES (?,?,?)', (id, Cost, Comment,))
-            conn.execute('UPDATE WinterInventory SET Sold = True WHERE ID = ?', (id,))
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("INSERT INTO SoldInventory (InventoryID,Cost,Comment) VALUES (?,?,?)", (id, Cost, Comment,))
+            conn.execute("UPDATE WinterInventory SET Sold = True WHERE ID = ?", (id,))
             conn.commit()
 
     def delInventory(id):
-        with sqlite3.connect('database.db') as conn:
-            conn.execute('DELETE FROM WinterInventory WHERE ID = ?', (id,))
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("DELETE FROM WinterInventory WHERE ID = ?", (id,))
             conn.commit()
     def getInventoryById(id):
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM WinterInventory WHERE NOT Sold = True AND ID = ?',(id,))
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM WinterInventory WHERE NOT Sold = True AND ID = ?",(id,))
             rows = cursor.fetchone()
             if not rows:
                 return None
             rows = [row for row in rows]
             output = {}
             
-            cursor = conn.execute('SELECT Name FROM WinterInventoryTypes WHERE ID = ?', (rows[2],))
+            cursor = conn.execute("SELECT Name FROM WinterInventoryTypes WHERE ID = ?", (rows[2],))
             output={
-                'ID' : rows[0],
-                'Name' : rows[1],
-                'Type' : cursor.fetchone()[0],
-                'Rented' : rows[3],
-                'Size' : rows[4]
+                "ID" : rows[0],
+                "Name" : rows[1],
+                "Type" : cursor.fetchone()[0],
+                "Rented" : rows[3],
+                "Size" : rows[4]
                 }
             services = Database.getServicesForInventory(rows[0])
             if services:
-                output['services'] = services
+                output["services"] = services
             return output
     def getInventory():
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM WinterInventory WHERE NOT Sold = True')
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM WinterInventory WHERE NOT Sold = True")
             rows = cursor.fetchall()
             if not rows:
                 return None
             rows = [row for row in rows]
             output = []
             for row in rows:
-                cursor = conn.execute('SELECT Name FROM WinterInventoryTypes WHERE ID = ?', (row[2],))
+                cursor = conn.execute("SELECT Name FROM WinterInventoryTypes WHERE ID = ?", (row[2],))
                 output.append({
-                    'ID' : row[0],
-                    'Name' : row[1],
-                    'Type' : cursor.fetchone()[0],
-                    'Rented' : row[3],
-                    'Size' : row[4]})
+                    "ID" : row[0],
+                    "Name" : row[1],
+                    "Type" : cursor.fetchone()[0],
+                    "Rented" : row[3],
+                    "Size" : row[4]})
             return output
         
     def GetClientById(id):
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM Clients WHERE ID = ?',(id,))
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM Clients WHERE ID = ?",(id,))
             rows = cursor.fetchone()
             if not rows:
                 return None
             client = {
-                'ID' : rows[0],
-                'FIO' : rows[1],
-                'Passport' : rows[2],
-                'PhoneNumber' : rows[3]
+                "ID" : rows[0],
+                "FIO" : rows[1],
+                "Passport" : rows[2],
+                "PhoneNumber" : rows[3]
             }
             return client
         
@@ -369,13 +369,13 @@ class Database:
         itemsdump = []
         for item in StartItems:
             itemsdump.append(Database.getInventoryById(item))
-        with sqlite3.connect('database.db') as conn:
-            conn.execute('INSERT INTO Rents (Start_Date, Start_Time, Return_Date, Return_Time, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed, paymentMethod) VALUES (?,?,?,?,?,?,?,?,?,?,?)', (Start_Date, Start_Time, Return_Date, Return_Time, json.dumps(itemsdump), json.dumps(ReturnedItems), Client, Deposit, Cost, IsPayed, paymentMethod))
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("INSERT INTO Rents (Start_Date, Start_Time, Return_Date, Return_Time, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed, paymentMethod) VALUES (?,?,?,?,?,?,?,?,?,?,?)", (Start_Date, Start_Time, Return_Date, Return_Time, json.dumps(itemsdump), json.dumps(ReturnedItems), Client, Deposit, Cost, IsPayed, paymentMethod))
         return
     
     def getRents():
-         with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM Rents')
+         with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM Rents")
             rows = cursor.fetchall()
             if not rows:
                 return None
@@ -408,8 +408,8 @@ class Database:
             return output
          
     def getStaffName():
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT Name FROM Employees ')
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT Name FROM Employees ")
             rows = cursor.fetchall()
             if rows:
                 rows = [row[0] for row in rows]
@@ -417,8 +417,8 @@ class Database:
             return None
     
     def getStaffAll():
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM Employees ')
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM Employees ")
             rows = cursor.fetchall()
             if rows:
                 return rows
@@ -426,98 +426,98 @@ class Database:
     
     
     def putSchedule(idEmployee: int, date: str, idStatus: int):
-        with sqlite3.connect('database.db') as conn:
+        with sqlite3.connect("database.db") as conn:
             cursor = conn.cursor()
 
             # Проверяем, существует ли запись с заданными значениями Employee_id и Date
-            cursor.execute('SELECT Employee_id FROM Employee_schedule WHERE Employee_id = ? AND Date = ?;', (idEmployee, date))
+            cursor.execute("SELECT Employee_id FROM Employee_schedule WHERE Employee_id = ? AND Date = ?;", (idEmployee, date))
             existing_record = cursor.fetchone()
 
             if existing_record:
                 # Если запись существует, обновляем ее
-                cursor.execute('UPDATE Employee_schedule SET Status_id = ? WHERE Employee_id = ? AND Date = ?;', (idStatus, idEmployee, date))
+                cursor.execute("UPDATE Employee_schedule SET Status_id = ? WHERE Employee_id = ? AND Date = ?;", (idStatus, idEmployee, date))
             else:
                 # Если запись не существует, вставляем новую
-                cursor.execute('INSERT INTO Employee_schedule (Employee_id, Date, Status_id) VALUES (?, ?, ?);', (idEmployee, date, idStatus))
+                cursor.execute("INSERT INTO Employee_schedule (Employee_id, Date, Status_id) VALUES (?, ?, ?);", (idEmployee, date, idStatus))
 
     def getIdEployee(name: str):
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT ID FROM Employees WHERE Name = ?', (name,))
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT ID FROM Employees WHERE Name = ?", (name,))
             row = cursor.fetchone()
             if row:
                 return row[0]
             return None
         
     def getIdWorkStatus(status: str):
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT ID FROM Work_status WHERE Status = ?', (status,))
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT ID FROM Work_status WHERE Status = ?", (status,))
             row = cursor.fetchone()
             if row:
                 return row[0]
             return None
         
     def getScheduleForEmployees(id: int):
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM Employee_schedule WHERE Employee_id = ?', (id,))
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM Employee_schedule WHERE Employee_id = ?", (id,))
             rows = cursor.fetchall()
             if rows:
                 result = []
                 for row in rows:
                     schedule_id, employee_id, date, status_id = row
                     # Получите имя сотрудника и значение статуса по их id из соответствующих таблиц
-                    cursor.execute('SELECT name FROM Employees WHERE id = ?', (employee_id,))
+                    cursor.execute("SELECT name FROM Employees WHERE id = ?", (employee_id,))
                     employee_name = cursor.fetchone()[0]
-                    cursor.execute('SELECT status FROM Work_status WHERE id = ?', (status_id,))
+                    cursor.execute("SELECT status FROM Work_status WHERE id = ?", (status_id,))
                     status_value = cursor.fetchone()[0]
                     result.append((schedule_id, employee_name, date, status_value))
                 return result
             return None
         
     def getTasksAll():
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM Tasks')
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM Tasks")
             rows = cursor.fetchall()
             output = []
             if rows:
                 for row in rows:
-                    Employee = conn.execute('SELECT ID,NAME FROM Employees WHERE ID = ?',(row[2],)).fetchone()
+                    Employee = conn.execute("SELECT ID,NAME FROM Employees WHERE ID = ?",(row[2],)).fetchone()
                     output.append({
-                        'ID': row[0],
-                        'Task': row[1],
-                        'Performer' : {'ID':Employee[0],'Name':Employee[1]},
-                        'Deadline' : row[3],
-                        'Status' : row[4],
-                        'Color' : row[5]
+                        "ID": row[0],
+                        "Task": row[1],
+                        "Performer" : {"ID":Employee[0],"Name":Employee[1]},
+                        "Deadline" : row[3],
+                        "Status" : row[4],
+                        "Color" : row[5]
                     })
                 return output
             return None
     
     def getTasksForEmployees(idEmployee: int):
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM Tasks WHERE Employee_id = ?', (idEmployee,))
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM Tasks WHERE Employee_id = ?", (idEmployee,))
             rows = cursor.fetchall()
             if rows:
                 return rows
             return None
     
     def delTask(idTask: int):
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('DELETE FROM Tasks WHERE ID = ?', (idTask,))
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("DELETE FROM Tasks WHERE ID = ?", (idTask,))
 
     def createTask(task: str, idEployees: int, deadline: str, status: bool, color: str):
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('INSERT INTO Tasks (Task, Performer, Deadline, Status, Color)VALUES (?, ?, ?, ?, ?)', (task, idEployees, deadline, status, color,))
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("INSERT INTO Tasks (Task, Performer, Deadline, Status, Color)VALUES (?, ?, ?, ?, ?)", (task, idEployees, deadline, status, color,))
 
     def statusPut(idTask: int, status: bool):
-        with sqlite3.connect('database.db') as conn:
+        with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("UPDATE Tasks SET Status = ? WHERE id = ?", (status, idTask))
 
     def createService(creating_date: str, id_client: int, id_inventory:int, task: str, parts: int, cost: int, isPayed: bool):
-        with sqlite3.connect('database.db') as conn:
+        with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("INSERT INTO Service (Creation_Date, Client_Id, Inventory_Id, Task, Parts, Cost, IsPayed) VALUES (?, ?, ?, ?, ?, ?, ?);", (creating_date, id_client, id_inventory, task, parts, cost, isPayed))
     def getServicesForInventory(InventoryId):
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM Service WHERE Inventory_Id = ?',(InventoryId,))
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM Service WHERE Inventory_Id = ?",(InventoryId,))
             rows = cursor.fetchall()
             if not rows:
                 return None
@@ -525,39 +525,39 @@ class Database:
             output = []
             for row in rows:
                 output.append({
-                        'ID':row[0],
-                        'Creation_Date':row[1],
-                        'Client_Id':row[2],
-                        'Inventory_Id':row[3],
-                        'Task':row[4],
-                        'Parts':row[5],
-                        'Cost':row[6],
-                        'IsPayed':row[7]
+                        "ID":row[0],
+                        "Creation_Date":row[1],
+                        "Client_Id":row[2],
+                        "Inventory_Id":row[3],
+                        "Task":row[4],
+                        "Parts":row[5],
+                        "Cost":row[6],
+                        "IsPayed":row[7]
                     })
             return output
                  
     def getService():
-        with sqlite3.connect('database.db') as conn:
-            cursor = conn.execute('SELECT * FROM Service')
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM Service")
             rows = cursor.fetchall()
             if not rows:
                 return None
             output = []
             for row in rows:
-                client = {'ID': 0, 'FIO': 'Нет', 'Passport': 'Нет', 'PhoneNumber': 'Нет'}
+                client = {"ID": 0, "FIO": "Нет", "Passport": "Нет", "PhoneNumber": "Нет"}
                 if row[2]:
                     client = Database.GetClientById(row[2])
                 if row[3]:
                     inventory = Database.getInventoryById(row[3])
                 output.append({
-                        'ID':row[0],
-                        'Creation_Date':row[1],
-                        'Client': client,
-                        'Inventory': inventory,
-                        'Task':row[4],
-                        'Parts':row[5],
-                        'Cost':row[6],
-                        'IsPayed':row[7]
+                        "ID":row[0],
+                        "Creation_Date":row[1],
+                        "Client": client,
+                        "Inventory": inventory,
+                        "Task":row[4],
+                        "Parts":row[5],
+                        "Cost":row[6],
+                        "IsPayed":row[7]
                     })
             
             return output
