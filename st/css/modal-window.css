@@ -21,7 +21,7 @@
     position: relative;
     display: none;
     overflow-y: scroll;
-    width: 1234px;
+    width: auto;
 }
 
 .close {
@@ -155,6 +155,30 @@
     margin-bottom: 32px
 }
 
+.date-picker-container input[type="time"] {
+    text-align: center;
+    width: 232px;
+    padding: 16px;
+    border-radius: 12px;
+    border: 2px solid var(--color-light-light-3, #DFDFE6);
+    background: var(--color-light-light, #FCFCFD);
+    margin-bottom: 32px
+}
+
+.date-picker-container input[type="text"] {
+    text-align: center;
+    width: 232px;
+    padding: 16px;
+    border-radius: 12px;
+    border: 2px solid var(--color-light-light-3, #DFDFE6);
+    background: var(--color-light-light, #FCFCFD);
+    margin-bottom: 32px
+}
+.date-picker input[type="checkbox"] {
+    width: 60px;
+    align-items: center;
+    height: 55px;
+  }
 .date-picker-container label {
     color: var(--color-dark-dark-2, #87898E);
     font-size: 14px;
