@@ -1,5 +1,5 @@
 // При нажатии 
-
+var ItemId = null
 // Для логики при нажати кнопки
 document.addEventListener("DOMContentLoaded", function () {
   const addItemButton = document.getElementById("addItemButton");
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var element = document.createElement('tr');
       var btn = document.createElement('button');
       btn.textContent = "Удалить";
-      
+      ItemId = info.ID
       // Добавление обработчика событий для кнопки "Удалить"
       btn.addEventListener('click', function() {
         // Удаление родительского tr
@@ -96,22 +96,15 @@ document.addEventListener('DOMContentLoaded', function () {
           document.getElementById('ItemName').textContent = info.Name
           document.getElementById('ItemSize').textContent = info.Size
           document.getElementById('ItemType').textContent = info.Type
+          info.
+          const serviceList = document.getElementById('service_list')
+          const listItem = document.createElement("div");
+          listItem.textContent = Text;
+          serviceList.appendChild(listItem);
         });
       });
     });
   }
-});
-var ItemId = null
-document.querySelectorAll('.inventory-for-rent').forEach(function(element){
-  element.addEventListener('click', function() {
-    document.getElementById('pole-container').style.display='flex'
-    document.getElementById('pole-1').style.display='block'
-    var info=JSON.parse(element.dataset.info)
-    document.getElementById('ItemName').textContent = info.Name
-    document.getElementById('ItemSize').textContent = info.Size
-    document.getElementById('ItemType').textContent = info.Type
-    ItemId = info.ID
-  });
 });
 
 
@@ -129,7 +122,7 @@ function deleteRow(button) {
     const addItemButton = document.getElementById("addItemButton");
 
 
-    
+    console.log(ItemId)
     const data = {
       creating_date: null,
       clients: null,

@@ -322,16 +322,16 @@ class Database:
             output = {}
             
             cursor = conn.execute("SELECT Name FROM WinterInventoryTypes WHERE ID = ?", (rows[2],))
+            services = Database.getServicesForInventory(rows[0])
             output={
                 "ID" : rows[0],
                 "Name" : rows[1],
                 "Type" : cursor.fetchone()[0],
                 "Rented" : rows[3],
-                "Size" : rows[4]
+                "Size" : rows[4],
+                "Services": services if services else None
                 }
-            services = Database.getServicesForInventory(rows[0])
-            if services:
-                output["services"] = services
+           
             return output
     def getInventory():
         with sqlite3.connect("database.db") as conn:
@@ -343,12 +343,15 @@ class Database:
             output = []
             for row in rows:
                 cursor = conn.execute("SELECT Name FROM WinterInventoryTypes WHERE ID = ?", (row[2],))
+                services = Database.getServicesForInventory(row[0])
                 output.append({
                     "ID" : row[0],
                     "Name" : row[1],
                     "Type" : cursor.fetchone()[0],
                     "Rented" : row[3],
-                    "Size" : row[4]})
+                    "Size" : row[4],
+                    "Services": services if services else None})
+                services = Database.getServicesForInventory(row[0])
             return output
         
     def GetClientById(id):
@@ -404,7 +407,7 @@ class Database:
                     "Cost" : row[9],
                     "IsPayed" : row[10],
                     "Expired": return_datetime < current_date,
-                    'paymentMethod' : row[11]
+                    "paymentMethod" : row[11]
                     })
             return output
          
