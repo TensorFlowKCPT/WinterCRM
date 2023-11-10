@@ -1,6 +1,6 @@
 /* default settings */
 body {
-    background: var(--color-light-light, #FCFCFD);
+    background: #F1F1F4;
     margin: 0;
     max-width: 1920px;
     font-family: 'Inter', sans-serif;
