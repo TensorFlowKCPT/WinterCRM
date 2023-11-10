@@ -34,7 +34,9 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <button class="slide_menu-button">Статистика</button>
+              <a href="#"
+                ><button class="slide_menu-button">Статистика</button></a
+              >
             </div>
           </div>
           <div class="slide_menu__card">
@@ -54,7 +56,9 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <button class="slide_menu-button">Клиенты</button>
+              <a href="/clients"
+                ><button class="slide_menu-button">Клиенты</button></a
+              >
             </div>
           </div>
         </div>
@@ -76,7 +80,9 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <button class="slide_menu-button">Склад</button>
+              <a href="/inventory"
+                ><button class="slide_menu-button">Инвентарь</button></a
+              >
             </div>
             <div class="slide_menu__button">
               <svg
@@ -91,7 +97,9 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <button class="slide_menu-button">Магазин</button>
+              <a href="/shop"
+                ><button class="slide_menu-button">Магазин</button></a
+              >
             </div>
             <div class="slide_menu__button">
               <svg
@@ -106,14 +114,34 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <button class="slide_menu-button">Заказы</button>
+              <a href="/rents"
+                ><button class="slide_menu-button">Заказы</button></a
+              >
+            </div>
+            <div class="slide_menu__button">
+              <!-- Свг нужно под сервис -->
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+              >
+                <path
+                  d="M16.9133 6.2125L12.5383 1.8375C12.4512 1.75033 12.3478 1.68117 12.234 1.63398C12.1202 1.5868 11.9982 1.56251 11.875 1.5625H4.375C3.9606 1.5625 3.56317 1.72712 3.27015 2.02015C2.97712 2.31317 2.8125 2.7106 2.8125 3.125V16.875C2.8125 17.2894 2.97712 17.6868 3.27015 17.9799C3.56317 18.2729 3.9606 18.4375 4.375 18.4375H15.625C16.0394 18.4375 16.4368 18.2729 16.7299 17.9799C17.0229 17.6868 17.1875 17.2894 17.1875 16.875V6.875C17.1875 6.62656 17.0889 6.38827 16.9133 6.2125ZM12.5 4.45312L14.2969 6.25H12.5V4.45312ZM4.6875 16.5625V3.4375H10.625V7.1875C10.625 7.43614 10.7238 7.6746 10.8996 7.85041C11.0754 8.02623 11.3139 8.125 11.5625 8.125H15.3125V16.5625H4.6875Z"
+                  fill="#A8A8BD"
+                />
+              </svg>
+              <a href="/service"
+                ><button class="slide_menu-button">Сервис</button></a
+              >
             </div>
           </div>
         </div>
         <div class="slide_menu__inset slide_menu__inset_center">
           <div class="slide_menu__card">
             <div class="slide_menu-headling">
-              <div class="slide_menu-text">Продукция</div>
+              <div class="slide_menu-text">Сотрудники</div>
             </div>
             <div class="slide_menu__button">
               <svg
@@ -129,9 +157,11 @@
                   stroke-width="2"
                 />
               </svg>
-              <button class="slide_menu-button">
-                Губаха(я так понимаю зп?)
-              </button>
+              <a href="#"
+                ><button class="slide_menu-button">
+                  Губаха(я так понимаю зп?)
+                </button></a
+              >
             </div>
             <div class="slide_menu__button">
               <svg
@@ -146,7 +176,9 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <button class="slide_menu-button">Сотрудники</button>
+              <a href="#"
+                ><button class="slide_menu-button">Сотрудники</button></a
+              >
             </div>
             <div class="slide_menu__button">
               <svg
@@ -161,7 +193,9 @@
                   fill="#ADADC1"
                 />
               </svg>
-              <button class="slide_menu-button">Задачи</button>
+              <a href="/tasks"
+                ><button class="slide_menu-button">Задачи</button></a
+              >
             </div>
             <div class="slide_menu__button slide_menu__active">
               <svg
@@ -187,11 +221,13 @@
                   fill="#8A84E2"
                 />
               </svg>
-              <button
-                class="slide_menu-button slide_menu-calendar-but slide_menu__active-button"
+              <a href="/schedule">
+                <button
+                  class="slide_menu-button slide_menu-calendar-but slide_menu__active-button"
+                >
+                  Календарь
+                </button></a
               >
-                Календарь
-              </button>
             </div>
           </div>
         </div>
@@ -220,28 +256,41 @@
           <option value="placeholder" disabled selected hidden>
             Выберите сотрудника
           </option>
-            {% for emp in data %}
-                <option value="{{ emp }}">{{ emp }}</option>
-            {% endfor %}
+          {% for emp in data %}
+          <option value="{{ emp }}">{{ emp }}</option>
+          {% endfor %}
         </select>
         <div style="display: none" class="status">
           <input type="radio" id="option1" name="radioGroup" value="option1" />
-          <label style="background-color: rgb(207, 232, 255)" for="option1">Работает</label>
-    
+          <label style="background-color: rgb(207, 232, 255)" for="option1"
+            >Работает</label
+          >
+
           <input type="radio" id="option2" name="radioGroup" value="option2" />
-          <label style="background-color: rgb(255, 207, 207)" for="option2">Болеет</label>
-    
+          <label style="background-color: rgb(255, 207, 207)" for="option2"
+            >Болеет</label
+          >
+
           <input type="radio" id="option3" name="radioGroup" value="option3" />
-          <label style="background-color: rgb(253, 255, 174)" for="option3">Отпуск</label>
-    
+          <label style="background-color: rgb(253, 255, 174)" for="option3"
+            >Отпуск</label
+          >
+
           <button id="saveButton">Сохранить</button>
         </div>
         <div>
-          <input type="password" id="password" name="password" placeholder="Пароль" required />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Пароль"
+            required
+          />
           <br />
           <button id="passwordButton" class="buttonName">Отправить</button>
           <script src="/static/js/schedule.js"></script>
         </div>
+      </div>
     </main>
   </body>
 </html>
