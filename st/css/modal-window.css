@@ -174,11 +174,13 @@
     background: var(--color-light-light, #FCFCFD);
     margin-bottom: 32px
 }
+
 .date-picker input[type="checkbox"] {
     width: 60px;
     align-items: center;
     height: 55px;
-  }
+}
+
 .date-picker-container label {
     color: var(--color-dark-dark-2, #87898E);
     font-size: 14px;
@@ -314,4 +316,57 @@
 .close3 {
     float: right;
     cursor: pointer;
+}
+
+/* switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    display: none;
+}
+
+.switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 40px;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.switch-slider::before {
+    content: "";
+    position: absolute;
+    cursor: pointer;
+    left: 4px;
+    bottom: 4px;
+    height: 26px;
+    width: 26px;
+    background-color: #FFF;
+    border-radius: 50%;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.switch-input:focus+.switch-slider {
+    box-shadow: 0px 0px 4px rgba(97, 97, 97, 0.08);
+}
+
+.switch-input:checked+.switch-slider {
+    background-color: #3772FF;
+}
+
+.switch-input:checked+.switch-slider::before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
 }
