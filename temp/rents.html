@@ -234,110 +234,57 @@
               </svg>
               <!-- Не парься, главное чтобы выглядело адекватно, подвяжем мы сам -->
               <input
+                id="rents-searchbox"
                 class="rents__search-input"
                 type="text"
                 name="search"
                 placeholder="Поиск"
+                oninput="SearchBoxChanged()"
               />
             </div>
             <div class="rents__filter">
               <!-- Не парься, главное чтобы выглядело адекватно, подвяжем мы сами -->
-              <select class="rents-filter" id="clients-filter" onchange="filterRents()">
+              <select class="rents-filter" id="rents-filter" onchange="filterChanged()">
                 <option value="placeholder" disabled selected hidden >
                   Фильтр
                 </option>
                 <option value="all">Все</option>
-                <option value="False">Активные</option>
-                <option value="True">Возвращеные?</option>
+                <option value="false">Активные</option>
+                <option value="true">Возвращеные?</option>
               </select>
             </div>
             <div class="rents__score">
-              <!-- Вместо счет клиентов, нужно для заказов -->
-              <div class="rents-score">Всего заказов:</div>
-              <div id="rentsCount" class="rents-score">
-                {{ data['lenRents'] }}
-              </div>
+              <div class="rents-score">Заказов в списке:</div>
+              <div id="rentsCount" class="rents-score"></div>
             </div>
           </div>
           <div class="rents__right">
-            <button id="openModalButton" class="mdlbutton">
+            <button id="openCreateRentModalBtn" class="mdlbutton">
               Добавить заказ
             </button>
           </div>
         </div>
-
+        <!-- Таблица с заказами -->
         <div>
-          <table>
-            <tr class="table__header">
-              <th>Статус заказа</th>
-              <th>Предметы</th>
-              <th>Имя клиента</th>
-              <th>Время взятия</th>
-              <th>Время возврата</th>
-              <th>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M11 5H6C4.89543 5 4 5.89543 4 7V18C4 19.1046 4.89543 20 6 20H17C18.1046 20 19 19.1046 19 18V13M17.5858 3.58579C18.3668 2.80474 19.6332 2.80474 20.4142 3.58579C21.1953 4.36683 21.1953 5.63316 20.4142 6.41421L11.8284 15H9L9 12.1716L17.5858 3.58579Z"
-                    stroke="#6B7280"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </th>
-            </tr>
-            <!-- БД для заказов -->
-            {% for rent in data['Rents'] %}
-            <tr data-info="{{ rent }}" onclick=editModal() data-expired="{{ rent['Expired'] }}" {% if rent['Expired'] %} style="background-color: rgb(255, 145, 145);"  {%endif%} id="{{rent['ID']}}">
-              <td class="colone">{{rent['IsPayed']}}</td>
-              <td class="colone colone-items">{{rent['StartItemsCount']}}</td>
-              <td class="colone colone-name">{{rent['Client']['FIO']}}</td>
-              <td class="colone">{{rent['Start_Date']}},{{rent['Start_Time']}}</td>
-              <td class="colone">{{rent['Return_Date']}},{{rent['Return_Time']}}</td>
-              <td class="colone colone-edit">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M11 5H6C4.89543 5 4 5.89543 4 7V18C4 19.1046 4.89543 20 6 20H17C18.1046 20 19 19.1046 19 18V13M17.5858 3.58579C18.3668 2.80474 19.6332 2.80474 20.4142 3.58579C21.1953 4.36683 21.1953 5.63316 20.4142 6.41421L11.8284 15H9L9 12.1716L17.5858 3.58579Z"
-                    stroke="#6B7280"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </td>
-            </tr>
-            {% endfor %}
+          <table id="RentsMainTable" class="RentsMainTable">
           </table>
         </div>
       </div>
 
-      <div class="modal-container">
-        <div class="modal">
+      <div class="modal-container" id="RentMainModalContainer">
+        <div class="modal" id="RentMainModal">
           <div class="modal__wrapper">
             <div class="modal_list__wrapper">
               <div class="modal__list-header">
                 Создать аренду
                 <svg
                   class="close"
-                  id="closeModalBtn"
+                  id="closeCreateRentModalBtn"
                   xmlns="http://www.w3.org/2000/svg"
                   width="39"
                   height="39"
                   viewBox="0 0 39 39"
-                  fill="none"
-                >
+                  fill="none">
                   <path
                     d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
                     fill="#DFDFE6"
@@ -354,7 +301,7 @@
               </div>
               <div class="modal__list-container">
                 <div class="modal__list_left">
-                  <table class="table__inventory"></table>
+                  <table class="table__inventory" id="SelectedInventoryTable"></table>
                   <button class="addItemButton" id="addItemButton">
                     Добавить
                   </button>
@@ -364,11 +311,11 @@
           </div>
           <div class="modal_pay__wrapper">
             <!-- Второе поле -->
-            <div class="pole-container" id="pole-container">
+            <div class="pole-container" id="InventoryInfoContainer">
               <div class="pole-1">
-                <div class="pole__name">Название: <span id="ItemName">Писюн</span></div>
-                <div class="pole__size">Размер: <span id="ItemSize">5см</span></div>
-                <div class="pole__type">Тип: <span id="ItemType">"Сноуборд"</span></div>
+                <div class="pole__name">Название: <span id="SelectedItemName"></span></div>
+                <div class="pole__size">Размер: <span id="SelectedItemSize"></span></div>
+                <div class="pole__type">Тип: <span id="SelectedItemType"></span></div>
               </div>
               <div class="modal__list-container">
                 <div class="modal__list_left">
@@ -379,8 +326,8 @@
                 </div>
               </div>
             </div>
-            <form id="addItemForm">
-              <select class="dropdownPayment" name="clientDropdown" required>
+            <form id="AddRentForm">
+              <select class="dropdownPayment" name="clientDropdown" id="FormClientSelect" required>
                 <option value="" disabled selected hidden>
                   Выберите клиента
                 </option>
@@ -389,7 +336,7 @@
                 {%endfor%}
               </select>
 
-              <select name="paymentMethod" required class="dropdownPayment">
+              <select name="paymentMethod" required class="dropdownPayment" id="FormPaymentMethodSelect">
                 <option value="" disabled selected hidden>
                   Выберите способ оплаты
                 </option>
@@ -454,19 +401,19 @@
                   />
                 </div>
               </div>
-              <input type="number" class="itemsSum" name="" id="">
+              <input type="number" class="itemsSum" name="" id="itemsSum">
               <input type="submit" value="Создать" />
             </form>
           </div>
         </div>
       </div>
-
-      <div class="modal-container-2">
-        <div class="modal2">
+      
+      <div class="modal-container-2" id="NotRentedInventoryModalContainer">
+        <div class="modal2" id="NotRentedInventoryModal">
           <div class="modal2__wrapper">
             <svg
               class="close2"
-              id="closeModalBtn"
+              id="closeNotRentedInventoryModal"
               xmlns="http://www.w3.org/2000/svg"
               width="39"
               height="39"
@@ -486,27 +433,43 @@
                 fill="#23262F"
               />
             </svg>
-            <table class="list">
-              <tbody id="maintable">
-                {% for item in data['Inventory'] %}
-                <tr data-info="{{ item }}" class="list_content" id="{{item['ID']}}">
-                  <td>{{item['Name']}}</td>
-                  <td>{{item['Type']}}</td>
-                  <td>{{item['Size']}}</td>
-                </tr>
-                {%endfor%}
-              </tbody>
+            <div class="rents__search">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M7.19998 2.79999C6.03302 2.79999 4.91387 3.26356 4.08871 4.08872C3.26355 4.91388 2.79998 6.03304 2.79998 7.19999C2.79998 8.36694 3.26355 9.4861 4.08871 10.3113C4.91387 11.1364 6.03302 11.6 7.19998 11.6C8.36693 11.6 9.48609 11.1364 10.3112 10.3113C11.1364 9.4861 11.6 8.36694 11.6 7.19999C11.6 6.03304 11.1364 4.91388 10.3112 4.08872C9.48609 3.26356 8.36693 2.79999 7.19998 2.79999ZM1.59998 7.19999C1.60005 6.30453 1.81487 5.42214 2.2264 4.62684C2.63793 3.83155 3.23418 3.14653 3.96514 2.62927C4.69609 2.112 5.54043 1.77757 6.42733 1.65402C7.31423 1.53047 8.21783 1.62141 9.06233 1.91921C9.90682 2.21701 10.6676 2.71298 11.2808 3.36552C11.894 4.01807 12.3418 4.80815 12.5866 5.66951C12.8314 6.53086 12.8661 7.43835 12.6878 8.31588C12.5094 9.1934 12.1232 10.0154 11.5616 10.7128L14.224 13.376C14.2829 13.4309 14.3302 13.4972 14.363 13.5708C14.3958 13.6444 14.4134 13.7238 14.4148 13.8044C14.4163 13.8849 14.4015 13.965 14.3713 14.0397C14.3411 14.1144 14.2962 14.1822 14.2392 14.2392C14.1822 14.2962 14.1144 14.3411 14.0397 14.3713C13.9649 14.4015 13.8849 14.4163 13.8044 14.4149C13.7238 14.4134 13.6443 14.3958 13.5707 14.363C13.4971 14.3302 13.4309 14.2829 13.376 14.224L10.7128 11.5616C9.89001 12.2243 8.89657 12.6407 7.84718 12.7628C6.79779 12.8849 5.73527 12.7077 4.78233 12.2516C3.82939 11.7955 3.02491 11.0792 2.46179 10.1853C1.89868 9.2914 1.5999 8.25646 1.59998 7.19999Z"
+                  fill="#64748B"
+                />
+              </svg>
+              <!-- Не парься, главное чтобы выглядело адекватно, подвяжем мы сам -->
+              <input
+                id="inventory-searchbox"
+                class="rents__search-input"
+                type="text"
+                name="search"
+                placeholder="Поиск"
+                oninput="InventorySearchBoxChanged()"
+              />
+            </div>
+            <table id="NotRentedInventoryTable">
             </table>
           </div>
         </div>
       </div>
 
-      <div class="service-container">
-        <div class="service-modal">
+      <div class="service-container" id="serviceModalContainer">
+        <div class="service-modal" id="serviceModal">
           Создание поломки
           <svg
             class="close3"
-            id="closeModalBtn"
+            id="closeAddServiceModal"
             xmlns="http://www.w3.org/2000/svg"
             width="39"
             height="39"

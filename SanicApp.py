@@ -173,25 +173,42 @@ async def addRent(request):
         return response.json({'error':str(exception)}, status=500)
     return response.json({'status':'Ok'}, status=200)
 
+
 @app.get("/getInventoryData")
 async def InventoryData(request):
     inventory = Database.getInventoryById(request.args.get('ID'))
     if not inventory:
         return response.json(None)
-    services = Database.getServicesForInventory(request.args.get('ID'))
-    if services:
-        inventory['Services'] = services
     return response.json(inventory)
 
-@app.get("/rents")
-async def rents(request):
-    data = {}
+@app.get("/getNotRentedInventory")
+async def NotRentedInventory(request):
     Inventory = Database.getInventory()
     if Inventory:
         NotRentedInventory = list(filter(lambda item: item['Rented'] == False or item['Rented'] == 'false', Inventory))
-        data['Inventory'] = NotRentedInventory
+        return json(NotRentedInventory)
+    else: return response.json({},status=404)
+
+@app.get("/getrentbyid")
+async def getrentbyid(request):
+    Rents = Database.getRentById(request.args.get('ID'))
+    if Rents:
+        return response.json(Rents)
+    else:
+        return response.json({},status=404)
+
+@app.get("/getallrents")
+async def getallrents(request):
     Rents = Database.getRents()
+    if Rents:
+        return response.json(Rents)
+    else:
+        return response.json({},status=404)
     
+@app.get("/rents")
+async def rents(request):
+    data = {}
+    Rents = Database.getRents()
     data['lenRents'] = 0
     if Rents:
         data['Rents'] = Rents

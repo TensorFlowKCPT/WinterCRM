@@ -1,150 +1,345 @@
-// При нажатии 
-var ItemId = null
-// Для логики при нажати кнопки
+
+// При загрузке страницы
 document.addEventListener("DOMContentLoaded", function () {
-  const addItemButton = document.getElementById("addItemButton");
-  const itemSelect = document.getElementById("itemSelect");
-  const selectedItems = document.getElementById("selectedItems");
-  const itemInfoContainer = document.getElementById("itemInfoContainer");
+  UpdateRents()
+});
+var clients = null
+var RentsFilterOption = "all"
+//При изменении значения в фильтре
+function filterChanged(){
+  RentsFilterOption = document.getElementById("rents-filter").value
+  UpdateRents()
+}
+var RentsSearchText = ""
+//При изменении значения в поиске
+function SearchBoxChanged(){
+  RentsSearchText = document.getElementById("rents-searchbox").value
+  UpdateRents()
+}
+const RentsMainTable = document.getElementById("RentsMainTable")
 
-  // Обработчик нажатия на кнопку "Добавить"
-  addItemButton.addEventListener("click", function () {
-    const selectedItem = itemSelect.value;
-
-    if (selectedItem) {
-      const listItem = document.createElement("div");
-      listItem.textContent = selectedItem;
-      selectedItems.appendChild(listItem);
-
-      // Добавьте информацию о товаре в информационный контейнер
-      const itemInfo = document.createElement("div");
-      itemInfo.textContent = "Информация о " + selectedItem;
-      itemInfoContainer.innerHTML = "";
-      itemInfoContainer.appendChild(itemInfo);
-    }
-  });
-
+//Обновление главной таблицы
+function UpdateRents(){
   
+  fetch('/getallrents')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+      //Логика обновления данных в таблице
+      ////console.log(data)
+      //headers
+      RentsMainTable.innerHTML = ''
+      var headers = ['Оплачено', 'Предметы', 'Имя клиента', 'Время взятия', 'Время возврата'];
+      var headerRow = document.createElement('tr');
 
-});
-
-// Для первой модального окна
-document.getElementById("openModalButton").addEventListener("click", function() {
-    document.querySelector(".modal-container").style.display = "flex";
-    document.querySelector(".modal").style.display = "block";
-});
-
-document.querySelectorAll(".close").forEach(function(element) {
-    element.addEventListener("click", function() {
-        document.querySelector(".modal-container").style.display = "none";
-        document.querySelector(".modal").style.display = "none";
-        document.querySelector(".table__inventory").innerHTML = '';
-        document.getElementById('pole-container').style.display = "none";
-        location.reload()
-    });
-});
-
-// Для первой модального окна
-document.getElementById("addItemButton").addEventListener("click", function() {
-    document.querySelector(".modal-container-2").style.display = "flex";
-    document.querySelector(".modal2").style.display = "block";
-});
-
-document.querySelectorAll(".close2").forEach(function(element) {
-    element.addEventListener("click", function() {
-        document.querySelector(".modal-container-2").style.display = "none";
-        document.querySelector(".modal2").style.display = "none";
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-  var rows = document.getElementsByClassName('list_content');
-
-  for (var i = 0; i < rows.length; i++) {
-    rows[i].addEventListener('click', function () {
-      console.log(this.dataset.info.replace(/'/g, '"').replace(/None/g, "null").replace(/False/g,"false").replace(/True/g,"true"))
-      var info = JSON.parse(this.dataset.info.replace(/'/g, '"').replace(/None/g, "null").replace(/False/g,"false").replace(/True/g,"true"))
-      console.log(info)
-      var productName = info.Name;
-      var productId = info.ID;
-      
-      // Создание новой строки в таблице с добавлением атрибута id_inventory
-      var tableInventory = document.querySelector('.table__inventory');
-      var element = document.createElement('tr');
-      var btn = document.createElement('button');
-      btn.textContent = "Удалить";
-      ItemId = info.ID
-      // Добавление обработчика событий для кнопки "Удалить"
-      btn.addEventListener('click', function() {
-        // Удаление родительского tr
-        this.remove()
-        document.querySelectorAll('.list_content').forEach(function(element) {
-          if (parseInt(element.id) === productId) {
-
-              element.style.display='table-row'
-          }
+      headers.forEach(function(headerText) {
+          var th = document.createElement('th');
+          th.textContent = headerText;
+          //th.classList.add("")
+          headerRow.appendChild(th);
+          headerRow.classList.add("table__header")
       });
-        document.getElementById('pole-container').style.display='none'
-        tableInventory.removeChild(element);
+      RentsMainTable.appendChild(headerRow)
+
+      //Фильтрация по фильтру
+      data = data.filter(function(item) {
+        return item.Expired.toString().toLowerCase() === RentsFilterOption || RentsFilterOption === 'all';
+      });
+
+      //Фильтрация по Поиску
+      data = data.filter(function(item) {
+        item = JSON.stringify(item)
         
-        document.querySelectorAll('.list_content').forEach(function(element) {
-            if (parseInt(element.id) === productId) {
-
-                element.style.display='table-row'
-            }
-        });
-          
+        return item.includes(RentsSearchText) || RentsSearchText === "";
       });
 
-      element.textContent = productName;
-      element.setAttribute('id_inventory', productId);
-      element.className = 'inventory-for-rent'
-      element.dataset.info = JSON.stringify(info)
-      btn.setAttribute('id_inventory', productId)
-      tableInventory.appendChild(element);
-      tableInventory.appendChild(btn);
-      this.style.display='none'
-      document.querySelectorAll('.inventory-for-rent').forEach(function(element){
-        element.addEventListener('click', function() {
-          document.getElementById('pole-container').style.display='flex'
-          var info=JSON.parse(element.dataset.info)
-          document.getElementById('ItemName').textContent = info.Name
-          document.getElementById('ItemSize').textContent = info.Size
-          document.getElementById('ItemType').textContent = info.Type
-          
-          const serviceList = document.getElementById('service_list')
-          serviceList.innerHTML = '';
-          info.Services.forEach(function(service) {
-            var listItem = document.createElement("tr");
-            listItem.innerText = service.Task;
-            serviceList.appendChild(listItem);
-        });
-          
-        });
+      data.forEach(function(dataRow) {
+        var tr = document.createElement('tr');
+        var IsPayed = document.createElement('td');
+        IsPayed.textContent = dataRow.IsPayed
+        tr.appendChild(IsPayed);
+        var Items = document.createElement('td');
+        Items.textContent = dataRow.StartItems.length
+        tr.appendChild(Items);
+        var Client = document.createElement('td');
+        Client.textContent = dataRow.Client.FIO
+        tr.appendChild(Client);
+        var StartTime = document.createElement('td');
+        StartTime.textContent = dataRow.Start_Date+ " " + dataRow.Start_Time
+        tr.appendChild(StartTime);
+        var ReturnTime = document.createElement('td');
+        ReturnTime.textContent = dataRow.Return_Date+ " " + dataRow.Return_Time
+        tr.appendChild(ReturnTime);
+        tr.classList.add('table-row')
+        tr.onclick = function(){OpenRentInfo(dataRow.ID)}
+        Array.from(tr.children).forEach(row => row.classList.add('colone'))
+        RentsMainTable.appendChild(tr)
       });
+      document.getElementById("rentsCount").innerText = RentsMainTable.rows.length-1;
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
     });
-  }
-});
-
-
-function deleteRow(button) {
-  // Получаем родительский элемент <tr>
-  var row = button.parentNode.parentNode;
-  console.log(JSON.parse(row.dataset.info).ID)
-  // Удаляем строку
-  row.parentNode.removeChild(row);
+    
 }
 
-  document.getElementById("addServiceForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-    const Text = event.target.ToDo.value;
-    const addItemButton = document.getElementById("addItemButton");
+const RentMainModalContainer = document.getElementById("RentMainModalContainer")
+const RentMainModal = document.getElementById("RentMainModal")
+const SelectedInventoryTable = document.getElementById("SelectedInventoryTable")
+const InventoryInfoContainer = document.getElementById("InventoryInfoContainer")
+const ServiceList = document.getElementById("service_list")
+const addItemButton = document.getElementById("addItemButton")
+// Модальное окно создания аренды
+document.getElementById("openCreateRentModalBtn").addEventListener("click", function() {
+    clients = null
+    RentMainModalContainer.style.display = "flex";
+    RentMainModal.style.display = "block";
+    addItemButton.style.display = "block"
+    var headers = ['Название', 'Удалить'];
+      var headerRow = document.createElement('tr');
 
+      headers.forEach(function(headerText) {
+          var th = document.createElement('th');
+          th.textContent = headerText;
+          //th.classList.add("")
+          headerRow.appendChild(th);
+          headerRow.classList.add("table__header")
+      });
+      SelectedInventoryTable.appendChild(headerRow)
+      ServiceList.innerHTML = ""
+      var headers = ['Поломки'];
+      var headerRow = document.createElement('tr');
 
-    console.log(ItemId)
+      headers.forEach(function(headerText) {
+          var th = document.createElement('th');
+          th.textContent = headerText;
+          //th.classList.add("")
+          headerRow.appendChild(th);
+          headerRow.classList.add("table__header")
+      });
+      ServiceList.appendChild(headerRow)
+      UpdateNotRentedInventory()
+});
+
+document.getElementById("closeCreateRentModalBtn").addEventListener("click", function() {
+      RentMainModalContainer.style.display = "none";
+      RentMainModalContainer.style.display = "none";
+      InventoryInfoContainer.style.display = "none";
+      addItemButton.style.display = "none"
+      SelectedInventoryTable.innerHTML = "";
+      ServiceList.innerHTML = "";
+    });
+const NotRentedInventoryTable = document.getElementById("NotRentedInventoryTable")
+const NotRentedInventoryModalContainer = document.getElementById("NotRentedInventoryModalContainer")
+const NotRentedInventoryModal = document.getElementById("NotRentedInventoryModal")
+
+// Модальное окно добавления инвентаря в аренду
+document.getElementById("addItemButton").addEventListener("click",function(){
+  NotRentedInventoryModalContainer.style.display = "flex";
+  NotRentedInventoryModal.style.display = "block";
+});
+
+var InventorySearchText = ""
+
+//При изменении текста в поиске инвентаря
+function InventorySearchBoxChanged(){
+  InventorySearchText = document.getElementById("inventory-searchbox").value
+  UpdateNotRentedInventory()
+}
+
+function UpdateNotRentedInventory(){
+  NotRentedInventoryTable.innerHTML = "";
+  fetch('/getNotRentedInventory')
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+  })
+  .then(data => {
+    //Логика обновления данных в таблице
+    ////console.log(data)
+    //headers
+    NotRentedInventoryTable.innerHTML = ''
+    var headers = ['Название', 'Размер', 'Тип'];
+    var headerRow = document.createElement('tr');
+
+    headers.forEach(function(headerText) {
+        var th = document.createElement('th');
+        th.textContent = headerText;
+        //th.classList.add("")
+        headerRow.appendChild(th);
+        headerRow.classList.add("table__header")
+    });
+    NotRentedInventoryTable.appendChild(headerRow)
+
+    //Фильтрация по Поиску
+    data = data.filter(function(item) {
+      item = JSON.stringify(item)
+      
+      return item.includes(InventorySearchText) || InventorySearchText === "";
+    });
+
+    data.forEach(function(dataRow) {
+      var tr = document.createElement('tr');
+      var Name = document.createElement('td');
+      Name.textContent = dataRow.Name
+      tr.appendChild(Name);
+      var Size = document.createElement('td');
+      Size.textContent = dataRow.Size
+      tr.appendChild(Size);
+      var Type = document.createElement('td');
+      Type.textContent = dataRow.Type
+      tr.appendChild(Type);
+      tr.onclick = function(){AddInventoryToList(dataRow.ID), NotRentedInventoryTable.removeChild(tr)}
+      tr.classList.add('table-row')
+      Array.from(tr.children).forEach(row => row.classList.add('colone'))
+      NotRentedInventoryTable.appendChild(tr)
+    });
+    
+  })
+  .catch(error => {
+      console.error('There was a problem with the fetch operation:', error);
+  });
+}
+
+function AddInventoryToList(id){
+  fetch('/getInventoryData?ID='+id)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(dataRow => {
+      //Логика обновления данных в таблице
+      //console.log(dataRow)
+      var tr = document.createElement('tr');
+      var Name = document.createElement('td');
+      Name.textContent = dataRow.Name
+      Name.onclick = function(){ShowSelectedInventoryData(dataRow.ID)}
+      tr.appendChild(Name);
+      var Delete = document.createElement('td');
+      Delete.textContent = "Удалить"
+      Delete.onclick = function(){SelectedInventoryTable.removeChild(tr);DeleteSelectedInventory(dataRow.ID)}
+      tr.appendChild(Delete);
+      tr.dataset.id = dataRow.ID
+      tr.classList.add('table-row')
+      
+      Array.from(tr.children).forEach(row => row.classList.add('colone'))
+      SelectedInventoryTable.appendChild(tr)
+      
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+}
+
+function DeleteSelectedInventory(id){
+  fetch('/getInventoryData?ID='+id)
+  .then(response => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+  })
+  .then(dataRow => {
+    //console.log(dataRow)
+    var tr = document.createElement('tr');
+    var Name = document.createElement('td');
+    Name.textContent = dataRow.Name
+    tr.appendChild(Name);
+    var Size = document.createElement('td');
+    Size.textContent = dataRow.Size
+    tr.appendChild(Size);
+    var Type = document.createElement('td');
+    Type.textContent = dataRow.Type
+    tr.appendChild(Type);
+    tr.onclick = function(){AddInventoryToList(dataRow.ID), NotRentedInventoryTable.removeChild(tr)}
+    tr.classList.add('table-row')
+    Array.from(tr.children).forEach(row => row.classList.add('colone'))
+    NotRentedInventoryTable.appendChild(tr)
+    InventoryInfoContainer.style.display="None"
+  })
+  .catch(error => {
+      console.error('There was a problem with the fetch operation:', error);
+  });
+}
+const SelectedItemName = document.getElementById("SelectedItemName");
+const SelectedItemSize = document.getElementById("SelectedItemSize");
+const SelectedItemType = document.getElementById("SelectedItemType");
+var ItemId = 0
+function ShowSelectedInventoryData(id){
+  ItemId = id
+  ServiceList.innerHTML = ""
+  var headers = ['Поломки'];
+      var headerRow = document.createElement('tr');
+
+      headers.forEach(function(headerText) {
+          var th = document.createElement('th');
+          th.textContent = headerText;
+          //th.classList.add("")
+          headerRow.appendChild(th);
+          headerRow.classList.add("table__header")
+      });
+      ServiceList.appendChild(headerRow)
+  fetch('/getInventoryData?ID='+id)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(dataRow => {
+      ////console.log(dataRow)
+      SelectedItemName.textContent = dataRow.Name;
+      SelectedItemSize.textContent = dataRow.Size;
+      SelectedItemType.textContent = dataRow.Type;
+      
+      dataRow.Services.forEach(function(row) {
+        var tr = document.createElement('tr');
+        tr.textContent = row.Task;
+        //th.classList.add("")
+        ServiceList.appendChild(tr);
+        tr.classList.add("colon")});
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+    
+    InventoryInfoContainer.style.display="flex";
+ 
+}
+document.getElementById("closeNotRentedInventoryModal").addEventListener("click",function(){
+  NotRentedInventoryModalContainer.style.display = "none";
+  NotRentedInventoryModal.style.display = "none";
+})
+
+//Модалка для добавления сервиса
+const serviceModalContainer = document.getElementById("serviceModalContainer");
+const serviceModal = document.getElementById("serviceModal");
+
+document.getElementById("addServiceButton").addEventListener("click",function(){
+  serviceModalContainer.style.display="flex"
+  serviceModal.style.display="block"
+});
+
+document.getElementById("closeAddServiceModal").addEventListener("click",function(){
+  serviceModalContainer.style.display="none"
+  serviceModal.style.display="none"
+});
+
+document.getElementById("addServiceForm").addEventListener("submit",function(event){
+  event.preventDefault();
+  const Text = event.target.ToDo.value;
+    //console.log(ItemId)
     const data = {
       creating_date: null,
-      clients: null,
+      clients: clients,
       inventory: ItemId,
       task: Text,
       parts: 0,
@@ -163,21 +358,10 @@ function deleteRow(button) {
         if (response.ok) {
             // Обработка успешной отправки данных
             console.log("Данные успешно отправлены на сервер.");
-            const serviceList = document.getElementById('service_list')
             const listItem = document.createElement("tr");
             listItem.innerText = Text;
-            serviceList.appendChild(listItem);
-            document.querySelectorAll('.inventory-for-rent').forEach(function(element) {
-              if (parseInt(element.getAttribute('id_inventory')) === ItemId) {
-                var info = JSON.parse(element.dataset.info);
-        
-                if (!info.hasOwnProperty('Services')) {
-                    info.Services = [];
-                }
-                info.Services.push({ Task: Text });
-                element.dataset.info = JSON.stringify(info);
-            }
-            });
+            ServiceList.appendChild(listItem);
+            listItem.classList.add("colon")
         } else {
             // Обработка ошибки отправки данных
             console.error("Ошибка при отправке данных на сервер.");
@@ -186,103 +370,106 @@ function deleteRow(button) {
     .catch(error => {
         console.error("Произошла ошибка: " + error);
     });
-    })
-// Для сервиса
-document.getElementById("addServiceButton").addEventListener("click", function() {
-    document.querySelector(".service-container").style.display = "flex";
-    document.querySelector(".service-modal").style.display = "block";
+  
 });
-
-document.querySelectorAll(".close3").forEach(function(element) {
-    element.addEventListener("click", function() {
-        document.querySelector(".service-container").style.display = "none";
-        document.querySelector(".service-modal").style.display = "none";
-    });
-});
-
-document.getElementById('addItemForm').addEventListener('submit', function (event) {
-    event.preventDefault(); // Предотвращаем стандартную отправку формы
-
-  var table = document.querySelector('.table__inventory');
-  var rows = table.querySelectorAll('tr');
+const rentalStartDate = document.getElementById('rentalStartDate')
+const rentalStartTime = document.getElementById('rentalStartTime')
+const rentalEndDate = document.getElementById('rentalEndDate')
+const rentalEndTime = document.getElementById('rentalEndTime')
+const FormClientSelect = document.getElementById('FormClientSelect')
+const FormPaymentMethodSelect = document.getElementById('FormPaymentMethodSelect')
+const deposit = document.getElementById('deposit')
+const isPayed = document.getElementById('isPayed')
+const itemsSum = document.getElementById('itemsSum')
+const AddRentForm = document.getElementById("AddRentForm").addEventListener("submit", function(event){
+  event.preventDefault();
+  var rows = SelectedInventoryTable.querySelectorAll('tr');
   var idInventoryArray = [];
   rows.forEach(function (row) {
-    var idInventory = row.getAttribute('id_inventory');
+    var idInventory = row.dataset.id;
     if (idInventory !== null && idInventory !== undefined) {
       idInventoryArray.push(idInventory);
     }
   });
-
-    // Получаем данные формы
-    var formData = {
-      Start_Date: document.getElementById('rentalStartDate').value,
-      Start_Time: document.getElementById('rentalStartTime').value,
-      Return_Date: document.getElementById('rentalEndDate').value,
-      Return_Time: document.getElementById('rentalEndTime').value,
-      StartItems: idInventoryArray,
-      Client: document.querySelector('.dropdownPayment').value,
-      paymentMethod: document.querySelector('.dropdownPayment').value,
-      Deposit: document.getElementById('deposit').value,
-      IsPayed: document.getElementById('isPayed').value,
-      Cost: document.querySelector('.itemsSum').value
-    };
-    console.log(formData)
-    // Отправляем данные на сервер Sanic с использованием fetch
-    fetch('/rents', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
+  var formData = {
+    Start_Date: rentalStartDate.value,
+    Start_Time: rentalStartTime.value,
+    Return_Date: rentalEndDate.value,
+    Return_Time: rentalEndTime.value,
+    StartItems: idInventoryArray,
+    Client: FormClientSelect.value,
+    paymentMethod: FormPaymentMethodSelect.value,
+    Deposit: deposit.value,
+    IsPayed: isPayed.value,
+    Cost: itemsSum.value
+  };
+  fetch('/rents', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData)
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Успех:', data);
+      UpdateRents();
+      UpdateNotRentedInventory();
+      RentMainModalContainer.style.display = "none";
+      RentMainModalContainer.style.display = "none";
+      InventoryInfoContainer.style.display = "none";
+      SelectedInventoryTable.innerHTML = "";
+      ServiceList.innerHTML = "";
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Успех:', data);
-        location.reload()
-      })
-      .catch((error) => {
-        console.error('Ошибка:', error);
-        // Обрабатываем ошибки, если необходимо
-      });
-  });
-  function filterRents() {
-    const select = document.getElementById("clients-filter");
+    .catch((error) => {
+      console.error('Ошибка:', error);
+    });
 
-    const selectedOption = select.value;
-    //console.log(selectedOption)
-    const rows = table.querySelectorAll("table tr");
-
-    for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        const isExpired = row.dataset.expired;
-        console.log(isExpired)
-        if ((selectedOption === "all" || selectedOption === isExpired)) {
-            row.style.display = "table-row";
-        } else {
-            row.style.display = "none";
-        }
-    }
-}
-document.querySelector(".rents__search-input").addEventListener("input", function () {
-  var searchInput = this.value.toLowerCase();
-  var rows = document.querySelectorAll("tbody tr");
-  
-  for (var i = 1; i < rows.length; i++) {  // Начинаем с 1, чтобы пропустить строку с заголовками
-      var cells = rows[i].querySelectorAll(".table-colon");
-      var match = false;
-      var dataInfo = rows[i].getAttribute("data-info").toLowerCase();
-      var match = dataInfo.includes(searchInput);
-
-      if (match) {
-          rows[i].style.display = "";
-      } else {
-          rows[i].style.display = "none";
-      }
-  }
 });
 
-function editModal() {
-  var modal = document.querySelector('.modal-container');
-  modal.style.display = 'flex';
-  document.querySelector(".modal").style.display = "block";
+function OpenRentInfo(id){
+  RentMainModalContainer.style.display = "flex";
+  RentMainModal.style.display = "block";
+  FormClientSelect.disabled = true
+  rentalStartDate.disabled = true
+  rentalStartTime.disabled = true
+  deposit.disabled = true
+  var headers = ['Предметы'];
+      var headerRow = document.createElement('tr');
+
+      headers.forEach(function(headerText) {
+          var th = document.createElement('th');
+          th.textContent = headerText;
+          //th.classList.add("")
+          headerRow.appendChild(th);
+          headerRow.classList.add("table__header")
+      });
+      SelectedInventoryTable.appendChild(headerRow)
+      ServiceList.innerHTML = ""
+      var headers = ['Поломки'];
+      var headerRow = document.createElement('tr');
+
+      headers.forEach(function(headerText) {
+          var th = document.createElement('th');
+          th.textContent = headerText;
+          //th.classList.add("")
+          headerRow.appendChild(th);
+          headerRow.classList.add("table__header")
+      });
+      ServiceList.appendChild(headerRow)
+  fetch('/getrentbyid?ID='+id)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+      console.log(data)
+      clients = data.Client.ID
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
 }
+
