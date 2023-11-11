@@ -404,14 +404,12 @@
     </div>
     <div class="modal-overlay-sell" id="ModalSell">
       <div class="modal-content-sell">
-        <form id="SellForm" action="/sell_inventory" method="post">
           <label for="cost">Цена</label>
           <input type="text" name="cost" id="cost" />
           <input type="text" style="display: none" name="idinventory" id="idinventory" />
           <label for="comment">Комментарий</label>
           <input type="text" name="comment" id="comment" />
-          <input type="submit" name="submit" id="submit" />
-        </form>
+          <input type="submit" name="submit" id="submit" onclick="Sell()"/>
       </div>
     </div>
 

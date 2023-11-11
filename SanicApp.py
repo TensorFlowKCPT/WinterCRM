@@ -557,9 +557,10 @@ async def clients(request):
 #region /inventory
 @app.post('/sell_inventory')
 async def sellInventory(request):
-   Cost = request.form.get('cost')
-   Comment = request.form.get('comment')
-   id = request.form.get('idinventory')
+   Cost = request.json.get('cost')
+   Comment = request.json.get('comment')
+   id = request.json.get('idinventory')
+   print(Cost, Comment, id)
    Database.sellInventory(id,Cost,Comment)
    return response.json({'status':'ok'}, status=200)
 
