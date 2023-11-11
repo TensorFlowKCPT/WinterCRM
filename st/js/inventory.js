@@ -80,7 +80,7 @@ function filterInventory() {
         const row = rows[i];
         var RowName = row.children[0].textContent;
         var rowType = row.children[1].textContent;
-        var RowRented = row.children[2].textContent;
+        var RowRented = row.children[2].children[0].textContent;
         if (RowRented === 'true'){
             RowRented = '1'
         }

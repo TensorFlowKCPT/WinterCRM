@@ -339,7 +339,7 @@
             <td>{{item['Type']}}</td>
             <td>
               <span style="display: none">{{item['Rented']}}</span>
-              <input type="checkbox" {% if item['Rented'] == "1" or
+              <input type="checkbox" disabled="true" {% if item['Rented'] == 1 or
               item['Rented'] == "true" %} checked="true" {%endif%} />
             </td>
             <td>{{item['Size']}}</td>
