@@ -60,9 +60,13 @@ function UpdateRents(){
 
       data.forEach(function(dataRow) {
         var tr = document.createElement('tr');
-        var IsPayed = document.createElement('td');
-        IsPayed.textContent = dataRow.IsPayed
-        tr.appendChild(IsPayed);
+        var Payed = document.createElement('td');
+        var checkbox = document.createElement('input')
+        checkbox.type = "checkbox"
+        checkbox.checked = dataRow.IsPayed
+        checkbox.disabled = true
+        Payed.appendChild(checkbox)
+        tr.appendChild(Payed);
         var Items = document.createElement('td');
         Items.textContent = dataRow.StartItems.length
         tr.appendChild(Items);
@@ -143,7 +147,7 @@ document.getElementById("closeCreateRentModalBtn").addEventListener("click", fun
       rentalEndDate.value = null
       rentalEndTime.value = null
       itemsSum.value = null
-      isPayed.value = null // Не работает, фронтам надо фиксить
+      isPayed.checked = false // Не работает, фронтам надо фиксить
       deposit.value = null
       FormClientSelect.disabled = false
       rentalStartDate.disabled = false
@@ -453,7 +457,7 @@ const AddRentForm = document.getElementById("AddRentForm").addEventListener("sub
     Client: FormClientSelect.value,
     paymentMethod: FormPaymentMethodSelect.value,
     Deposit: deposit.value,
-    IsPayed: isPayed.value === 'on',
+    IsPayed: isPayed.checked,
     Cost: itemsSum.value
   };
   fetch('/rents', {
@@ -495,7 +499,7 @@ document.getElementById('SaveRentBtn').addEventListener('click',function(){
     ReturnedItems: idInventoryArray,
     paymentMethod: FormPaymentMethodSelect.value,
     Deposit: deposit.value,
-    IsPayed: isPayed.value === 'on',
+    IsPayed: isPayed.checked,
     Cost: itemsSum.value
   };
   fetch('/updaterent', {
@@ -579,7 +583,6 @@ function OpenRentInfo(id){
         tr.dataset.id = item.ID
         tr.appendChild(Name)
         SelectedInventoryTable.appendChild(tr);
-        
         SelectedInventoryTable.classList.add("colon");});
         FormClientSelect.value = data.Client.ID
         FormPaymentMethodSelect.value = data.paymentMethod
@@ -587,7 +590,7 @@ function OpenRentInfo(id){
         rentalStartTime.value = data.Start_Time
         rentalEndDate.value = data.Return_Date
         rentalEndTime.value = data.Return_Time
-        isPayed.value = data.isPayed // Не работает, фронтам надо фиксить
+        isPayed.checked = (data.IsPayed === 1 || data.IsPayed)
         deposit.value = data.Deposit
         itemsSum.value = data.Cost
 

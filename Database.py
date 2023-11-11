@@ -420,6 +420,7 @@ class Database:
                     "Expired": return_datetime < current_date,
                     "paymentMethod" : row[11]
                     })
+                
             return output
 
     def getRents():
@@ -455,8 +456,13 @@ class Database:
                     "Expired": return_datetime < current_date,
                     "paymentMethod" : row[11]
                     })
+                if output[-1]["Expired"]:
+                    for item in output[-1]['StartItems']:
+                        Database.UnrentInventory(item["ID"])
             return output
-         
+    def UnrentInventory(id):
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("UPDATE WinterInventory SET Rented = ? WHERE id = ?",(False,id,))
     def getStaffName():
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT Name FROM Employees ")
