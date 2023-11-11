@@ -54,3 +54,30 @@ document.addEventListener('DOMContentLoaded', function () {
       modal.style.display = 'none';
     };
   });
+  
+function UpdatePaymentStatus(id){
+    var data = {
+        ID:id,
+        IsPayed:document.getElementById(id).children[6].children[0].checked
+    }
+    fetch("/update_service_payment", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (response.ok) {
+            // Обработка успешной отправки данных
+            console.log("Данные успешно отправлены на сервер.");
+        } else {
+            // Обработка ошибки отправки данных
+            console.error("Ошибка при отправке данных на сервер.");
+        }
+    })
+    .catch(error => {
+        console.error("Произошла ошибка: " + error);
+    });
+    
+}

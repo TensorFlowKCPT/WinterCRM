@@ -336,7 +336,7 @@
 
             <tbody class="table__content">
               {% for service in data["service"] %}
-              <tr>
+              <tr id="{{service["ID"]}}">
                 
                 <th>{{ service['Creation_Date'] }}</th>
                 <th class="content-1">{{ service['Client']['FIO'] }}</th>
@@ -346,7 +346,7 @@
                 <th>{{ service['Cost'] }}</th>
                 <th>
                   <input {% if service['IsPayed'] %}checked{% endif %}
-                  type="checkbox" name="" id="" />
+                  type="checkbox" name="" id="" onchange="UpdatePaymentStatus({{service["ID"]}})"/>
                 </th>
                 
               </tr>
