@@ -204,7 +204,27 @@ async def getallrents(request):
         return response.json(Rents)
     else:
         return response.json({},status=404)
-    
+@app.post("/updaterent")
+async def updaterent(request):
+    #Очень не факт что работает, фронта нет, не тестил
+    try:
+        id = request.json.get('ID')
+        ReturnDate = request.json.get('Return_Date')
+        ReturnTime = request.json.get('Return_Time')
+        ReturnedItems = request.json.get('ReturnedItems')
+        Cost = request.json.get('Cost')
+        IsPayed = request.json.get('IsPayed')
+        paymentMethod = request.json.get('paymentMethod')
+        Database.updateRent(id = id,
+                         Return_Date=ReturnDate,
+                         Return_Time=ReturnTime,
+                         ReturnedItems=ReturnedItems,
+                         paymentMethod=paymentMethod,
+                         Cost=Cost, 
+                         IsPayed=IsPayed)
+    except Exception as exception:
+        return response.json({'error':str(exception)}, status=500)
+    return response.json({'status':'Ok'}, status=200)
 @app.get("/rents")
 async def rents(request):
     data = {}
@@ -560,7 +580,6 @@ async def sellInventory(request):
    Cost = request.json.get('cost')
    Comment = request.json.get('comment')
    id = request.json.get('idinventory')
-   print(Cost, Comment, id)
    Database.sellInventory(id,Cost,Comment)
    return response.json({'status':'ok'}, status=200)
 

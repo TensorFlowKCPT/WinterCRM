@@ -367,11 +367,19 @@ class Database:
                 "PhoneNumber" : rows[3]
             }
             return client
+    def updateRent(id,Return_Date,Return_Time,ReturnedItems,paymentMethod,Cost,IsPayed):
+        itemsdump = []
+        for item in ReturnedItems:
+            itemsdump.append(Database.getInventoryById(item))
+        with sqlite3.connect("database.db") as conn:
+            for item in ReturnedItems:
+                conn.execute("UPDATE WinterInventory SET Rented = ? WHERE ID = ?",(True,item,))
+            conn.execute("UPDATE Rents SET Return_Date = ?, Return_Time = ?, ReturnedItemsJSON = ?, Cost = ?, IsPayed = ?, paymentMethod = ? WHERE ID = ?", (Return_Date, Return_Time, json.dumps(itemsdump), Cost, IsPayed, paymentMethod, id))
         
+            
     def addRent(Start_Date, Start_Time, Return_Date, Return_Time, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:int, IsPayed:bool, paymentMethod: str):
         itemsdump = []
         for item in StartItems:
-            
             itemsdump.append(Database.getInventoryById(item))
         with sqlite3.connect("database.db") as conn:
             for item in StartItems:

@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   UpdateRents()
 });
 var clients = null
+var RentId = 0
 var RentsFilterOption = "all"
 //При изменении значения в фильтре
 function filterChanged(){
@@ -17,7 +18,7 @@ function SearchBoxChanged(){
   UpdateRents()
 }
 const RentsMainTable = document.getElementById("RentsMainTable")
-
+const SaveRentBtn = document.getElementById("SaveRentBtn")
 //Обновление главной таблицы
 function UpdateRents(){
   
@@ -93,8 +94,11 @@ const SelectedInventoryTable = document.getElementById("SelectedInventoryTable")
 const InventoryInfoContainer = document.getElementById("InventoryInfoContainer")
 const ServiceList = document.getElementById("service_list")
 const addItemButton = document.getElementById("addItemButton")
+const CreateRentBtn = document.getElementById("CreateRentBtn")
 // Модальное окно создания аренды
 document.getElementById("openCreateRentModalBtn").addEventListener("click", function() {
+    SaveRentBtn.style.display = 'none'
+    CreateRentBtn.style.display = 'block'
     clients = null
     RentMainModalContainer.style.display = "flex";
     RentMainModal.style.display = "block";
@@ -132,6 +136,19 @@ document.getElementById("closeCreateRentModalBtn").addEventListener("click", fun
       addItemButton.style.display = "none"
       SelectedInventoryTable.innerHTML = "";
       ServiceList.innerHTML = "";
+      FormClientSelect.value = null
+      FormPaymentMethodSelect.value = null
+      rentalStartDate.value = null
+      rentalStartTime.value = null
+      rentalEndDate.value = null
+      rentalEndTime.value = null
+      itemsSum.value = null
+      isPayed.value = null // Не работает, фронтам надо фиксить
+      deposit.value = null
+      FormClientSelect.disabled = false
+      rentalStartDate.disabled = false
+      rentalStartTime.disabled = false
+      deposit.disabled = false
     });
 const NotRentedInventoryTable = document.getElementById("NotRentedInventoryTable")
 const NotRentedInventoryModalContainer = document.getElementById("NotRentedInventoryModalContainer")
@@ -273,6 +290,42 @@ const SelectedItemName = document.getElementById("SelectedItemName");
 const SelectedItemSize = document.getElementById("SelectedItemSize");
 const SelectedItemType = document.getElementById("SelectedItemType");
 var ItemId = 0
+function ShowOldInventoryData(data){
+  //console.log(data)
+  ItemId = data.ID
+  //console.log(ItemId)
+  ServiceList.innerHTML = ""
+  var headers = ['Поломки'];
+      var headerRow = document.createElement('tr');
+
+      headers.forEach(function(headerText) {
+          var th = document.createElement('th');
+          th.textContent = headerText;
+          //th.classList.add("")
+          headerRow.appendChild(th);
+          headerRow.classList.add("table__header")
+      });
+      ServiceList.appendChild(headerRow)
+  
+      ////console.log(dataRow)
+      SelectedItemName.textContent = data.Name;
+      SelectedItemSize.textContent = data.Size;
+      SelectedItemType.textContent = data.Type;
+      if (data.Services !== null){
+
+        data.Services.forEach(function(row) {
+          var tr = document.createElement('tr');
+          tr.textContent = row.Task;
+          //th.classList.add("")
+          ServiceList.appendChild(tr);
+          tr.classList.add("colon")});
+      }
+
+    
+    
+    InventoryInfoContainer.style.display="flex";
+ 
+}
 function ShowSelectedInventoryData(id){
   ItemId = id
   ServiceList.innerHTML = ""
@@ -400,7 +453,7 @@ const AddRentForm = document.getElementById("AddRentForm").addEventListener("sub
     Client: FormClientSelect.value,
     paymentMethod: FormPaymentMethodSelect.value,
     Deposit: deposit.value,
-    IsPayed: isPayed.value,
+    IsPayed: isPayed.value === 'on',
     Cost: itemsSum.value
   };
   fetch('/rents', {
@@ -426,8 +479,52 @@ const AddRentForm = document.getElementById("AddRentForm").addEventListener("sub
     });
 
 });
-
+document.getElementById('SaveRentBtn').addEventListener('click',function(){
+  var rows = SelectedInventoryTable.querySelectorAll('tr');
+  var idInventoryArray = [];
+  rows.forEach(function (row) {
+    var idInventory = row.dataset.id;
+    if (idInventory !== null && idInventory !== undefined) {
+      idInventoryArray.push(idInventory);
+    }
+  });
+  var formData = {
+    ID:RentId,
+    Return_Date: rentalEndDate.value,
+    Return_Time: rentalEndTime.value,
+    ReturnedItems: idInventoryArray,
+    paymentMethod: FormPaymentMethodSelect.value,
+    Deposit: deposit.value,
+    IsPayed: isPayed.value === 'on',
+    Cost: itemsSum.value
+  };
+  fetch('/updaterent', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData)
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Успех:', data);
+      UpdateRents();
+      UpdateNotRentedInventory();
+      RentMainModalContainer.style.display = "none";
+      RentMainModalContainer.style.display = "none";
+      InventoryInfoContainer.style.display = "none";
+      SelectedInventoryTable.innerHTML = "";
+      ServiceList.innerHTML = "";
+    })
+    .catch((error) => {
+      console.error('Ошибка:', error);
+    });
+});
 function OpenRentInfo(id){
+  RentId = id
+  SaveRentBtn.style.display = 'block'
+  CreateRentBtn.style.display = 'none'
+  addItemButton.style.display = "none"
   RentMainModalContainer.style.display = "flex";
   RentMainModal.style.display = "block";
   FormClientSelect.disabled = true
@@ -467,6 +564,33 @@ function OpenRentInfo(id){
     .then(data => {
       console.log(data)
       clients = data.Client.ID
+      var itemsarr
+      if(data.ReturnedItems!==null){
+        itemsarr = data.ReturnedItems
+      }
+      else{
+        itemsarr = data.StartItems
+      }
+      itemsarr.forEach(function(item) {
+        var tr = document.createElement('tr');
+        var Name = document.createElement('td');
+        Name.textContent = item.Name;
+        Name.onclick = function(){ShowOldInventoryData(item)}
+        tr.dataset.id = item.ID
+        tr.appendChild(Name)
+        SelectedInventoryTable.appendChild(tr);
+        
+        SelectedInventoryTable.classList.add("colon");});
+        FormClientSelect.value = data.Client.ID
+        FormPaymentMethodSelect.value = data.paymentMethod
+        rentalStartDate.value = data.Start_Date
+        rentalStartTime.value = data.Start_Time
+        rentalEndDate.value = data.Return_Date
+        rentalEndTime.value = data.Return_Time
+        isPayed.value = data.isPayed // Не работает, фронтам надо фиксить
+        deposit.value = data.Deposit
+        itemsSum.value = data.Cost
+
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
