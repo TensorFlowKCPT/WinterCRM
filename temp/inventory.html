@@ -279,22 +279,26 @@
             </div>
 
             <div class="inventory__filter">
-              <select class="inventory-filter" id="type-filter" onchange="filterInventory()">
-                <option value="all" disabled selected hidden>
-                  Тип
-                </option>
+              <select
+                class="inventory-filter"
+                id="type-filter"
+                onchange="filterInventory()"
+              >
+                <option value="all" disabled selected hidden>Тип</option>
                 <option value="all">Все</option>
                 {% for type in data['InventoryTypes'] %}
-                    <option value="{{type['Name']}}">{{type['Name']}}</option>
+                <option value="{{type['Name']}}">{{type['Name']}}</option>
                 {%endfor%}
               </select>
             </div>
 
             <div class="inventory__filter">
-              <select class="inventory-filter" id="rented-filter" onchange="filterInventory()">
-                <option value="all" disabled selected hidden>
-                  Аренда
-                </option>
+              <select
+                class="inventory-filter"
+                id="rented-filter"
+                onchange="filterInventory()"
+              >
+                <option value="all" disabled selected hidden>Аренда</option>
                 <option value="all">Все</option>
                 <option value="1">В аренде</option>
                 <option value="0">Не в аренде</option>
@@ -333,7 +337,11 @@
           <tr id="{{item['ID']}}">
             <td>{{item['Name']}}</td>
             <td>{{item['Type']}}</td>
-            <td>{{item['Rented']}}</td>
+            <td>
+              <span style="display: none">{{item['Rented']}}</span>
+              <input type="checkbox" {% if item['Rented'] == "1" or
+              item['Rented'] == "true" %} checked="true" {%endif%} />
+            </td>
             <td>{{item['Size']}}</td>
             <td>
               <button
