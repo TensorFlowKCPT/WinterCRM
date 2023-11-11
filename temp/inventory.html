@@ -273,26 +273,31 @@
                 type="text"
                 name="search"
                 placeholder="Поиск"
+                id="inventory-searchbox"
+                oninput="filterInventory()"
               />
             </div>
 
             <div class="inventory__filter">
-              <select class="inventory-filter" id="clients-filter">
-                <option value="placeholder" disabled selected hidden>
-                  Фильтр
+              <select class="inventory-filter" id="type-filter" onchange="filterInventory()">
+                <option value="all" disabled selected hidden>
+                  Тип
                 </option>
-                <option value="option1">Опция 1</option>
-                <option value="option2">Опция 2</option>
+                <option value="all">Все</option>
+                {% for type in data['InventoryTypes'] %}
+                    <option value="{{type['Name']}}">{{type['Name']}}</option>
+                {%endfor%}
               </select>
             </div>
 
             <div class="inventory__filter">
-              <select class="inventory-filter" id="clients-filter">
-                <option value="placeholder" disabled selected hidden>
-                  Фильтр
+              <select class="inventory-filter" id="rented-filter" onchange="filterInventory()">
+                <option value="all" disabled selected hidden>
+                  Аренда
                 </option>
-                <option value="option1">Опция 1</option>
-                <option value="option2">Опция 2</option>
+                <option value="all">Все</option>
+                <option value="1">В аренде</option>
+                <option value="0">Не в аренде</option>
               </select>
             </div>
 
