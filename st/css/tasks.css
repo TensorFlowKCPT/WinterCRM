@@ -315,6 +315,7 @@ tr {
     background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
+    overflow-y: scroll;
 }
 
 .modal-content {
@@ -327,17 +328,8 @@ tr {
 }
 
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
     cursor: pointer;
+    float: right;
 }
 
 .mdlbutton {
