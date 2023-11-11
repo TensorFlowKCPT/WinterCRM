@@ -167,11 +167,15 @@ td {
     background: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
-  }
+}
 
-  /* Style for the modal content */
-  .modal-content-sell {
+/* Style for the modal content */
+.modal-content-sell {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-  }
+}
+
+.mdlbutton {
+    width: 141px;
+}

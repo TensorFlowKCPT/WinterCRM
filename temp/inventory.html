@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/slide_menu.css" />
-    <link rel="stylesheet" href="/static/css/inventory.css"/>
     <link rel="stylesheet" href="/static/css/modal-window.css" />
+    <link rel="stylesheet" href="/static/css/inventory.css" />
     <title>Инвентарь</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -82,7 +82,9 @@
                 />
               </svg>
               <a href="/inventory"
-                ><button class="slide_menu-button slide_menu__active-button">Инвентарь</button></a
+                ><button class="slide_menu-button slide_menu__active-button">
+                  Инвентарь
+                </button></a
               >
             </div>
             <div class="slide_menu__button">
@@ -116,9 +118,7 @@
                 />
               </svg>
               <a href="/rents"
-                ><button class="slide_menu-button">
-                  Заказы
-                </button></a
+                ><button class="slide_menu-button">Заказы</button></a
               >
             </div>
             <div class="slide_menu__button">
@@ -268,7 +268,6 @@
                   fill="#64748B"
                 />
               </svg>
-              <!-- Для inventory поиск -->
               <input
                 class="inventory__search-input"
                 type="text"
@@ -276,7 +275,7 @@
                 placeholder="Поиск"
               />
             </div>
-            <!-- Для inventory фильтр -->
+
             <div class="inventory__filter">
               <select class="inventory-filter" id="clients-filter">
                 <option value="placeholder" disabled selected hidden>
@@ -286,7 +285,7 @@
                 <option value="option2">Опция 2</option>
               </select>
             </div>
-            <!-- Для inventory счет -->
+
             <div class="inventory__score">
               <div id="clientsCount" class="inventory-score">
                 {{ data['lenClients'] }}
@@ -299,86 +298,70 @@
               <button id="openModalButton" class="mdlbutton">
                 Добавить предмет
               </button>
-              <!-- Че будет сортивировать? -->
-              <select
-                class="inventory-filter inventory-sortirovka"
-                id="sortirovka-filter"
-              >
-                <option
-                  value="default"
-                  class="inventory-sortirovka-text"
-                  selected
-                  hidden
-                >
-                  Сортировка
-                </option>
-                <option value="name">По имени</option>
-                <option value="surname">По фамилии</option>
-                <option value="lastname">По отчеству</option>
-              </select>
             </div>
           </div>
         </div>
-    <table>
-      <thead class="table__header">
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Rented</th>
-            <th>Size</th>
-            <th>Sell</th>
-            <th>Delete</th>
-        </tr>
-        <!-- Здесь нужно вставить данные из вашей базы данных -->
-        {% for item in data['Inventory'] %}
-        <tr id="{{item['ID']}}">
+        <table>
+          <thead class="table__header">
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Rented</th>
+              <th>Size</th>
+              <th>Sell</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <!-- Здесь нужно вставить данные из вашей базы данных -->
+          {% for item in data['Inventory'] %}
+          <tr id="{{item['ID']}}">
             <td>{{item['Name']}}</td>
             <td>{{item['Type']}}</td>
             <td>{{item['Rented']}}</td>
             <td>{{item['Size']}}</td>
-            <td><button onclick="openModalSell({{ item['ID'] }})">Продать</button></td>
+            <td>
+              <button onclick="openModalSell({{ item['ID'] }})">Продать</button>
+            </td>
             <td><button onclick="Delete({{ item['ID'] }})">Удалить</button></td>
-            
-        </tr>
-        {%endfor%}
-        <!-- Добавьте другие строки с данными по мере необходимости -->
-    </table>
-    <div class="modal-container">
-        <div class="modal">
-          <div class="modal__wrapper">
-            <div class="modal__list-header">
+          </tr>
+          {%endfor%}
+          <!-- Добавьте другие строки с данными по мере необходимости -->
+        </table>
+        <div class="modal-container">
+          <div class="modal">
+            <div class="modal__wrapper">
+              <div class="modal__list-header">
                 Добавить новую запись
-            <svg
-            class="close"
-            id="closeModalBtn"
-            xmlns="http://www.w3.org/2000/svg"
-            width="39"
-            height="39"
-            viewBox="0 0 39 39"
-            fill="none"
-          >
-            <path
-              d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
-              fill="#DFDFE6"
-            />
-            <path
-              d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
-              fill="#23262F"
-            />
-            <path
-              d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
-              fill="#23262F"
-            />
-          </svg>
-        </div>
-            <form id="addItemForm">
-                <input type="text" placeholder="Name" name="name" required>
-                <select class="dropdownPayment" name="type" required>
+                <svg
+                  class="close"
+                  id="closeModalBtn"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="39"
+                  height="39"
+                  viewBox="0 0 39 39"
+                  fill="none"
+                >
+                  <path
+                    d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
+                    fill="#DFDFE6"
+                  />
+                  <path
+                    d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
+                    fill="#23262F"
+                  />
+                  <path
+                    d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
+                    fill="#23262F"
+                  />
+                </svg>
+                <form id="addItemForm">
+                  <input type="text" placeholder="Name" name="name" required />
+                  <select class="dropdownPayment" name="type" required>
                     {% for type in data['InventoryTypes'] %}
                     <option value="{{ type['ID'] }}">{{type['Name']}}</option>
                     {%endfor%}
-                </select>
-                <div class="date-picker-container">
+                  </select>
+                  <div class="date-picker-container">
                     <div class="date-picker">
                       <label for="sizeInv">Размер</label>
                       <input
@@ -395,24 +378,32 @@
                         id="rentedCheck"
                         name="rentalStartTime"
                       />
-                </div>
-                <input type="submit" value="Добавить">
-            </form>
+                      <input type="submit" value="Добавить" />
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-    </div>
-    <div class="modal-overlay-sell" id="ModalSell">
-      <div class="modal-content-sell">
-          <label for="cost">Цена</label>
-          <input type="text" name="cost" id="cost" />
-          <input type="text" style="display: none" name="idinventory" id="idinventory" />
-          <label for="comment">Комментарий</label>
-          <input type="text" name="comment" id="comment" />
-          <input type="submit" name="submit" id="submit" onclick="Sell()"/>
+        <div class="modal-overlay-sell" id="ModalSell">
+          <div class="modal-content-sell">
+            <label for="cost">Цена</label>
+            <input type="text" name="cost" id="cost" />
+            <input
+              type="text"
+              style="display: none"
+              name="idinventory"
+              id="idinventory"
+            />
+            <label for="comment">Комментарий</label>
+            <input type="text" name="comment" id="comment" />
+            <input type="submit" name="submit" id="submit" onclick="Sell()" />
+          </div>
+        </div>
       </div>
-    </div>
 
-    <script src="/static/js/inventory.js"></script>
-</body>
+      <script src="/static/js/inventory.js"></script>
+    </main>
+  </body>
 </html>
