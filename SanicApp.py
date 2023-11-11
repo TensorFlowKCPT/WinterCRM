@@ -121,6 +121,12 @@ async def service(request):
     render_template = template.render(data = data)
     return response.html(render_template)
 
+@app.post("/update_service_payment")
+async def update_service_payment(request):
+    try:Database.UpdateServicePayment(request.json.get('ID'), request.json.get("IsPayed"))
+    except:return response.json({"status":"bad"}, status=500)
+    return response.json({"status":"ok"}, status=200)
+
 @app.route("/service_create", methods=['POST'])
 async def service_create(request):
     creating_date = request.json.get('creating_date')

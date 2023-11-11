@@ -335,8 +335,9 @@
             </thead>
 
             <tbody class="table__content">
-              <tr>
-                {% for service in data["service"] %}
+              {% for service in data["service"] %}
+              <tr id="{{service["ID"]}}">
+                
                 <th>{{ service['Creation_Date'] }}</th>
                 <th class="content-1">{{ service['Client']['FIO'] }}</th>
                 <th class="content-1">{{ service['Inventory']['Name'] }}</th>
@@ -345,10 +346,11 @@
                 <th>{{ service['Cost'] }}</th>
                 <th>
                   <input {% if service['IsPayed'] %}checked{% endif %}
-                  type="checkbox" name="" id="" />
+                  type="checkbox" name="" id="" onchange="UpdatePaymentStatus({{service["ID"]}})"/>
                 </th>
-                {% endfor %}
+                
               </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
@@ -428,7 +430,7 @@
                   <span class="switch-slider"></span>
                 </label>
               </div>
-              <button class="create__service-button">Сохранить</button>
+              <button class="create__service-button" id="CreateServiceBtn">Сохранить</button>
             </div>
           </div>
         </div>

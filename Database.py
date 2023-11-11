@@ -480,7 +480,10 @@ class Database:
                 return rows
             return None
     
-    
+    def UpdateServicePayment(id:int,IsPayed:bool):
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("UPDATE Service SET IsPayed = ? WHERE ID = ?",(IsPayed,id,))
+            
     def putSchedule(idEmployee: int, date: str, idStatus: int):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.cursor()
