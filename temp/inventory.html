@@ -286,6 +286,16 @@
               </select>
             </div>
 
+            <div class="inventory__filter">
+              <select class="inventory-filter" id="clients-filter">
+                <option value="placeholder" disabled selected hidden>
+                  Фильтр
+                </option>
+                <option value="option1">Опция 1</option>
+                <option value="option2">Опция 2</option>
+              </select>
+            </div>
+
             <div class="inventory__score">
               <div id="clientsCount" class="inventory-score">
                 {{ data['lenClients'] }}
@@ -320,9 +330,18 @@
             <td>{{item['Rented']}}</td>
             <td>{{item['Size']}}</td>
             <td>
-              <button onclick="openModalSell({{ item['ID'] }})">Продать</button>
+              <button
+                class="td-button"
+                onclick="openModalSell({{ item['ID'] }})"
+              >
+                Продать
+              </button>
             </td>
-            <td><button onclick="Delete({{ item['ID'] }})">Удалить</button></td>
+            <td>
+              <button class="td-button" onclick="Delete({{ item['ID'] }})">
+                Удалить
+              </button>
+            </td>
           </tr>
           {%endfor%}
           <!-- Добавьте другие строки с данными по мере необходимости -->

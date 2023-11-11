@@ -179,3 +179,17 @@ td {
 .mdlbutton {
     width: 141px;
 }
+
+.td-button {
+    background: none;
+    border: none;
+    border-radius: 10px;
+    background: var(--color-light-mode-primary-primary, #3772FF);
+    padding: 5px 10px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.td-button:hover {
+    color: #000;
+}
