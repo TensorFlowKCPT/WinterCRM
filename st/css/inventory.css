@@ -124,6 +124,50 @@ td {
     line-height: 16px;
 }
 
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]+label {
+    position: relative;
+    padding-left: 30px;
+    cursor: not-allowed;
+}
+
+input[type="checkbox"]+label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000;
+    background-color: #fff;
+    display: block;
+}
+
+input[type="checkbox"]:checked+label::before {
+    content: '✔';
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    color: #000;
+}
+
+.td-button {
+    background: none;
+    border: none;
+    border-radius: 10px;
+    background: var(--color-light-mode-primary-primary, #3772FF);
+    padding: 5px 10px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.td-button:hover {
+    color: #000;
+}
+
 /* Модальное окно */
 .modal-container {
     display: none;
@@ -181,18 +225,4 @@ td {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
-}
-
-.td-button {
-    background: none;
-    border: none;
-    border-radius: 10px;
-    background: var(--color-light-mode-primary-primary, #3772FF);
-    padding: 5px 10px;
-    color: #fff;
-    cursor: pointer;
-}
-
-.td-button:hover {
-    color: #000;
 }

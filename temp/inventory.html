@@ -337,10 +337,12 @@
           <tr id="{{item['ID']}}">
             <td>{{item['Name']}}</td>
             <td>{{item['Type']}}</td>
-            <td>
+            <td class="td-checkbox">
               <span style="display: none">{{item['Rented']}}</span>
-              <input type="checkbox" disabled="true" {% if item['Rented'] == 1 or
-              item['Rented'] == "true" %} checked="true" {%endif%} />
+              <input type="checkbox" id="myCheckbox" {% if item['Rented'] == 1
+              or item['Rented'] == "true" %} checked="true" {%endif%} disabled "
+              class="active" />
+              <label for="myCheckbox"></label>
             </td>
             <td>{{item['Size']}}</td>
             <td>
