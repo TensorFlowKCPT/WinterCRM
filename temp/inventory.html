@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/css/inventory.css" />
     <link rel="stylesheet" href="/static/css/slide_menu.css" />
+    <link rel="stylesheet" href="/static/css/inventory.css"/>
+    <link rel="stylesheet" href="/static/css/modal-window.css" />
     <title>Инвентарь</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -81,9 +82,7 @@
                 />
               </svg>
               <a href="/inventory"
-                ><button class="slide_menu-button slide_menu__active-button">
-                  Инвентарь
-                </button></a
+                ><button class="slide_menu-button slide_menu__active-button">Инвентарь</button></a
               >
             </div>
             <div class="slide_menu__button">
@@ -117,7 +116,9 @@
                 />
               </svg>
               <a href="/rents"
-                ><button class="slide_menu-button">Заказы</button></a
+                ><button class="slide_menu-button">
+                  Заказы
+                </button></a
               >
             </div>
             <div class="slide_menu__button">
@@ -249,7 +250,6 @@
           </div>
         </div>
       </div>
-
       <div class="inventory__wrapper">
         <div class="inventory__header">
           <div class="inventory__left">
@@ -296,7 +296,7 @@
 
           <div class="inventory__right">
             <div class="inventory__filter">
-              <button id="openModalBtn" class="mdlbutton">
+              <button id="openModalButton" class="mdlbutton">
                 Добавить предмет
               </button>
               <!-- Че будет сортивировать? -->
@@ -319,91 +319,102 @@
             </div>
           </div>
         </div>
-        <div>
-          <table>
-            <thead class="table__header">
-              <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Rented</th>
-                <th>Size</th>
-                <th>Sell</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <!-- Здесь нужно вставить данные из вашей базы данных -->
-            {% for item in data['Inventory'] %}
-            <!-- <tr id="{{item['ID']}}">
-              <td>{{item['Name']}}</td>
-              <td>{{item['Type']}}</td>
-              <td>{{item['Rented']}}</td>
-              <td>{{item['Size']}}</td>
-              <td><button onclick="Sell({{ item['ID'] }})">Продать</button></td>
-        <td><button onclick="Delete({{ item['ID'] }})">Удалить</button></td>
-            </tr>
-            {%endfor%} -->
-            <!-- Добавьте другие строки с данными по мере необходимости -->
-          </table>
-        </div>
-      </div>
-
-      <div id="myModal" class="modal">
-        <div class="modal-container">
-          <svg
-            class="svg-cross"
+    <table>
+      <thead class="table__header">
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Rented</th>
+            <th>Size</th>
+            <th>Sell</th>
+            <th>Delete</th>
+        </tr>
+        <!-- Здесь нужно вставить данные из вашей базы данных -->
+        {% for item in data['Inventory'] %}
+        <tr id="{{item['ID']}}">
+            <td>{{item['Name']}}</td>
+            <td>{{item['Type']}}</td>
+            <td>{{item['Rented']}}</td>
+            <td>{{item['Size']}}</td>
+            <td><button onclick="openModalSell({{ item['ID'] }})">Продать</button></td>
+            <td><button onclick="Delete({{ item['ID'] }})">Удалить</button></td>
+            
+        </tr>
+        {%endfor%}
+        <!-- Добавьте другие строки с данными по мере необходимости -->
+    </table>
+    <div class="modal-container">
+        <div class="modal">
+          <div class="modal__wrapper">
+            <div class="modal__list-header">
+                Добавить новую запись
+            <svg
+            class="close"
+            id="closeModalBtn"
             xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
+            width="39"
+            height="39"
+            viewBox="0 0 39 39"
             fill="none"
           >
             <path
-              d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
+              d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
               fill="#DFDFE6"
             />
             <path
-              d="M9.17011 15.58C8.98011 15.58 8.79011 15.51 8.64011 15.36C8.35011 15.07 8.35011 14.59 8.64011 14.3L14.3001 8.63999C14.5901 8.34999 15.0701 8.34999 15.3601 8.63999C15.6501 8.92999 15.6501 9.40998 15.3601 9.69998L9.70011 15.36C9.56011 15.51 9.36011 15.58 9.17011 15.58Z"
+              d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
               fill="#23262F"
             />
             <path
-              d="M14.8301 15.58C14.6401 15.58 14.4501 15.51 14.3001 15.36L8.64011 9.69998C8.35011 9.40998 8.35011 8.92999 8.64011 8.63999C8.93011 8.34999 9.41011 8.34999 9.70011 8.63999L15.3601 14.3C15.6501 14.59 15.6501 15.07 15.3601 15.36C15.2101 15.51 15.0201 15.58 14.8301 15.58Z"
+              d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
               fill="#23262F"
             />
           </svg>
-          <div class="modal__wrapper">
-            <h2>Добавить новую запись</h2>
+        </div>
             <form id="addItemForm">
-              <input type="text" placeholder="Name" name="name" required />
-              <select name="type" required>
-                {% for type in data['InventoryTypes'] %}
-                <option value="{{ type['ID'] }}">{{type['Name']}}</option>
-                {%endfor%}
-              </select>
-              <input type="checkbox" name="rented" value="false" />Rented
-              <input type="number" placeholder="Size" name="size" />
-              <input type="submit" value="Добавить" />
+                <input type="text" placeholder="Name" name="name" required>
+                <select class="dropdownPayment" name="type" required>
+                    {% for type in data['InventoryTypes'] %}
+                    <option value="{{ type['ID'] }}">{{type['Name']}}</option>
+                    {%endfor%}
+                </select>
+                <div class="date-picker-container">
+                    <div class="date-picker">
+                      <label for="sizeInv">Размер</label>
+                      <input
+                        type="text"
+                        id="sizeInv"
+                        name="rentalStartDate"
+                        required
+                      />
+                    </div>
+                    <div class="date-picker">
+                      <label>Rented</label>
+                      <input
+                        type="checkbox"
+                        id="rentedCheck"
+                        name="rentalStartTime"
+                      />
+                </div>
+                <input type="submit" value="Добавить">
             </form>
-            <br />
-            <div class="modalWindow" id="Modal">
-              <form id="SellForm" action="/sell_inventory" method="post">
-                <label for="cost">Цена</label>
-                <input type="text" name="cost" id="cost" />
-                <input
-                  type="text"
-                  style="display: none"
-                  name="idinventory"
-                  id="idinventory"
-                />
-                <label for="comment">Комментарий</label>
-                <input type="text" name="comment" id="comment" />
-                <input type="submit" name="submit" id="submit" />
-              </form>
             </div>
           </div>
         </div>
+    </div>
+    <div class="modal-overlay-sell" id="ModalSell">
+      <div class="modal-content-sell">
+        <form id="SellForm" action="/sell_inventory" method="post">
+          <label for="cost">Цена</label>
+          <input type="text" name="cost" id="cost" />
+          <input type="text" style="display: none" name="idinventory" id="idinventory" />
+          <label for="comment">Комментарий</label>
+          <input type="text" name="comment" id="comment" />
+          <input type="submit" name="submit" id="submit" />
+        </form>
       </div>
+    </div>
 
-      <script src="/static/js/inventory.js"></script>
-    </main>
-  </body>
+    <script src="/static/js/inventory.js"></script>
+</body>
 </html>
