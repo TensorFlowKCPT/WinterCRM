@@ -115,6 +115,13 @@
     position: relative;
 }
 
+.modal_pay__end {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    height: 35px;
+}
+
 /* ПОЛЕ 1 */
 .pole-container {
     display: none;
@@ -137,6 +144,10 @@
     display: flex;
     justify-content: center;
     gap: 16px;
+}
+
+.date-picker-container-2 {
+    gap: 200px;
 }
 
 .date-picker {
@@ -189,6 +200,11 @@
     text-align: center;
 }
 
+.date-picker-container-2 input[type="text"] {
+    width: 92px;
+    align-items: center;
+}
+
 /* для списков */
 .dropdownPayment {
     width: 100%;
@@ -212,7 +228,7 @@
 
 /* Сумма */
 .itemsSum {
-    width: 552px;
+    width: 199px;
     padding: 16px;
     text-align: center;
     border-radius: 12px;

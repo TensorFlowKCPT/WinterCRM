@@ -35,7 +35,9 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <a href="#"><button class="slide_menu-button">Статистика</button></a>
+              <a href="#"
+                ><button class="slide_menu-button">Статистика</button></a
+              >
             </div>
           </div>
           <div class="slide_menu__card">
@@ -55,7 +57,9 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <a href="/clients"><button class="slide_menu-button">Клиенты</button></a>
+              <a href="/clients"
+                ><button class="slide_menu-button">Клиенты</button></a
+              >
             </div>
           </div>
         </div>
@@ -77,7 +81,9 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <a href="/inventory"><button class="slide_menu-button">Инвентарь</button></a>
+              <a href="/inventory"
+                ><button class="slide_menu-button">Инвентарь</button></a
+              >
             </div>
             <div class="slide_menu__button">
               <svg
@@ -92,7 +98,9 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <a href="/shop"><button class="slide_menu-button">Магазин</button></a>
+              <a href="/shop"
+                ><button class="slide_menu-button">Магазин</button></a
+              >
             </div>
             <div class="slide_menu__button slide_menu__active">
               <svg
@@ -107,9 +115,11 @@
                   fill="#8A84E2"
                 />
               </svg>
-              <a href="/rents"><button class="slide_menu-button slide_menu__active-button">
-                Заказы
-              </button></a>
+              <a href="/rents"
+                ><button class="slide_menu-button slide_menu__active-button">
+                  Заказы
+                </button></a
+              >
             </div>
             <div class="slide_menu__button">
               <!-- Свг нужно под сервис -->
@@ -125,7 +135,9 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <a href="/service"><button class="slide_menu-button">Сервис</button></a>
+              <a href="/service"
+                ><button class="slide_menu-button">Сервис</button></a
+              >
             </div>
           </div>
         </div>
@@ -148,9 +160,11 @@
                   stroke-width="2"
                 />
               </svg>
-              <a href="#"><button class="slide_menu-button">
-                Губаха(я так понимаю зп?)
-              </button></a>
+              <a href="#"
+                ><button class="slide_menu-button">
+                  Губаха(я так понимаю зп?)
+                </button></a
+              >
             </div>
             <div class="slide_menu__button">
               <svg
@@ -165,7 +179,9 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <a href="#"><button class="slide_menu-button">Сотрудники</button></a>
+              <a href="#"
+                ><button class="slide_menu-button">Сотрудники</button></a
+              >
             </div>
             <div class="slide_menu__button">
               <svg
@@ -180,7 +196,9 @@
                   fill="#ADADC1"
                 />
               </svg>
-              <a href="/tasks"><button class="slide_menu-button">Задачи</button></a>
+              <a href="/tasks"
+                ><button class="slide_menu-button">Задачи</button></a
+              >
             </div>
             <div class="slide_menu__button">
               <svg
@@ -206,9 +224,11 @@
                   fill="#ADADC1"
                 />
               </svg>
-              <a href="/schedule"> <button class="slide_menu-button slide_menu-calendar-but">
-                Календарь
-              </button></a>
+              <a href="/schedule">
+                <button class="slide_menu-button slide_menu-calendar-but">
+                  Календарь
+                </button></a
+              >
             </div>
           </div>
         </div>
@@ -260,8 +280,12 @@
             </div>
             <div class="rents__filter">
               <!-- Не парься, главное чтобы выглядело адекватно, подвяжем мы сами -->
-              <select class="rents-filter" id="rents-filter" onchange="filterChanged()">
-                <option value="placeholder" disabled selected hidden >
+              <select
+                class="rents-filter"
+                id="rents-filter"
+                onchange="filterChanged()"
+              >
+                <option value="placeholder" disabled selected hidden>
                   Фильтр
                 </option>
                 <option value="all">Все</option>
@@ -282,8 +306,7 @@
         </div>
         <!-- Таблица с заказами -->
         <div>
-          <table id="RentsMainTable" class="RentsMainTable">
-          </table>
+          <table id="RentsMainTable" class="RentsMainTable"></table>
         </div>
       </div>
 
@@ -300,7 +323,8 @@
                   width="39"
                   height="39"
                   viewBox="0 0 39 39"
-                  fill="none">
+                  fill="none"
+                >
                   <path
                     d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
                     fill="#DFDFE6"
@@ -317,7 +341,10 @@
               </div>
               <div class="modal__list-container">
                 <div class="modal__list_left">
-                  <table class="table__inventory" id="SelectedInventoryTable"></table>
+                  <table
+                    class="table__inventory"
+                    id="SelectedInventoryTable"
+                  ></table>
                   <button class="addItemButton" id="addItemButton">
                     Добавить
                   </button>
@@ -329,13 +356,19 @@
             <!-- Второе поле -->
             <div class="pole-container" id="InventoryInfoContainer">
               <div class="pole-1">
-                <div class="pole__name">Название: <span id="SelectedItemName"></span></div>
-                <div class="pole__size">Размер: <span id="SelectedItemSize"></span></div>
-                <div class="pole__type">Тип: <span id="SelectedItemType"></span></div>
+                <div class="pole__name">
+                  Название: <span id="SelectedItemName"></span>
+                </div>
+                <div class="pole__size">
+                  Размер: <span id="SelectedItemSize"></span>
+                </div>
+                <div class="pole__type">
+                  Тип: <span id="SelectedItemType"></span>
+                </div>
               </div>
               <div class="modal__list-container">
                 <div class="modal__list_left">
-                  <table class="table__inventory" id="service_list" ></table>
+                  <table class="table__inventory" id="service_list"></table>
                   <button class="addItemButton" id="addServiceButton">
                     Добавить
                   </button>
@@ -343,7 +376,12 @@
               </div>
             </div>
             <form id="AddRentForm">
-              <select class="dropdownPayment" name="clientDropdown" id="FormClientSelect" required>
+              <select
+                class="dropdownPayment"
+                name="clientDropdown"
+                id="FormClientSelect"
+                required
+              >
                 <option value="" disabled selected hidden>
                   Выберите клиента
                 </option>
@@ -352,7 +390,12 @@
                 {%endfor%}
               </select>
 
-              <select name="paymentMethod" required class="dropdownPayment" id="FormPaymentMethodSelect">
+              <select
+                name="paymentMethod"
+                required
+                class="dropdownPayment"
+                id="FormPaymentMethodSelect"
+              >
                 <option value="" disabled selected hidden>
                   Выберите способ оплаты
                 </option>
@@ -398,32 +441,44 @@
                     required
                   />
                 </div>
+              </div>
+
+              <div class="date-picker-container date-picker-container-2">
                 <div class="date-picker">
                   <label for="isPayed">Оплачено?</label>
-                  <input
-                    type="checkbox"
-                    id="isPayed"
-                    name="isPayed"
-                    required
-                  />
+                  <label class="switch" for="isPayed">
+                    <input
+                      class="switch-input"
+                      type="checkbox"
+                      id="isPayed"
+                      name="isPayed"
+                      required
+                    />
+                    <span class="switch-slider"></span>
+                  </label>
                 </div>
-                <div class="date-picker">
+
+                <div class="date-picker-2">
                   <label for="deposit">Залог</label>
-                  <input
-                    type="text"
-                    id="deposit"
-                    name="deposit"
-                    required
-                  />
+                  <input type="text" id="deposit" name="deposit" required />
                 </div>
               </div>
-              <input type="number" class="itemsSum" name="" id="itemsSum">
-              <input type="submit" value="Создать" />
+
+              <div class="modal_pay__end">
+                <input
+                  placeholder="Сумма"
+                  type="number"
+                  class="itemsSum"
+                  name=""
+                  id="itemsSum"
+                />
+                <input type="submit" value="Создать" />
+              </div>
             </form>
           </div>
         </div>
       </div>
-      
+
       <div class="modal-container-2" id="NotRentedInventoryModalContainer">
         <div class="modal2" id="NotRentedInventoryModal">
           <div class="modal2__wrapper">
@@ -474,8 +529,7 @@
                 oninput="InventorySearchBoxChanged()"
               />
             </div>
-            <table id="NotRentedInventoryTable">
-            </table>
+            <table id="NotRentedInventoryTable"></table>
           </div>
         </div>
       </div>
@@ -507,7 +561,12 @@
           </svg>
           <div class="service__wrapper">
             <form id="addServiceForm" action="">
-              <input type="text" name="ToDo" id="ToDo" placeholder="Что нужно сделать?" />
+              <input
+                type="text"
+                name="ToDo"
+                id="ToDo"
+                placeholder="Что нужно сделать?"
+              />
               <input type="submit" value="Добавить" />
             </form>
           </div>
