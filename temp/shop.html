@@ -12,28 +12,6 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
       rel="stylesheet"
     />
-    <!-- <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-    </style> -->
   </head>
   <body>
     <main>
@@ -341,16 +319,18 @@
             </div>
           </div>
         </div>
+
+        <div>
         <table>
-          <tr>
-            <thead class="table__header">
+          <thead class="table__header">
+            <tr>
               <th>Name</th>
               <th>Cost</th>
               <th>Left</th>
               <th>Sold</th>
               <th>Delete</th>
-            </thead>
-          </tr>
+            </tr>
+          </thead>
           <!-- Здесь нужно вставить данные из вашей базы данных -->
           {% for item in data['Consumables'] %}
         <tr{% if item['Left'] <= 0 %} style="background:rgb(255, 84, 84)"{% endif %}>
@@ -363,6 +343,7 @@
         {%endfor%}
           <!-- Добавьте другие строки с данными по мере необходимости -->
         </table>
+        </div>
 
         <div id="myModal" class="modal">
           <div class="modal-container">
@@ -398,7 +379,6 @@
           </div>
         </div>
       </div>
-      <!--  -->
 
       <script src="/static/js/shop.js"></script>
     </main>

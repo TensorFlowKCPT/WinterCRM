@@ -12,7 +12,7 @@ main {
     display: flex;
 }
 
-.shop__wrapper {
+.inventory__wrapper {
     display: flex;
     flex-direction: column;
     padding: 0 24px;
@@ -20,7 +20,7 @@ main {
 }
 
 /* Вверх сайта */
-.shop__header {
+.inventory__header {
     display: flex;
     padding: 12px 0 18px 24px;
     align-items: center;
@@ -28,19 +28,19 @@ main {
 }
 
 /* Настройка для левой стороны header */
-.shop__left {
+.inventory__left {
     display: flex;
     gap: 8px;
     align-items: center;
 }
 
-.shop__right {
+.inventory__right {
     display: flex;
     gap: 8px;
     align-items: center;
 }
 
-.shop__search {
+.inventory__search {
     padding: 4px 0 4px 12px;
     display: flex;
     gap: 6px;
@@ -51,7 +51,7 @@ main {
     width: 240px;
 }
 
-.shop__search-input {
+.inventory__search-input {
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -60,7 +60,7 @@ main {
 }
 
 /* Для "фильтра" и "сортировки" */
-.shop-filter {
+.inventory-filter {
     border-radius: var(--border-radius-rounded-md, 6px);
     border: 1px solid var(--gray-200, #E5E7EB);
     background: var(--White, #FFF);
@@ -72,12 +72,12 @@ main {
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
 }
 
-.shop-sortirovka {
+.inventory-sortirovka {
     width: 124px;
 }
 
 /* Параметры текста клиентов */
-.shop-score {
+.inventory-score {
     color: var(--slate-500, #64748B);
     font-size: 14px;
     font-weight: 400;
@@ -150,11 +150,12 @@ tr {
     border-radius: 15px;
     box-sizing: border-box;
     margin: auto;
-    width: 35%;
+    width: 45%;
 }
 
 .modal__wrapper {
     padding: 25px;
+
 }
 
 td {
