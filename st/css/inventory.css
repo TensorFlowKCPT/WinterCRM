@@ -131,7 +131,6 @@ input[id="rentCheck"] {
 input[type="checkbox"]+label {
     position: relative;
     padding-left: 30px;
-    cursor: not-allowed;
 }
 
 input[type="checkbox"]+label::before {
@@ -141,7 +140,6 @@ input[type="checkbox"]+label::before {
     top: 0;
     width: 20px;
     height: 20px;
-    border: 2px solid #000;
     background-color: #fff;
     display: block;
 }
@@ -151,12 +149,12 @@ input[type="checkbox"]:checked+label::before {
     font-size: 16px;
     line-height: 20px;
     text-align: center;
-    color: #000;
+    color: #fff;
+    background-color: #3772FF;
 }
 
 .td-button {
     background: none;
-    border: none;
     border-radius: 10px;
     background: var(--color-light-mode-primary-primary, #3772FF);
     padding: 5px 10px;
@@ -166,6 +164,7 @@ input[type="checkbox"]:checked+label::before {
 
 .td-button:hover {
     color: #000;
+    background: #2062fc;
 }
 
 /* Модальное окно */
@@ -190,7 +189,11 @@ input[type="checkbox"]:checked+label::before {
     margin: 20px auto 10px;
     position: relative;
     display: none;
-    width: auto;
+    width: 40%;
+}
+
+.modal__list-header {
+    margin-top: 10px;
 }
 
 .close {
@@ -205,6 +208,41 @@ input[type="checkbox"]:checked+label::before {
 .modal__wrapper {
     display: flex;
     flex-direction: column;
+}
+
+/* для Form */
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 16px 16px 30px;
+    background: #FCFCFD;
+    border-radius: 12px;
+    border: 2px #DFDFE6 solid;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    display: inline-flex;
+    margin-bottom: 30px;
+}
+
+.date-picker-container input[type="text"] {
+    margin-bottom: 0;
+}
+
+.date-picker input[type="checkbox"] {
+    width: 60px;
+    height: 48px;
+}
+
+.date-picker-container {
+    margin-bottom: 32px;
 }
 
 /* Модальное окно для кнопки "Продать" */
@@ -225,4 +263,20 @@ input[type="checkbox"]:checked+label::before {
     background: #fff;
     padding: 20px;
     border-radius: 8px;
+}
+
+#ModalSell input[type="submit"] {
+    border: none;
+    background: none;
+    cursor: pointer;
+    background-color: #3772FF;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #000;
+    color: #fff;
+}
+
+#ModalSell input[type="submit"]:hover {
+    color: #000;
+    background: #2062fc;
 }

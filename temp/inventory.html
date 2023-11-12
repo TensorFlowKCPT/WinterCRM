@@ -35,7 +35,7 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <a href="#"
+              <a href="/statistics"
                 ><button class="slide_menu-button">Статистика</button></a
               >
             </div>
@@ -339,8 +339,8 @@
             <td>{{item['Type']}}</td>
             <td class="td-checkbox">
               <span style="display: none">{{item['Rented']}}</span>
-              <input type="checkbox" id="rentCheck" {% if item['Rented'] == 1
-              or item['Rented'] == "true" %} checked="true" {%endif%} disabled "
+              <input type="checkbox" id="rentCheck" {% if item['Rented'] == 1 or
+              item['Rented'] == "true" %} checked="true" {%endif%} disabled "
               class="active" />
               <label for="myCheckbox"></label>
             </td>
@@ -389,35 +389,41 @@
                     fill="#23262F"
                   />
                 </svg>
-                <form id="addItemForm">
-                  <input type="text" placeholder="Name" name="name" required />
-                  <select class="dropdownPayment" name="type" required>
-                    {% for type in data['InventoryTypes'] %}
-                    <option value="{{ type['ID'] }}">{{type['Name']}}</option>
-                    {%endfor%}
-                  </select>
-                  <div class="date-picker-container">
-                    <div class="date-picker">
-                      <label for="sizeInv">Размер</label>
-                      <input
-                        type="text"
-                        id="sizeInv"
-                        name="rentalStartDate"
-                        required
-                      />
-                    </div>
-                    <div class="date-picker">
-                      <label>Rented</label>
-                      <input
-                        type="checkbox"
-                        id="rentedCheck"
-                        name="rentedChecker"
-                      />
-                    </div>
-                    <input type="submit" value="Добавить" />
-                  </div>
-                </form>
               </div>
+              <form class="form" id="addItemForm">
+                <input
+                  class="form-input"
+                  type="text"
+                  placeholder="Name"
+                  name="name"
+                  required
+                />
+                <select class="dropdownPayment" name="type" required>
+                  {% for type in data['InventoryTypes'] %}
+                  <option value="{{ type['ID'] }}">{{type['Name']}}</option>
+                  {%endfor%}
+                </select>
+                <div class="date-picker-container">
+                  <div class="date-picker">
+                    <label for="sizeInv">Размер</label>
+                    <input
+                      type="text"
+                      id="sizeInv"
+                      name="rentalStartDate"
+                      required
+                    />
+                  </div>
+                  <div class="date-picker">
+                    <label>Rented</label>
+                    <input
+                      type="checkbox"
+                      id="rentedCheck"
+                      name="rentedChecker"
+                    />
+                  </div>
+                </div>
+                <input type="submit" value="Добавить" />
+              </form>
             </div>
           </div>
         </div>

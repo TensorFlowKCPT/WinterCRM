@@ -141,9 +141,13 @@ tr {
     text-align: center;
 }
 
-.svg-cross {
-    cursor: pointer;
+.mdlbutton:hover {
+    background-color: #c0c0c0;
+}
+
+.close {
     float: right;
+    cursor: pointer;
     padding: 10px 20px;
 }
 
@@ -164,12 +168,14 @@ tr {
     border-radius: 15px;
     box-sizing: border-box;
     margin: auto;
-    width: 35%;
+    width: 30%;
 }
 
 .modal__wrapper {
     padding: 25px;
 }
+
+
 
 /* Для "Добавить сервис" контент */
 .create__service {
@@ -181,7 +187,12 @@ tr {
 }
 
 .item {
+    height: 30px;
     width: 200px;
+    background-color: #FCFCFD;
+    border-radius: 12px;
+    border: 2px #DFDFE6 solid;
+    text-align: center;
 }
 
 .create__service_item {
@@ -192,7 +203,12 @@ tr {
 
 .create__service_item select,
 .create__service_item input[type="date"] {
-    width: 210px;
+    height: 30px;
+    width: 200px;
+    background-color: #FCFCFD;
+    border-radius: 12px;
+    border: 2px #DFDFE6 solid;
+    text-align: center;
 }
 
 .create__service_item-2 {
@@ -212,7 +228,6 @@ tr {
 
 .create__service-button {
     background: none;
-    border: none;
     cursor: pointer;
     border-radius: 10px;
     background: var(--color-light-mode-primary-primary, #3772FF);

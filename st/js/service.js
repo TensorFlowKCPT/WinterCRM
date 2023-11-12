@@ -44,7 +44,7 @@ document.getElementById("CreateServiceBtn").addEventListener("click", function()
 document.addEventListener('DOMContentLoaded', function () {
     var modal = document.getElementById('myModal');
     var openModalButton = document.getElementById('openModalBtn');
-    var closeModalSpan = document.getElementsByClassName('svg-cross')[0];
+    var closeModalSpan = document.getElementsByClassName('close')[0];
   
     openModalButton.onclick = function () {
       modal.style.display = 'block';

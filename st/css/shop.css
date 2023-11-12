@@ -127,10 +127,22 @@ tr {
     padding: 4px 8px;
 }
 
-.svg-cross {
-    cursor: pointer;
+.mdlbutton:hover {
+    background-color: rgb(196, 194, 194);
+}
+
+.modal__list-header {
+    text-align: center;
+    color: #000;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 30px;
+    margin-bottom: 55px;
+}
+
+.close {
     float: right;
-    padding: 10px 20px;
+    cursor: pointer;
 }
 
 .modal {
@@ -143,18 +155,22 @@ tr {
     background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
+    padding-top: 15px;
 }
 
 .modal-container {
     background-color: #fefefe;
     border-radius: 15px;
     box-sizing: border-box;
-    margin: auto;
-    width: 35%;
+    margin: 20px auto 10px;
+    padding: 20px;
+    width: 45%;
 }
 
+
 .modal__wrapper {
-    padding: 25px;
+    display: flex;
+    flex-direction: column;
 }
 
 td {
@@ -165,4 +181,55 @@ td {
     font-size: 16px;
     font-weight: 500;
     line-height: 16px;
+}
+
+.td-button {
+    background: none;
+    border-radius: 10px;
+    background: var(--color-light-mode-primary-primary, #3772FF);
+    padding: 5px 10px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.td-button:hover {
+    color: #000;
+    background: #2062fc;
+}
+
+/* form */
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 16px 16px 30px;
+    background: #FCFCFD;
+    border-radius: 12px;
+    border: 2px #DFDFE6 solid;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    display: inline-flex;
+    margin-bottom: 30px;
+}
+
+#addItemForm input[type="submit"] {
+    background: none;
+    width: 270px;
+    height: 66px;
+    padding: 20px 0px;
+    border-radius: 10px;
+    background: var(--color-light-mode-primary-primary, #3772FF);
+    color: #FFF;
+}
+
+#addItemForm input[type="submit"]:hover {
+    color: #000;
+    background: #2062fc;
 }

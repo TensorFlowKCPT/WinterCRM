@@ -4,16 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/slide_menu.css" />
-    <link rel="stylesheet" href="/static/css/tasks.css" />
-    <title>Задачи</title>
+    <link rel="stylesheet" href="/static/css/modal-window.css" />
+    <link rel="stylesheet" href="/static/css/inventory.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment"></script>
+    <title>Инвентарь</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
   </head>
-
   <body>
     <main>
       <div class="slide_menu__wrapper">
@@ -22,7 +24,7 @@
             <div class="slide_menu-headling">
               <div class="slide_menu-text">Статистика</div>
             </div>
-            <div class="slide_menu__button">
+            <div class="slide_menu__button slide_menu__active">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="18"
@@ -32,11 +34,11 @@
               >
                 <path
                   d="M16.7345 13.3239H16.422V1.13635C16.422 0.887712 16.3232 0.649255 16.1474 0.47344C15.9716 0.297625 15.7331 0.198853 15.4845 0.198853H11.1095C10.8609 0.198853 10.6224 0.297625 10.4466 0.47344C10.2708 0.649255 10.172 0.887712 10.172 1.13635V3.94885H6.7345C6.48586 3.94885 6.2474 4.04762 6.07158 4.22344C5.89577 4.39926 5.797 4.63771 5.797 4.88635V7.69885H2.9845C2.73586 7.69885 2.4974 7.79762 2.32158 7.97344C2.14577 8.14926 2.047 8.38771 2.047 8.63635V13.3239H1.7345C1.48586 13.3239 1.2474 13.4226 1.07158 13.5984C0.895769 13.7743 0.796997 14.0127 0.796997 14.2614C0.796997 14.51 0.895769 14.7484 1.07158 14.9243C1.2474 15.1001 1.48586 15.1989 1.7345 15.1989H16.7345C16.9831 15.1989 17.2216 15.1001 17.3974 14.9243C17.5732 14.7484 17.672 14.51 17.672 14.2614C17.672 14.0127 17.5732 13.7743 17.3974 13.5984C17.2216 13.4226 16.9831 13.3239 16.7345 13.3239ZM12.047 2.07385H14.547V13.3239H12.047V2.07385ZM7.672 5.82385H10.172V13.3239H7.672V5.82385ZM3.922 9.57385H5.797V13.3239H3.922V9.57385Z"
-                  fill="#A8A8BD"
+                  fill="#8A84E2"
                 />
               </svg>
               <a href="/statistics"
-                ><button class="slide_menu-button">Статистика</button></a
+                ><button class="slide_menu-button  slide_menu__active-button">Статистика</button></a
               >
             </div>
           </div>
@@ -82,7 +84,9 @@
                 />
               </svg>
               <a href="/inventory"
-                ><button class="slide_menu-button">Инвентарь</button></a
+                ><button class="slide_menu-button">
+                  Инвентарь
+                </button></a
               >
             </div>
             <div class="slide_menu__button">
@@ -181,7 +185,7 @@
                 ><button class="slide_menu-button">Сотрудники</button></a
               >
             </div>
-            <div class="slide_menu__button slide_menu__active">
+            <div class="slide_menu__button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -191,13 +195,11 @@
               >
                 <path
                   d="M3 2.35322C3 1.72911 3.25598 1.13056 3.71161 0.689242C4.16725 0.247928 4.78523 0 5.4296 0H15.148C15.7924 0 16.4104 0.247928 16.866 0.689242C17.3216 1.13056 17.5776 1.72911 17.5776 2.35322V13.9816L16.3628 15.17V2.35322C16.3628 2.04116 16.2348 1.74189 16.007 1.52123C15.7792 1.30057 15.4702 1.17661 15.148 1.17661H5.4296C5.10742 1.17661 4.79843 1.30057 4.57061 1.52123C4.34279 1.74189 4.2148 2.04116 4.2148 2.35322V16.4725C4.2148 16.7846 4.34279 17.0839 4.57061 17.3045C4.79843 17.5252 5.10742 17.6491 5.4296 17.6491H10.3921C10.4783 17.8845 10.6168 18.1068 10.81 18.2963L11.3457 18.8257H5.4296C4.78523 18.8257 4.16725 18.5778 3.71161 18.1365C3.25598 17.6952 3 17.0966 3 16.4725V2.35322ZM7.8592 4.11813C7.8592 4.43019 7.73121 4.72946 7.5034 4.95012C7.27558 5.17078 6.96659 5.29474 6.6444 5.29474C6.32222 5.29474 6.01323 5.17078 5.78541 4.95012C5.55759 4.72946 5.4296 4.43019 5.4296 4.11813C5.4296 3.80608 5.55759 3.5068 5.78541 3.28614C6.01323 3.06549 6.32222 2.94152 6.6444 2.94152C6.96659 2.94152 7.27558 3.06549 7.5034 3.28614C7.73121 3.5068 7.8592 3.80608 7.8592 4.11813ZM9.6814 3.52983C9.52031 3.52983 9.36582 3.59181 9.25191 3.70214C9.138 3.81247 9.074 3.9621 9.074 4.11813C9.074 4.27416 9.138 4.4238 9.25191 4.53413C9.36582 4.64445 9.52031 4.70644 9.6814 4.70644H14.5406C14.7017 4.70644 14.8562 4.64445 14.9701 4.53413C15.084 4.4238 15.148 4.27416 15.148 4.11813C15.148 3.9621 15.084 3.81247 14.9701 3.70214C14.8562 3.59181 14.7017 3.52983 14.5406 3.52983H9.6814ZM9.6814 8.23626C9.52031 8.23626 9.36582 8.29825 9.25191 8.40857C9.138 8.5189 9.074 8.66854 9.074 8.82457C9.074 8.9806 9.138 9.13023 9.25191 9.24056C9.36582 9.35089 9.52031 9.41287 9.6814 9.41287H14.5406C14.7017 9.41287 14.8562 9.35089 14.9701 9.24056C15.084 9.13023 15.148 8.9806 15.148 8.82457C15.148 8.66854 15.084 8.5189 14.9701 8.40857C14.8562 8.29825 14.7017 8.23626 14.5406 8.23626H9.6814ZM9.074 13.531C9.074 13.375 9.138 13.2253 9.25191 13.115C9.36582 13.0047 9.52031 12.9427 9.6814 12.9427H14.5406C14.7017 12.9427 14.8562 13.0047 14.9701 13.115C15.084 13.2253 15.148 13.375 15.148 13.531C15.148 13.687 15.084 13.8367 14.9701 13.947C14.8562 14.0573 14.7017 14.1193 14.5406 14.1193H9.6814C9.52031 14.1193 9.36582 14.0573 9.25191 13.947C9.138 13.8367 9.074 13.687 9.074 13.531ZM6.6444 10.0012C6.96659 10.0012 7.27558 9.87721 7.5034 9.65656C7.73121 9.4359 7.8592 9.13662 7.8592 8.82457C7.8592 8.51251 7.73121 8.21324 7.5034 7.99258C7.27558 7.77192 6.96659 7.64796 6.6444 7.64796C6.32222 7.64796 6.01323 7.77192 5.78541 7.99258C5.55759 8.21324 5.4296 8.51251 5.4296 8.82457C5.4296 9.13662 5.55759 9.4359 5.78541 9.65656C6.01323 9.87721 6.32222 10.0012 6.6444 10.0012ZM6.6444 14.7076C6.96659 14.7076 7.27558 14.5836 7.5034 14.363C7.73121 14.1423 7.8592 13.8431 7.8592 13.531C7.8592 13.2189 7.73121 12.9197 7.5034 12.699C7.27558 12.4784 6.96659 12.3544 6.6444 12.3544C6.32222 12.3544 6.01323 12.4784 5.78541 12.699C5.55759 12.9197 5.4296 13.2189 5.4296 13.531C5.4296 13.8431 5.55759 14.1423 5.78541 14.363C6.01323 14.5836 6.32222 14.7076 6.6444 14.7076ZM19.8311 15.1218C19.9413 15.0104 20.002 14.8615 20 14.7072C19.9979 14.5529 19.9334 14.4055 19.8203 14.2969C19.7071 14.1882 19.5545 14.127 19.3951 14.1264C19.2358 14.1257 19.0826 14.1857 18.9686 14.2934L14.543 18.6234L12.5447 16.649C12.4892 16.5926 12.4226 16.5474 12.3489 16.5161C12.2752 16.4848 12.1958 16.4679 12.1153 16.4666C12.0348 16.4653 11.9548 16.4795 11.8801 16.5083C11.8053 16.5372 11.7372 16.5802 11.6797 16.6347C11.6222 16.6893 11.5765 16.7544 11.5452 16.8263C11.514 16.8981 11.4978 16.9752 11.4975 17.0532C11.4973 17.1312 11.5131 17.2084 11.544 17.2804C11.5748 17.3524 11.6202 17.4178 11.6773 17.4726L14.0207 19.7882C14.0883 19.8551 14.169 19.9082 14.2581 19.9446C14.3472 19.9809 14.4428 19.9998 14.5395 20C14.6361 20.0002 14.7319 19.9818 14.8211 19.9459C14.9104 19.9099 14.9913 19.8571 15.0593 19.7906L19.8311 15.1218Z"
-                  fill="#8A84E2"
+                  fill="#ADADC1"
                 />
               </svg>
               <a href="/tasks"
-                ><button class="slide_menu-button slide_menu__active-button">
-                  Задачи
-                </button></a
+                ><button class="slide_menu-button">Задачи</button></a
               >
             </div>
             <div class="slide_menu__button">
@@ -250,10 +252,10 @@
           </div>
         </div>
       </div>
-      <div class="tasks__wrapper">
-        <div class="tasks__header">
-          <div class="tasks__left">
-            <div class="tasks__search">
+      <div class="inventory__wrapper">
+        <div class="inventory__header">
+          <div class="inventory__left">
+            <div class="inventory__search">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -269,233 +271,237 @@
                 />
               </svg>
               <input
-                class="tasks__search-input"
+                class="inventory__search-input"
                 type="text"
                 name="search"
                 placeholder="Поиск"
+                id="inventory-searchbox"
+                oninput="filterInventory()"
               />
             </div>
-            <div class="tasks__filter">
+
+            <div class="inventory__filter">
               <select
-                class="tasks-filter"
-                id="staff-filter"
-                onchange="filterTasks()"
+                class="inventory-filter"
+                id="type-filter"
+                onchange="filterInventory()"
               >
-                <option value="placeholder" disabled selected hidden>
-                  Сотрудник
-                </option>
+                <option value="all" disabled selected hidden>Тип</option>
                 <option value="all">Все</option>
-                {%for employee in data['staff']%}
-                <option value="{{employee[1]}}">{{employee[1]}}</option>
+                {% for type in data['InventoryTypes'] %}
+                <option value="{{type['Name']}}">{{type['Name']}}</option>
                 {%endfor%}
               </select>
+            </div>
+
+            <div class="inventory__filter">
               <select
-                class="tasks-filter tasks-color"
-                id="color-filter"
-                onchange="filterTasks()"
+                class="inventory-filter"
+                id="rented-filter"
+                onchange="filterInventory()"
               >
-                <option value="placeholder" disabled selected hidden>
-                  Цвет
-                </option>
+                <option value="all" disabled selected hidden>Аренда</option>
                 <option value="all">Все</option>
-                <option value="red" style="background-color: #ff6868">
-                  Красный
-                </option>
-                <option value="blue" style="background-color: #8ac7ff">
-                  Синий
-                </option>
-                <option value="yellow" style="background-color: #ffc273">
-                  Желтый
-                </option>
-                <option value="gray" style="background-color: #cccccc">
-                  Серый
-                </option>
+                <option value="1">В аренде</option>
+                <option value="0">Не в аренде</option>
               </select>
             </div>
-            <div class="tasks__score">
-              <div class="score">
-                <div class="tasks-score">Всего задач:</div>
-                <div class="tasks-score" id="allTasksCount">
-                  {{ data['allTasksCount'] }}
-                </div>
-              </div>
-              <div class="score">
-                <div class="tasks-score">Невыполненых задач:</div>
-                <div class="tasks-score" id="uncheckedTasksCount">
-                  {{ data['uncheckedTasksCount'] }}
-                </div>
+
+            <div class="inventory__score">
+              <div id="clientsCount" class="inventory-score">
+                {{ data['lenClients'] }}
               </div>
             </div>
           </div>
-          <div class="tasks__right">
-            <div class="tasks__filter">
+
+          <div class="inventory__right">
+            <div class="inventory__filter">
               <button id="openModalButton" class="mdlbutton">
-                Добавить задачу
+                Добавить предмет
               </button>
             </div>
           </div>
         </div>
-
-        <div>
-          <table>
-            <tr>
-              <td class="table-head">Задача</td>
-              <td class="table-head">Сотрудник</td>
-              <td class="table-head">Дедлайн</td>
-              <td class="table-head">Состояние</td>
-              <td class="table-head">Удалить</td>
-            </tr>
-            {% for task in data['tasks'] %}
-            <tr
-              id="{{task['ID']}}"
-              style="background-color: {{ task['Color']}} ;"
-            >
-              <td class="table-colon">{{ task['Task'] }}</td>
-              <td class="table-colon">{{ task['Performer']['Name'] }}</td>
-              <td class="table-colon">{{ task['Deadline'] }}</td>
-              <td class="table-colon">
-                <input type="checkbox" name="taskStatus" {% if task['Status']
-                %}checked{% endif %} class="task-status-checkbox"
-                data-task-id="{{ task['ID'] }}" />
-              </td>
-              <td class="table-colon">
-                <button
-                  class="table-colon-button"
-                  onclick="Delete({{ task['ID'] }})"
-                >
-                  Удалить
-                </button>
-              </td>
-            </tr>
-            {% endfor %}
-          </table>
-
-          <div id="myModal" class="modal">
-            <div class="modal-content">
-              <div class="modal__wrapper">
-                <div class="modal__header">
-                  <h1>Новая задача</h1>
-                  <svg
-                    class="close"
-                    id="closeModalBtn"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="39"
-                    height="39"
-                    viewBox="0 0 39 39"
-                    fill="none"
-                  >
-                    <path
-                      d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
-                      fill="#DFDFE6"
-                    />
-                    <path
-                      d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
-                      fill="#23262F"
-                    />
-                    <path
-                      d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
-                      fill="#23262F"
-                    />
-                  </svg>
+        <div class="main-container">
+            <!-- First Block -->
+            <div class="first-block">
+                <div class="number-container">
+                    <div class="number">1,234</div>
                 </div>
-
-                <input
-                  type="text"
-                  id="task"
-                  class="task"
-                  placeholder="Название задачи"
-                />
-
-                <div class="tasks__center">
-                  <div class="tasks__center-text">Описание</div>
-                  <div class="tasks__center-color">
-                    <div class="text-color">Цвет</div>
-                    <div
-                      class="color-circle color-gray"
-                      style="border: 2px solid black"
-                      onclick="selectColor(this)"
-                    ></div>
-                    <div
-                      class="color-circle color-blue"
-                      onclick="selectColor(this)"
-                    ></div>
-                    <div
-                      class="color-circle color-yellow"
-                      onclick="selectColor(this)"
-                    ></div>
-                    <div
-                      class="color-circle color-red"
-                      onclick="selectColor(this)"
-                    ></div>
-                  </div>
+                <div class="arrow-container">
+                    <div class="arrow"></div>
                 </div>
-
-                <div class="tasks__employees">
-                  <svg
-                    class="task-employee"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
-                      stroke="#87898E"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
-                      stroke="#87898E"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                  <select class="employees" id="employees">
-                    <option value="placeholder" selected hidden>
-                      Выберите сотрудника
-                    </option>
-                    {% for employee in data['staff'] %}
-                    <option value="{{ employee[0] }}">{{ employee[1] }}</option>
-                    {% endfor %}
-                  </select>
-                  <svg
-                    class="task-strelka"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                  >
-                    <path
-                      d="M19.9201 8.95L13.4001 15.47C12.6301 16.24 11.3701 16.24 10.6001 15.47L4.08008 8.95"
-                      stroke="#23262F"
-                      stroke-width="1.5"
-                      stroke-miterlimit="10"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </div>
-
-                <div class="date">
-                  <input type="date" id="dueDate" />
-                </div>
-
-                <div class="tasks__end">
-                  <button class="addTaskButton" id="addTaskButton">
-                    Создать
-                  </button>
-                </div>
-              </div>
             </div>
-          </div>
+    
+            <!-- Second Block -->
+            <div class="second-block">
+                <div class="icon-container">
+                    <div class="icon"></div>
+                </div>
+                <div class="order-text">Заказов(Всего)</div>
+            </div>
+        </div>
+              
+        <div class="chart-container">
+            <canvas id="orderChart" style="padding-top: 15px;"></canvas>
         </div>
       </div>
-      <script src="/static/js/tasks.js"></script>
+      </div>
+          <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Используем moment с локалями
+                moment.locale('ru');
+
+                // Генерация массива дней от сегодняшнего дня
+                var days = [];
+                for (var i = 4; i >= 0; i--) {
+                    days.push(moment().subtract(i, 'days').format('MMM DD'));
+                }
+
+                // Замените эти данные на свои данные о заказах
+                var orders = [5, 8, 2, 7, 4];
+
+                // Создаем график с использованием Chart.js
+                var ctx = document.getElementById('orderChart').getContext('2d');
+                var orderChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: days,
+                        datasets: [{
+                            label: 'Заказы',
+                            data: orders,
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 2,
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            x: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Дни'
+                                }
+                            }],
+                            y: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Заказы'
+                                }
+                            }]
+                        }
+                    }
+                });
+            });
+        </script>
+      </div>
     </main>
   </body>
 </html>
+<style>
+    .chart-container {
+      width: 550px;
+      background-color: #ffffff;
+      height: 350px;
+      padding-left:10px;
+      padding-right: 10px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+      overflow: hidden; /* Обрезаем скругленные углы внутри контейнера */
+    }
+  
+    #orderChart {
+      width: 100%;
+      height: 100%;
+    }
+    .main-container {
+            width: 467px;
+            height: 167px;
+            position: relative;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        /* First Block Styles */
+        .first-block {
+            position: absolute;
+            left: 27px;
+            top: 77px;
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .number-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .number {
+            color: #16161D;
+            font-size: 64px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            line-height: 64px;
+            word-wrap: break-word;
+        }
+
+        .arrow-container {
+            width: 64px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .arrow {
+            width: 14px;
+            height: 14px;
+            position: relative;
+            transform: rotate(-90deg);
+            transform-origin: 0 0;
+        }
+
+        /* Second Block Styles */
+        .second-block {
+            position: absolute;
+            left: 27px;
+            top: 24px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .icon-container {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            position: relative;
+        }
+
+        .order-text {
+            color: #6E6E91;
+            font-size: 20px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            line-height: 24px;
+            word-wrap: break-word;
+        }
+  </style>

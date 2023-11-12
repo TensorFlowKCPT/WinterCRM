@@ -186,7 +186,7 @@ checkboxes.forEach(checkbox => {
 document.addEventListener('DOMContentLoaded', function () {
     var modal = document.getElementById('myModal');
     var openModalButton = document.getElementById('openModalButton');
-    var closeModalSpan = document.getElementsByClassName('svg-cross')[0];
+    var closeModalSpan = document.getElementsByClassName('close')[0];
   
     openModalButton.onclick = function () {
       modal.style.display = 'block';

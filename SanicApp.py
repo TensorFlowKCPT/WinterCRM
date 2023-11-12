@@ -245,7 +245,15 @@ async def rents(request):
     template = env.get_template('rents.html')
     render_template = template.render(data = data)
     return response.html(render_template)
-#endregion
+#endregion 
+
+@app.route("/statistics")
+async def statistic(request):
+    staff = Database.getStaffName()
+    template = env.get_template('statistics.html')
+    rendered_html = template.render(data=staff)
+
+    return html(rendered_html)
 
 #region /schedule
 # Функция для получения значений по определенной дате

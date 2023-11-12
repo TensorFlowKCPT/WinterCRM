@@ -34,7 +34,7 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <a href="#"
+              <a href="/statistics"
                 ><button class="slide_menu-button">Статистика</button></a
               >
             </div>
@@ -336,9 +336,9 @@
         <tr{% if item['Left'] <= 0 %} style="background:rgb(255, 84, 84)"{% endif %}>
             <td>{{item['Name']}}</td>
             <td>{{item['Cost']}}</td>
-            <td>{{item['Left']}} <button onclick="Add({{item['ID']}})">Добавить</button></td>
-            <td>{{item['Sold']}} <button onclick="Sell({{item['ID']}})">Продать</button></td>
-            <td><button onclick="Delete({{item['ID']}})"</button>Удалить</td>
+            <td>{{item['Left']}} <br /> <br /> <button class="td-button" onclick="Add({{item['ID']}})">Добавить</button></td>
+            <td>{{item['Sold']}} <br /> <br /> <button class="td-button" onclick="Sell({{item['ID']}})">Продать</button></td>
+            <td><button class="td-button" onclick="Delete({{item['ID']}})"</button>Удалить</td>
         </tr>
         {%endfor%}
           <!-- Добавьте другие строки с данными по мере необходимости -->
@@ -347,32 +347,35 @@
 
         <div id="myModal" class="modal">
           <div class="modal-container">
-            <svg
-              class="svg-cross"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-            >
-              <path
-                d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z"
-                fill="#DFDFE6"
-              />
-              <path
-                d="M9.17011 15.58C8.98011 15.58 8.79011 15.51 8.64011 15.36C8.35011 15.07 8.35011 14.59 8.64011 14.3L14.3001 8.63999C14.5901 8.34999 15.0701 8.34999 15.3601 8.63999C15.6501 8.92999 15.6501 9.40998 15.3601 9.69998L9.70011 15.36C9.56011 15.51 9.36011 15.58 9.17011 15.58Z"
-                fill="#23262F"
-              />
-              <path
-                d="M14.8301 15.58C14.6401 15.58 14.4501 15.51 14.3001 15.36L8.64011 9.69998C8.35011 9.40998 8.35011 8.92999 8.64011 8.63999C8.93011 8.34999 9.41011 8.34999 9.70011 8.63999L15.3601 14.3C15.6501 14.59 15.6501 15.07 15.3601 15.36C15.2101 15.51 15.0201 15.58 14.8301 15.58Z"
-                fill="#23262F"
-              />
-            </svg>
             <div class="modal__wrapper">
-              <h2>Добавить новую запись</h2>
-              <form id="addItemForm">
-                <input type="text" placeholder="name" name="name" required />
-                <input type="number" placeholder="cost" name="cost" required />
+              <div class="modal__list-header">
+                Добавить новую запись
+                <svg
+                  class="close"
+                  id="closeModalBtn"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="39"
+                  height="39"
+                  viewBox="0 0 39 39"
+                  fill="none"
+                >
+                  <path
+                    d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
+                    fill="#DFDFE6"
+                  />
+                  <path
+                    d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
+                    fill="#23262F"
+                  />
+                  <path
+                    d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
+                    fill="#23262F"
+                  />
+                </svg>
+              </div>
+              <form class="form" id="addItemForm">
+                <input class="form-input" type="text" placeholder="name" name="name" required />
+                <input class="form-input" type="number" placeholder="cost" name="cost" required />
                 <input type="submit" value="Добавить" />
               </form>
             </div>
