@@ -339,7 +339,7 @@
             <td>{{item['Type']}}</td>
             <td class="td-checkbox">
               <span style="display: none">{{item['Rented']}}</span>
-              <input type="checkbox" id="myCheckbox" {% if item['Rented'] == 1
+              <input type="checkbox" id="rentCheck" {% if item['Rented'] == 1
               or item['Rented'] == "true" %} checked="true" {%endif%} disabled "
               class="active" />
               <label for="myCheckbox"></label>
@@ -411,10 +411,10 @@
                       <input
                         type="checkbox"
                         id="rentedCheck"
-                        name="rentalStartTime"
+                        name="rentedChecker"
                       />
-                      <input type="submit" value="Добавить" />
                     </div>
+                    <input type="submit" value="Добавить" />
                   </div>
                 </form>
               </div>

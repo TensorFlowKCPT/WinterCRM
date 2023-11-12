@@ -124,7 +124,7 @@ td {
     line-height: 16px;
 }
 
-input[type="checkbox"] {
+input[id="rentCheck"] {
     display: none;
 }
 
