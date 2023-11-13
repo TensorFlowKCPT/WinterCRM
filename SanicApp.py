@@ -210,6 +210,13 @@ async def getallrents(request):
         return response.json(Rents)
     else:
         return response.json({},status=404)
+@app.route("/getrentcountbydate")
+async def get_rent_count_by_date(request):
+    rent_count_by_date = Database.countRentsByDate()
+    if rent_count_by_date:
+        return response.json(rent_count_by_date)
+    else:
+        return response.json({}, status=404)
 @app.post("/updaterent")
 async def updaterent(request):
     #Очень не факт что работает, фронта нет, не тестил

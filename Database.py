@@ -422,7 +422,11 @@ class Database:
                     })
                 
             return output
-
+    def countRentsByDate():
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT Start_Date, COUNT(*) FROM Rents GROUP BY Start_Date")
+            data = cursor.fetchall()
+        return data
     def getRents():
          with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM Rents")
