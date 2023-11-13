@@ -490,7 +490,7 @@ class Database:
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM Employees ")
             rows = cursor.fetchall()
-            output = {}
+            output = []
             if rows:
                 for row in rows:
                     output.append({
