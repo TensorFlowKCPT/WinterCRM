@@ -40,7 +40,25 @@ document.getElementById("CreateServiceBtn").addEventListener("click", function()
         console.error("Произошла ошибка: " + error);
     });
 });
-
+function Delete(id){
+        // Отправьте данные на сервер с использованием Fetch API
+        fetch("/service_delete?id="+id, {
+            method: "POST",
+        })
+        .then(response => {
+            if (response.ok) {
+                // Обработка успешной отправки данных
+                console.log("Данные успешно отправлены на сервер.");
+                location.reload()
+            } else {
+                // Обработка ошибки отправки данных
+                console.error("Ошибка при отправке данных на сервер.");
+            }
+        })
+        .catch(error => {
+            console.error("Произошла ошибка: " + error);
+        });
+}
 document.addEventListener('DOMContentLoaded', function () {
     var modal = document.getElementById('myModal');
     var openModalButton = document.getElementById('openModalBtn');

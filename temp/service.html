@@ -311,6 +311,7 @@
                 <th>Запчасти</th>
                 <th>Сумма</th>
                 <th>Оплата</th>
+                <th>Удалить</th>
               </tr>
             </thead>
 
@@ -328,6 +329,7 @@
                   <input {% if service['IsPayed'] %}checked{% endif %}
                   type="checkbox" name="" id="" onchange="UpdatePaymentStatus({{service["ID"]}})"/>
                 </th>
+                <th><button onclick="Delete({{service['ID']}})">Удалить</button></th>
                 
               </tr>
               {% endfor %}

@@ -104,6 +104,12 @@ async def updateTaskStatus(request):
 #endregion
 
 #region /service
+
+@app.post("/service_delete")
+async def delservice(request):
+    Database.delService(request.args.get('id'))
+    return response.json({"status":"ok"}, status=200)
+
 @app.route("/service", methods=['GET'])
 async def service(request):
     getClients = Database.getClients()
@@ -156,10 +162,15 @@ async def addRent(request):
         if not StartTime:
             StartTime = datetime.now().time().strftime("%H:%M:%S")
         ReturnDate = request.json.get('Return_Date')
+
         ReturnTime = request.json.get('Return_Time')
         StartItems = request.json.get('StartItems')
         ReturnedItems = request.json.get('ReturnedItems')
         ClientId = request.json.get('Client')
+        try:
+            int(ClientId)
+        except:
+            return response.json({'status':'NotAdded'}, status=200)
         Deposit = request.json.get('Deposit')
         Cost = request.json.get('Cost')
         IsPayed = request.json.get('IsPayed')
@@ -261,6 +272,14 @@ async def statistic(request):
     rendered_html = template.render(data=staff)
 
     return html(rendered_html)
+
+@app.get("/getAllStaff")
+async def getAllStaff(request):
+   return response.json(Database.getStaffAll())
+
+@app.get("/getStaffCount")
+async def getAllStaff(request):
+    return response.json(len(Database.getStaffAll()))
 
 #region /schedule
 # Функция для получения значений по определенной дате

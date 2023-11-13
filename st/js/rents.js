@@ -438,8 +438,7 @@ const FormPaymentMethodSelect = document.getElementById('FormPaymentMethodSelect
 const deposit = document.getElementById('deposit')
 const isPayed = document.getElementById('isPayed')
 const itemsSum = document.getElementById('itemsSum')
-const AddRentForm = document.getElementById("AddRentForm").addEventListener("submit", function(event){
-  event.preventDefault();
+document.getElementById("CreateRentBtn").addEventListener("click", function(){
   var rows = SelectedInventoryTable.querySelectorAll('tr');
   var idInventoryArray = [];
   rows.forEach(function (row) {
