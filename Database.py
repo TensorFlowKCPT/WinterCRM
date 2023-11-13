@@ -1,5 +1,5 @@
 import sqlite3
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 
 class Database:
@@ -442,7 +442,10 @@ class Database:
                 returnedItemsLen = 0
                 if returnedItems:
                    returnedItemsLen = len(returnedItems)
-                return_datetime = datetime.strptime(f"{row[3]} {row[4]}", "%Y-%m-%d %H:%M")
+                try:
+                    return_datetime = datetime.strptime(f"{row[3]} {row[4]}", "%Y-%m-%d %H:%M")
+                except:
+                    return_datetime = datetime.now() + timedelta(days=1)
                 output.append({
                     "ID" : row[0],
                     "Start_Date" : row[1],
@@ -578,6 +581,11 @@ class Database:
     def createService(creating_date: str, id_client: int, id_inventory:int, task: str, parts: int, cost: int, isPayed: bool):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("INSERT INTO Service (Creation_Date, Client_Id, Inventory_Id, Task, Parts, Cost, IsPayed) VALUES (?, ?, ?, ?, ?, ?, ?);", (creating_date, id_client, id_inventory, task, parts, cost, isPayed))
+    
+    def delService(id):
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("DELETE FROM Service WHERE ID = ?",(id,))
+
     def getServicesForInventory(InventoryId):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM Service WHERE Inventory_Id = ?",(InventoryId,))
@@ -640,7 +648,10 @@ class Database:
                 returnedItemsLen = 0
                 if returnedItems:
                    returnedItemsLen = len(returnedItems)
-                return_datetime = datetime.strptime(f"{row[3]} {row[4]}", "%Y-%m-%d %H:%M")
+                try:
+                    return_datetime = datetime.strptime(f"{row[3]} {row[4]}", "%Y-%m-%d %H:%M")
+                except:
+                    return_datetime = datetime.now() + timedelta(days=1)
                 output.append({
                     "ID" : row[0],
                     "Start_Date" : row[1],
