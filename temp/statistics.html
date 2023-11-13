@@ -233,29 +233,37 @@
           </div>
         </div>
       </div>
-        <div class="main-container">
-          <!-- First Block -->
-          <div class="first-block">
-            <div class="number-container">
-              <div class="number" id="rent-count">Загрузка...</div>
-            </div>
-            <div class="arrow-container">
-              <div class="arrow"></div>
+      <div class="clients__wrapper">
+        <div class="clients__header">
+          <div class="clients__left">
+            <div class="clients__search">
+              <div class="main-container">
+                <!-- First Block -->
+                <div class="first-block">
+                  <div class="number-container">
+                    <div class="number" id="rent-count">Загрузка...</div>
+                  </div>
+                  <div class="arrow-container">
+                    <div class="arrow"></div>
+                  </div>
+                </div>
+
+                <!-- Second Block -->
+                <div class="second-block">
+                  <div class="icon-container">
+                    <div class="icon"></div>
+                  </div>
+                  <div class="order-text">Заказов(Всего)</div>
+                </div>
+              </div>
+
+              <div class="chart-container">
+                <canvas id="rentCountChart" style="padding-top: 15px"></canvas>
+              </div>
             </div>
           </div>
-
-          <!-- Second Block -->
-          <div class="second-block">
-            <div class="icon-container">
-              <div class="icon"></div>
-            </div>
-            <div class="order-text">Заказов(Всего)</div>
-          </div>
         </div>
-
-        <div class="chart-container">
-          <canvas id="rentCountChart" style="padding-top: 15px"></canvas>
-        </div>
+      </div>
       </div>
       <script src="/static/js/statistics.js"></script>
     </main>
