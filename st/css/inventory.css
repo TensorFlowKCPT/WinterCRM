@@ -266,14 +266,16 @@ input[type="checkbox"]:checked+label::before {
 }
 
 #ModalSell input[type="submit"] {
-    border: none;
     background: none;
-    cursor: pointer;
-    background-color: #3772FF;
-    border-radius: 5px;
-    padding: 5px;
-    border: 1px solid #000;
-    color: #fff;
+    width: 270px;
+    height: 66px;
+    padding: 20px 0px;
+    border-radius: 10px;
+    background: var(--color-light-mode-primary-primary, #3772FF);
+
+    color: #FFF;
+    
+
 }
 
 #ModalSell input[type="submit"]:hover {
