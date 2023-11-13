@@ -273,6 +273,14 @@ async def statistic(request):
 
     return html(rendered_html)
 
+@app.get("/getAllStaff")
+async def getAllStaff(request):
+   return response.json(Database.getStaffAll())
+
+@app.get("/getStaffCount")
+async def getAllStaff(request):
+    return response.json(len(Database.getStaffAll()))
+
 #region /schedule
 # Функция для получения значений по определенной дате
 def get_data_by_date(data_list, target_date):
