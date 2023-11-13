@@ -427,6 +427,7 @@ class Database:
             cursor = conn.execute("SELECT Start_Date, COUNT(*) FROM Rents GROUP BY Start_Date")
             data = cursor.fetchall()
         return data
+    
     def getRents():
          with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM Rents")
@@ -463,13 +464,19 @@ class Database:
                     "Expired": return_datetime < current_date,
                     "paymentMethod" : row[11]
                     })
-                if output[-1]["Expired"]:
+            if output[-1]["Expired"]:
                     for item in output[-1]['StartItems']:
                         Database.UnrentInventory(item["ID"])
             return output
+         
     def UnrentInventory(id):
         with sqlite3.connect("database.db") as conn:
             conn.execute("UPDATE WinterInventory SET Rented = ? WHERE id = ?",(False,id,))
+            rows = conn.execute("SELECT * FROM Rents WHERE Return_Date > ?",(datetime.now().date(),)).fetchall()
+            for row in rows:
+                for i in json.loads(row[5]):
+                    conn.execute("UPDATE WinterInventory SET Rented = ? WHERE id = ?", (True, id,))
+            
     def getStaffName():
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT Name FROM Employees ")
@@ -483,8 +490,14 @@ class Database:
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM Employees ")
             rows = cursor.fetchall()
+            output = []
             if rows:
-                return rows
+                for row in rows:
+                    output.append({
+                        'ID':row[0],
+                        'Name':row[1]
+                    })
+                return output
             return None
     
     def UpdateServicePayment(id:int,IsPayed:bool):

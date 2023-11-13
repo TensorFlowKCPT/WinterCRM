@@ -4,16 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/slide_menu.css" />
-    <link rel="stylesheet" href="/static/css/modal-window.css" />
-    <link rel="stylesheet" href="/static/css/inventory.css" />
-    <title>Инвентарь</title>
+    <link rel="stylesheet" href="/static/css/employees.css" />
+    <title>Клиенты</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
       rel="stylesheet"
     />
   </head>
+
   <body>
     <main>
       <div class="slide_menu__wrapper">
@@ -58,7 +58,9 @@
                 />
               </svg>
               <a href="/clients"
-                ><button class="slide_menu-button">Клиенты</button></a
+                ><button class="slide_menu-button">
+                  Клиенты
+                </button></a
               >
             </div>
           </div>
@@ -68,7 +70,7 @@
             <div class="slide_menu-headling">
               <div class="slide_menu-text">Продукция</div>
             </div>
-            <div class="slide_menu__button slide_menu__active">
+            <div class="slide_menu__button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -78,13 +80,11 @@
               >
                 <path
                   d="M17.625 4.89375L10.75 1.13047C10.5202 1.00402 10.2623 0.937714 10 0.937714C9.73775 0.937714 9.47975 1.00402 9.25 1.13047L2.375 4.89375C2.129 5.02835 1.92375 5.22668 1.78079 5.46792C1.63784 5.70916 1.56244 5.98443 1.5625 6.26485V13.7352C1.56244 14.0156 1.63784 14.2908 1.78079 14.5321C1.92375 14.7733 2.129 14.9717 2.375 15.1063L9.25 18.8695C9.47971 18.9961 9.73772 19.0625 10 19.0625C10.2623 19.0625 10.5203 18.9961 10.75 18.8695L17.625 15.1063C17.871 14.9717 18.0762 14.7733 18.2192 14.5321C18.3622 14.2908 18.4376 14.0156 18.4375 13.7352V6.26485C18.4376 5.98443 18.3622 5.70916 18.2192 5.46792C18.0762 5.22668 17.871 5.02835 17.625 4.89375ZM10 2.85703L15.625 5.9375L10 9.01563L4.375 5.9375L10 2.85703ZM3.4375 7.56172L9.0625 10.6398V16.6297L3.4375 13.55V7.56172ZM10.9375 16.6297V10.6398L16.5625 7.56172V13.55L10.9375 16.6297Z"
-                  fill="#8A84E2"
+                  fill="#A8A8BD"
                 />
               </svg>
               <a href="/inventory"
-                ><button class="slide_menu-button slide_menu__active-button">
-                  Инвентарь
-                </button></a
+                ><button class="slide_menu-button">Инвентарь</button></a
               >
             </div>
             <div class="slide_menu__button">
@@ -146,7 +146,7 @@
             <div class="slide_menu-headling">
               <div class="slide_menu-text">Сотрудники</div>
             </div>
-            <div class="slide_menu__button">
+            <div class="slide_menu__button slide_menu__active">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -156,14 +156,14 @@
               >
                 <path
                   d="M18.3109 16.4063C17.2398 14.5263 15.5673 13.0615 13.5625 12.2477C14.5594 11.5 15.2959 10.4575 15.6674 9.26803C16.039 8.07853 16.0269 6.80228 15.6328 5.62006C15.2387 4.43783 14.4827 3.40956 13.4717 2.68091C12.4608 1.95225 11.2462 1.56016 10 1.56016C8.75383 1.56016 7.53924 1.95225 6.52829 2.68091C5.51734 3.40956 4.76127 4.43783 4.3672 5.62006C3.97312 6.80228 3.96101 8.07853 4.33258 9.26803C4.70415 10.4575 5.44056 11.5 6.4375 12.2477C4.43276 13.0615 2.76019 14.5263 1.68907 16.4063C1.6227 16.513 1.57846 16.6319 1.55899 16.7561C1.53952 16.8803 1.54521 17.0071 1.57572 17.129C1.60624 17.2509 1.66096 17.3654 1.73662 17.4658C1.81228 17.5661 1.90735 17.6502 2.01617 17.7131C2.12499 17.776 2.24534 17.8163 2.37007 17.8318C2.49479 17.8472 2.62135 17.8374 2.74221 17.8029C2.86307 17.7685 2.97577 17.7101 3.0736 17.6312C3.17144 17.5523 3.25242 17.4546 3.31172 17.3438C4.72735 14.8969 7.22735 13.4375 10 13.4375C12.7727 13.4375 15.2727 14.8977 16.6883 17.3438C16.8168 17.5504 17.0207 17.699 17.2568 17.7581C17.4928 17.8172 17.7427 17.7822 17.9534 17.6604C18.1641 17.5387 18.3192 17.3397 18.386 17.1057C18.4527 16.8716 18.4258 16.6208 18.3109 16.4063ZM5.9375 7.5C5.9375 6.69651 6.17577 5.91107 6.62216 5.243C7.06855 4.57492 7.70303 4.05422 8.44535 3.74674C9.18768 3.43926 10.0045 3.35881 10.7926 3.51556C11.5806 3.67231 12.3045 4.05923 12.8726 4.62738C13.4408 5.19553 13.8277 5.9194 13.9844 6.70745C14.1412 7.49549 14.0607 8.31233 13.7533 9.05465C13.4458 9.79698 12.9251 10.4315 12.257 10.8778C11.5889 11.3242 10.8035 11.5625 10 11.5625C8.92294 11.5613 7.89035 11.1329 7.12875 10.3713C6.36716 9.60965 5.93875 8.57706 5.9375 7.5Z"
-                  fill="#A8A8BD"
+                  fill="#8A84E2"
                 />
               </svg>
               <a href="#"
                 ><button class="slide_menu-button">Сотрудники</button></a
               >
             </div>
-            <div class="slide_menu__button">
+            <div class="slide_menu__button slide_menu__active-button">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -230,10 +230,10 @@
           </div>
         </div>
       </div>
-      <div class="inventory__wrapper">
-        <div class="inventory__header">
-          <div class="inventory__left">
-            <div class="inventory__search">
+      <div class="employees__wrapper">
+        <div class="employees__header">
+          <div class="employees__left">
+            <div class="employees__search">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -249,176 +249,138 @@
                 />
               </svg>
               <input
-                class="inventory__search-input"
+                class="employees__search-input"
                 type="text"
                 name="search"
                 placeholder="Поиск"
-                id="inventory-searchbox"
-                oninput="filterInventory()"
               />
             </div>
-
-            <div class="inventory__filter">
-              <select
-                class="inventory-filter"
-                id="type-filter"
-                onchange="filterInventory()"
-              >
-                <option value="all" disabled selected hidden>Тип</option>
-                <option value="all">Все</option>
-                {% for type in data['InventoryTypes'] %}
-                <option value="{{type['Name']}}">{{type['Name']}}</option>
-                {%endfor%}
+            <div class="employees__filter">
+              <select class="employees-filter" id="employees-filter">
+                <option value="placeholder" disabled selected hidden>
+                  Фильтр
+                </option>
+                <option value="option1">Опция 1</option>
+                <option value="option2">Опция 2</option>
               </select>
             </div>
-
-            <div class="inventory__filter">
-              <select
-                class="inventory-filter"
-                id="rented-filter"
-                onchange="filterInventory()"
-              >
-                <option value="all" disabled selected hidden>Аренда</option>
-                <option value="all">Все</option>
-                <option value="1">В аренде</option>
-                <option value="0">Не в аренде</option>
-              </select>
-            </div>
-
-            <div class="inventory__score">
-              <div id="clientsCount" class="inventory-score">
-                {{ data['lenClients'] }}
+            <div class="employees__score">
+              <div id="employeesCount" class="employees-score">
+                {{ data['lenEmployees'] }}
               </div>
             </div>
           </div>
 
-          <div class="inventory__right">
-            <div class="inventory__filter">
-              <button id="openModalButton" class="mdlbutton">
-                Добавить предмет
+          <div class="employees__right">
+            <div class="employees__filter">
+              <button id="deleteSelected" class="delSelectedBtn">
+                Удалить выбранных
               </button>
+              <button id="openModalBtn" class="mdlbutton">
+                Добавить сотрудника
+              </button>
+              <!-- Пример сортировки (id) -->
+              <select
+                class="employees-filter clietns-sortirovka"
+                id="sortirovka-filter"
+              >
+                <option
+                  value="default"
+                  class="clietns-sortirovka-text"
+                  selected
+                  hidden
+                >
+                  Сортировка
+                </option>
+                <option value="name">По имени</option>
+                <option value="surname">По фамилии</option>
+                <option value="lastname">По отчеству</option>
+              </select>
             </div>
           </div>
         </div>
 
-        <table>
-          <thead class="table__header">
-            <tr>
-              <th>Наименование</th>
-              <th>Тип</th>
-              <th>В аренде ли</th>
-              <th>Размер</th>
-              <th>Продать</th>
-              <th>Удалить</th>
+        <div>
+          <table id="employees-table">
+            <tr class="table__header">
+              <th>ФИО</th>
+              <th>Действия</th>
+              <th>Выбрать</th>
             </tr>
-          </thead>
-          <!-- Здесь нужно вставить данные из вашей базы данных -->
-          {% for item in data['Inventory'] %}
-          <tr id="{{item['ID']}}">
-            <td>{{item['Name']}}</td>
-            <td>{{item['Type']}}</td>
-            <td class="td-checkbox">
-              <span style="display: none">{{item['Rented']}}</span>
-              <input type="checkbox" id="rentCheck" {% if item['Rented'] == 1 or
-              item['Rented'] == "true" %} checked="true" {%endif%} disabled "
-              class="active" />
-              <label for="myCheckbox"></label>
-            </td>
-            <td>{{item['Size']}}</td>
-            <td>
-              <button
-                class="td-button"
-                onclick="openModalSell({{ item['ID'] }})"
-              >
-                Продать
-              </button>
-            </td>
-            <td>
-              <button class="td-button" onclick="Delete({{ item['ID'] }})">
-                Удалить
-              </button>
-            </td>
-          </tr>
-          {%endfor%}
-          <!-- Добавьте другие строки с данными по мере необходимости -->
-        </table>
-        <div class="modal-container">
-          <div class="modal">
-            <div class="modal__wrapper">
-              <div class="modal__list-header">
-                Добавить новую запись
-                <svg
-                  class="close"
-                  id="closeModalBtn"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="39"
-                  height="39"
-                  viewBox="0 0 39 39"
-                  fill="none"
-                >
-                  <path
-                    d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
-                    fill="#DFDFE6"
-                  />
-                  <path
-                    d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
-                    fill="#23262F"
-                  />
-                  <path
-                    d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
-                    fill="#23262F"
-                  />
-                </svg>
-              </div>
-              <form class="form" id="addItemForm">
+            {% for item in data %}
+            <tr data-id="{{item['ID']}}">
+              <td class="table-colon">{{item['Name']}}</td>
+              <td class="table-colon">
+                <button class="delete-button-employee" data-id="{{item['ID']}}">
+                  Удалить
+                </button>
+              </td>
+              <td class="table-colon">
                 <input
-                  class="form-input"
+                  type="checkbox"
+                  class="select-checkbox"
+                  data-id="{{item['ID']}}"
+                />
+              </td>
+            </tr>
+            {% endfor %}
+          </table>
+
+          <div id="myModal" class="modal">
+            <div class="modal-content">
+              <svg
+                class="close"
+                id="closeModalBtn"
+                xmlns="http://www.w3.org/2000/svg"
+                width="39"
+                height="39"
+                viewBox="0 0 39 39"
+                fill="none"
+              >
+                <path
+                  d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
+                  fill="#DFDFE6"
+                />
+                <path
+                  d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
+                  fill="#23262F"
+                />
+                <path
+                  d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
+                  fill="#23262F"
+                />
+              </svg>
+              <form id="addItemForm">
+                <input
+                  class="addItemForm-first addItemForm"
                   type="text"
-                  placeholder="Name"
-                  name="name"
+                  placeholder="ФИО Клиента"
+                  name="FIO"
                   required
                 />
-                <select class="dropdownPayment" name="type" required>
-                  {% for type in data['InventoryTypes'] %}
-                  <option value="{{ type['ID'] }}">{{type['Name']}}</option>
-                  {%endfor%}
-                </select>
-                <div class="date-picker-container">
-                  <div class="date-picker">
-                    <label for="sizeInv">Размер</label>
-                    <input
-                      type="text"
-                      id="sizeInv"
-                      name="rentalStartDate"
-                      required
-                    />
-                  </div>
-                  <div class="date-picker">
-                    <label>Rented</label>
-                    <input
-                      type="checkbox"
-                      id="rentedCheck"
-                      name="rentedChecker"
-                    />
-                  </div>
-                </div>
+                <input
+                  class="addItemForm"
+                  type="text"
+                  placeholder="Серия/Номер паспорта"
+                  name="Passport"
+                  required
+                />
+                <input
+                  class="addItemForm"
+                  type="text"
+                  placeholder="Номер телефона"
+                  name="PhoneNumber"
+                  required
+                />
                 <input type="submit" value="Добавить" />
               </form>
             </div>
           </div>
         </div>
-        <div class="modal-overlay-sell" id="ModalSell">
-          <div class="modal-content-sell">
-            <label for="cost">Цена</label>
-            <input type="text" name="cost" id="cost" />
-            <label for="comment">Комментарий</label>
-            <input type="text" name="comment" id="comment" />
-            <input type="submit" name="submit" id="submit" onclick="Sell()" />
-          </div>
-        </div>
       </div>
 
-      <script src="/static/js/inventory.js"></script>
+      <script src="/static/js/employees.js"></script>
     </main>
   </body>
 </html>
+

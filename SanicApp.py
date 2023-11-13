@@ -18,7 +18,7 @@ app.static("/static/", "./st/")
 #region /index
 @app.route("/")
 async def index(request):
-    return response.text('Hello')
+    return response.redirect('/statistics')
 #endregion
 
 #region /shop
@@ -101,6 +101,15 @@ async def updateTaskStatus(request):
     status = request.json.get('isChecked')
     Database.statusPut(idTask=taskId, status=status)
     return response.json({"status": 200})
+#endregion
+#region /employees
+
+@app.get('/employees')
+async def Employees(request):
+    getClients = Database.getStaffAll()
+    template = env.get_template('employees.html')
+    render_template = template.render(data = getClients)
+    return response.html(render_template)
 #endregion
 
 #region /service
@@ -190,7 +199,6 @@ async def addRent(request):
         return response.json({'error':str(exception)}, status=500)
     return response.json({'status':'Ok'}, status=200)
 
-
 @app.get("/getInventoryData")
 async def InventoryData(request):
     inventory = Database.getInventoryById(request.args.get('ID'))
@@ -221,6 +229,7 @@ async def getallrents(request):
         return response.json(Rents)
     else:
         return response.json({},status=404)
+    
 @app.route("/getrentcountbydate")
 async def get_rent_count_by_date(request):
     rent_count_by_date = Database.countRentsByDate()
@@ -228,6 +237,7 @@ async def get_rent_count_by_date(request):
         return response.json(rent_count_by_date)
     else:
         return response.json({}, status=404)
+    
 @app.post("/updaterent")
 async def updaterent(request):
     #Очень не факт что работает, фронта нет, не тестил
@@ -272,6 +282,14 @@ async def statistic(request):
     rendered_html = template.render(data=staff)
 
     return html(rendered_html)
+
+@app.get("/getAllStaff")
+async def getAllStaff(request):
+   return response.json(Database.getStaffAll())
+
+@app.get("/getStaffCount")
+async def getStaffCount(request):
+    return response.json(len(Database.getStaffAll()))
 
 #region /schedule
 # Функция для получения значений по определенной дате
