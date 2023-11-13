@@ -40,6 +40,21 @@ document.getElementById("CreateServiceBtn").addEventListener("click", function()
         console.error("Произошла ошибка: " + error);
     });
 });
+function SearchBox(){
+    var SearchText = document.getElementById("serviceSearch").value
+    var rows = document.getElementById("Table").children
+    for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        rowText = row.children[2].innerHTML
+        console.log(rowText)
+        console.log(SearchText)
+        if (SearchText === '' || rowText.includes(SearchText)) {
+            row.style.display = "table-row";
+        } else {
+            row.style.display = "none";
+        }
+    }
+}
 function Delete(id){
         // Отправьте данные на сервер с использованием Fetch API
         fetch("/service_delete?id="+id, {
