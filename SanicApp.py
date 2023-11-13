@@ -320,11 +320,6 @@ async def schedule(request):
     rendered_html = template.render(data=staff)
     return html(rendered_html)
 
-# Обработчик для сохранения HTML таблицы
-@app.route('/save', methods=['POST'])
-async def save(request):
-    pass
-
 @app.route('/get_password', methods=['POST'])
 async def get_password(request):
     password = "adminqwerty"

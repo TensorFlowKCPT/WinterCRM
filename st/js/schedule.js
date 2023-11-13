@@ -11,8 +11,13 @@
  // Функция для создания календаря
  async function createCalendar() {
 
-    
+    if( employeeSelect.value === "placeholder"){
+      return
+    }
     var selectedDate = new Date(document.getElementById("monthInput").value);
+    if (selectedDate.toString() === "Invalid Date"){
+      return
+    }
     var year = selectedDate.getFullYear();
     var month = selectedDate.getMonth() + 1; // Месяцы в JavaScript начинаются с 0
     // Получаем контейнер для календаря
@@ -43,9 +48,9 @@
 
     for (var i = 0; i < 7; i++) {
       for (var j = 0; j < 7; j++) {
+
         var cell = row.insertCell(j);
-        cell.classList.add('cell')
-        cell.innerHTML = dayCount;
+
         if (i === 0 && j < startingDay) {
           // Пустые ячейки до начала месяца
           continue;
@@ -55,6 +60,8 @@
           // Завершаем создание таблицы, если превышено количество дней в месяце
           break;
         }
+        
+        cell.innerHTML = dayCount;
         await fetch('/getschedule?employee='+employeeSelect.value+"&date="+year+"-"+month+"-"+dayCount, {
           method: 'GET'
         })
@@ -67,7 +74,7 @@
             cell.style.background = colors[data['status_id']]
           }
         })
-        
+        cell.classList.add('cell')
         cell.dataset.day = dayCount;
         cell.dataset.month = month;
         cell.dataset.year = year
