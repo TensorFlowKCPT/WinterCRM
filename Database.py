@@ -688,4 +688,14 @@ class Database:
                     "paymentMethod" : row[11]
                     })
             return output[0]
+        
+    def getScheduleDateAndName(name: str, date: str):
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("""
+                SELECT * FROM Employee_schedule
+                JOIN Employees ON Employee_schedule.Employee_id = Employees.ID
+                JOIN Work_status ON Employee_schedule.Status_id = Work_status.ID
+                WHERE Employees.Name = ? AND strftime('%Y-%m', Employee_schedule.Date) = ?
+                """, (name, date))
+            return cursor.fetchall()
 Database.StartDataBase()
