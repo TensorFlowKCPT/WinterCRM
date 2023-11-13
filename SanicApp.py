@@ -303,26 +303,27 @@ def get_data_by_date(data_list, target_date):
             return value
     return False  # Если данных на указанную дату нет
 
+@app.get("/getschedule")
+async def getschedule(request):
+    return response.json({"status_id":Database.getDaySchedule(request.args.get("employee"),request.args.get("date"))})
+
+@app.post("/schedule")
+async def UpdateSchedule(request):
+
+    Database.putSchedule(request.json.get('idEmployee'), request.json.get('date'), request.json.get('idStatus'))
+    return response.json({"status":"ok"}, status=200)
+
 @app.route("/schedule")
 async def schedule(request):
-    staff = Database.getStaffName()
+    staff = Database.getStaffAll()
     template = env.get_template('schedule.html')
     rendered_html = template.render(data=staff)
-
     return html(rendered_html)
 
 # Обработчик для сохранения HTML таблицы
 @app.route('/save', methods=['POST'])
 async def save(request):
     pass
-
-@app.route('/get_schedule', methods=['POST'])
-async def get_schedule(request):
-    nameEmployee = request.json.get('employee')
-    date = request.json.get('month')
-    scheduleData = Database.getScheduleDateAndName(nameEmployee, date)
-    print(scheduleData)
-    return text('hi')
 
 @app.route('/get_password', methods=['POST'])
 async def get_password(request):

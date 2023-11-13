@@ -509,6 +509,14 @@ class Database:
         with sqlite3.connect("database.db") as conn:
             conn.execute("UPDATE Service SET IsPayed = ? WHERE ID = ?",(IsPayed,id,))
             
+    def getDaySchedule(idEmployee:int, date: str):
+        with sqlite3.connect("database.db") as conn:
+            rows = conn.execute("SELECT Status_id FROM Employee_schedule WHERE Employee_id = ? AND Date = ?",(idEmployee,date,)).fetchone()
+            if rows:
+                return str(rows[0])
+            return None
+            
+
     def putSchedule(idEmployee: int, date: str, idStatus: int):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.cursor()

@@ -1,5 +1,20 @@
+ var option = 0
+ const colors = {
+  '0':"rgb(255, 255, 255)",
+  '1':"rgb(207, 232, 255)",
+  '2':"rgb(255, 207, 207)",
+  '3':"rgb(253, 255, 174)"
+ }
+ const employeeSelect = document.getElementById('employeeSelect');
+
+
  // Функция для создания календаря
- function createCalendar(year, month) {
+ async function createCalendar() {
+
+    
+    var selectedDate = new Date(document.getElementById("monthInput").value);
+    var year = selectedDate.getFullYear();
+    var month = selectedDate.getMonth() + 1; // Месяцы в JavaScript начинаются с 0
     // Получаем контейнер для календаря
     var calendarContainer = document.getElementById('calendarContainer');
 
@@ -29,7 +44,8 @@
     for (var i = 0; i < 7; i++) {
       for (var j = 0; j < 7; j++) {
         var cell = row.insertCell(j);
-
+        cell.classList.add('cell')
+        cell.innerHTML = dayCount;
         if (i === 0 && j < startingDay) {
           // Пустые ячейки до начала месяца
           continue;
@@ -39,8 +55,24 @@
           // Завершаем создание таблицы, если превышено количество дней в месяце
           break;
         }
+        await fetch('/getschedule?employee='+employeeSelect.value+"&date="+year+"-"+month+"-"+dayCount, {
+          method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+          if(data['status_id']===null){
+            cell.style.background = colors['0']
+          }
+          else{
+            cell.style.background = colors[data['status_id']]
+          }
+        })
+        
+        cell.dataset.day = dayCount;
+        cell.dataset.month = month;
+        cell.dataset.year = year
+        
 
-        cell.innerHTML = dayCount;
         dayCount++;
       }
 
@@ -53,6 +85,31 @@
 
     // Добавляем таблицу в контейнер
     calendarContainer.appendChild(table);
+    document.querySelectorAll('.cell').forEach(function(element) {
+      element.addEventListener('click', function(event) {
+        var selectedRadio = document.querySelector('input[name="radioGroup"]:checked');
+          var data = {
+            idEmployee:employeeSelect.value,
+            date:element.dataset.year+"-"+element.dataset.month+"-"+element.dataset.day,
+            idStatus:selectedRadio.value
+          }
+          fetch('/schedule', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+          .then(response => response.json())
+          .then(data => {
+            element.style.background=colors[selectedRadio.value]
+            console.log('Ответ от сервера:', data);
+          })
+          .catch(error => {
+            console.error('Ошибка при отправке запроса:', error);
+          });
+      });
+  });
   }
 
   // Обработчик изменения значения в поле выбора месяца
@@ -69,7 +126,7 @@
 document.querySelector('.getSchedule').addEventListener('submit', function(event) {
     event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
 
-    var employeeSelect = document.getElementById('employeeSelect');
+    
     var monthInput = document.getElementById('monthInput');
 
     // Подготавливаем данные для отправки на сервер
