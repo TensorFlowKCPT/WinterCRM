@@ -18,7 +18,7 @@ app.static("/static/", "./st/")
 #region /index
 @app.route("/")
 async def index(request):
-    return response.text('Hello')
+    return response.redirect('/statistics')
 #endregion
 
 #region /shop
@@ -190,7 +190,6 @@ async def addRent(request):
         return response.json({'error':str(exception)}, status=500)
     return response.json({'status':'Ok'}, status=200)
 
-
 @app.get("/getInventoryData")
 async def InventoryData(request):
     inventory = Database.getInventoryById(request.args.get('ID'))
@@ -221,6 +220,7 @@ async def getallrents(request):
         return response.json(Rents)
     else:
         return response.json({},status=404)
+    
 @app.route("/getrentcountbydate")
 async def get_rent_count_by_date(request):
     rent_count_by_date = Database.countRentsByDate()
@@ -228,6 +228,7 @@ async def get_rent_count_by_date(request):
         return response.json(rent_count_by_date)
     else:
         return response.json({}, status=404)
+    
 @app.post("/updaterent")
 async def updaterent(request):
     #Очень не факт что работает, фронта нет, не тестил
