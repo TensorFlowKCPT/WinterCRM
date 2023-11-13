@@ -168,7 +168,6 @@ class Database:
                 )
             """)
     
-
     def sellConsumable(id):
         with sqlite3.connect("database.db") as conn:
             conn.execute("UPDATE Consumables SET 'Left' = 'Left' - 1 WHERE id = ?", (id,))
@@ -195,18 +194,22 @@ class Database:
             rows = [row for row in rows]
             output["Sold"] = row[0]
             return output
+        
     def addConsumable(id, howMany):
         with sqlite3.connect("database.db") as conn:
             conn.execute("UPDATE Consumables SET 'Left' = 'Left' + ? WHERE id = ?", (howMany,id,))
         return
+    
     def addConsumableType(name, cost):
         with sqlite3.connect("database.db") as conn:
             conn.execute("INSERT INTO Consumables (Name,Cost,Left) VALUES (?,?,?)", (name, cost, 0,))
         return
+    
     def delConsumable(id):
         with sqlite3.connect("database.db") as conn:
             conn.execute("DELETE FROM Consumables WHERE ID = ?", (id,))
             conn.commit()
+
     def getConsumables():
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM Consumables")
@@ -230,7 +233,6 @@ class Database:
                 rows = [row for row in rows]
                 consumable["Sold"] = rows[0]
             return output
-
 
     def getClientRents(id):
         with sqlite3.connect("database.db") as conn:
@@ -312,6 +314,7 @@ class Database:
         with sqlite3.connect("database.db") as conn:
             conn.execute("DELETE FROM WinterInventory WHERE ID = ?", (id,))
             conn.commit()
+
     def getInventoryById(id):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM WinterInventory WHERE NOT Sold = True AND ID = ?",(id,))
@@ -333,6 +336,7 @@ class Database:
                 }
            
             return output
+        
     def getInventory():
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM WinterInventory WHERE NOT Sold = True")
@@ -367,6 +371,7 @@ class Database:
                 "PhoneNumber" : rows[3]
             }
             return client
+        
     def updateRent(id,Return_Date,Return_Time,ReturnedItems,paymentMethod,Cost,IsPayed):
         itemsdump = []
         for item in ReturnedItems:
@@ -375,8 +380,7 @@ class Database:
             for item in ReturnedItems:
                 conn.execute("UPDATE WinterInventory SET Rented = ? WHERE ID = ?",(True,item,))
             conn.execute("UPDATE Rents SET Return_Date = ?, Return_Time = ?, ReturnedItemsJSON = ?, Cost = ?, IsPayed = ?, paymentMethod = ? WHERE ID = ?", (Return_Date, Return_Time, json.dumps(itemsdump), Cost, IsPayed, paymentMethod, id))
-        
-            
+         
     def addRent(Start_Date, Start_Time, Return_Date, Return_Time, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:int, IsPayed:bool, paymentMethod: str):
         itemsdump = []
         for item in StartItems:
@@ -422,6 +426,7 @@ class Database:
                     })
                 
             return output
+         
     def countRentsByDate():
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT Start_Date, COUNT(*) FROM Rents GROUP BY Start_Date")

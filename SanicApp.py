@@ -8,12 +8,13 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 
 app = Sanic("WinterCRM")
+
 env = Environment(
     loader=FileSystemLoader('temp'),  # Папка с шаблонами
     autoescape=select_autoescape(['html', 'xml'])
 )
-app.static("/static/", "./st/")
 
+app.static("/static/", "./st/")
 
 #region /index
 @app.route("/")
@@ -102,6 +103,7 @@ async def updateTaskStatus(request):
     Database.statusPut(idTask=taskId, status=status)
     return response.json({"status": 200})
 #endregion
+
 #region /employees
 
 @app.get('/employees')
@@ -113,7 +115,6 @@ async def Employees(request):
 #endregion
 
 #region /service
-
 @app.post("/service_delete")
 async def delservice(request):
     Database.delService(request.args.get('id'))
@@ -275,6 +276,7 @@ async def rents(request):
     return response.html(render_template)
 #endregion 
 
+#region /statistics
 @app.route("/statistics")
 async def statistic(request):
     staff = Database.getStaffName()
@@ -290,6 +292,7 @@ async def getAllStaff(request):
 @app.get("/getStaffCount")
 async def getStaffCount(request):
     return response.json(len(Database.getStaffAll()))
+#endregion
 
 #region /schedule
 # Функция для получения значений по определенной дате
