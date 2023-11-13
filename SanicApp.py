@@ -288,7 +288,7 @@ async def getAllStaff(request):
    return response.json(Database.getStaffAll())
 
 @app.get("/getStaffCount")
-async def getAllStaff(request):
+async def getStaffCount(request):
     return response.json(len(Database.getStaffAll()))
 
 #region /schedule
