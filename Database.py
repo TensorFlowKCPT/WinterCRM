@@ -490,8 +490,14 @@ class Database:
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM Employees ")
             rows = cursor.fetchall()
+            output = {}
             if rows:
-                return rows
+                for row in rows:
+                    output.append({
+                        'ID':row[0],
+                        'Name':row[1]
+                    })
+                return output
             return None
     
     def UpdateServicePayment(id:int,IsPayed:bool):

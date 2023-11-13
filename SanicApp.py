@@ -102,6 +102,15 @@ async def updateTaskStatus(request):
     Database.statusPut(idTask=taskId, status=status)
     return response.json({"status": 200})
 #endregion
+#region /employees
+
+@app.get('/employees')
+async def Employees(request):
+    getClients = Database.getStaffAll()
+    template = env.get_template('employees.html')
+    render_template = template.render(data = getClients)
+    return response.html(render_template)
+#endregion
 
 #region /service
 
