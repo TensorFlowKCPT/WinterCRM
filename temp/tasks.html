@@ -266,7 +266,7 @@
                 </option>
                 <option value="all">Все</option>
                 {%for employee in data['staff']%}
-                <option value="{{employee[1]}}">{{employee[1]}}</option>
+                <option value="{{employee['Name']}}">{{employee['Name']}}</option>
                 {%endfor%}
               </select>
               <select
@@ -439,7 +439,7 @@
                       Выберите сотрудника
                     </option>
                     {% for employee in data['staff'] %}
-                    <option value="{{ employee[0] }}">{{ employee[1] }}</option>
+                    <option value="{{ employee['ID'] }}">{{ employee['Name'] }}</option>
                     {% endfor %}
                   </select>
                   <svg
