@@ -116,13 +116,14 @@ function UpdatePaymentStatus(id){
 }
 function SearchBox() {
     var input, filter, table, tr, td, i, j, txtValue;
+    var SortValue = document.getElementById("sortirovka-filter").value
     input = document.getElementById("serviceSearch");
     filter = input.value.toUpperCase();
     table = document.getElementById("Table");
     tr = table.getElementsByTagName("tr");
 
     for (i = 0; i < tr.length; i++) {
-      td = tr[i].getElementsByTagName("th");
+      td = tr[i].getElementsByTagName("td");
       for (j = 0; j < td.length; j++) {
         if (td[j]) {
           txtValue = td[j].textContent || td[j].innerText;
@@ -135,43 +136,52 @@ function SearchBox() {
         }
       }
     }
-  }
-
-  function sortTable() {
-    var table, rows, switching, i, x, y, shouldSwitch;
-    table = document.getElementById("Table");
-    switching = true;
-    
-    // Set the column index for sorting
-    var columnIndex = 1; // 1 corresponds to the "Клиент" column
-    
-    while (switching) {
-      switching = false;
-      rows = table.rows;
-
-      for (i = 1; i < rows.length - 1; i++) {
-        shouldSwitch = false;
-
-        x = rows[i].getElementsByTagName("td")[columnIndex].textContent.toLowerCase();
-        y = rows[i + 1].getElementsByTagName("td")[columnIndex].textContent.toLowerCase();
-
-        // Special handling for date column
-        if (columnIndex === 0) {
-          x = new Date(x);
-          y = new Date(y);
-        }
-
-        if (x > y) {
-          shouldSwitch = true;
-          break;
-        }
-      }
-
-      if (shouldSwitch) {
-        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-        switching = true;
-      }
+    var rows = Array.from(tr);
+    console.log(rows)
+    var data = rows.map(function(row) {
+        return {
+            id: row.id,
+            date: row.cells[0].textContent,
+            client: row.cells[1].textContent,
+            inventory: row.cells[2].textContent,
+            task: row.cells[3].textContent,
+            parts: row.cells[4].textContent,
+            cost: row.cells[5].textContent,
+            ispayed: row.cells[6].querySelector('input[type="checkbox"]').checked,
+            rowItem : row
+        };
+    });
+    if (SortValue === 'date') {
+        data.sort(function(a, b) {
+            // Сортировка по дате
+            return new Date(a.date) - new Date(b.date);
+        });
+    } else if (SortValue === "inventory") {
+        data.sort(function(a, b) {
+            // Сортировка по названию инвентаря
+            return a.inventory.localeCompare(b.inventory);
+        });
+    } else if (SortValue === "summ") {
+        data.sort(function(a, b) {
+            // Сортировка по cost
+            return parseFloat(a.cost) - parseFloat(b.cost);
+        });
+    } else if (SortValue === "clients") {
+        data.sort(function(a, b) {
+            // Сортировка по client
+            return a.client.localeCompare(b.client);
+        });
     }
+    // Удаляем текущие строки из таблицы
+    rows.forEach(function(row) {
+        row.remove();
+    });
+    data.forEach(function(item) {
+        var row = item.rowItem;
+        table.appendChild(row);
+    });
+    console.log(data)
+
   }
 
 
