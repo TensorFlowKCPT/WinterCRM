@@ -110,6 +110,16 @@ async def updateTaskStatus(request):
 #endregion
 
 #region /employees
+@app.post('/employees')
+async def addEmployee(request):
+    Database.addEmployee(request.json.get("FIO"))
+@app.post('/delete_employee')
+async def delEmployee(request):
+    try:
+        Database.DelEmployee(request.args.get('ID'))
+    except:
+        return response.json({'status':'error'}, status=500)
+    return response.json({'status':'ok'}, status=200)
 
 @app.get('/employees')
 async def Employees(request):

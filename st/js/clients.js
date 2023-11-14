@@ -211,40 +211,47 @@ document.addEventListener('click', function(event) {
     }
 });
 // СОРТИРОВКА
-const sortSelect = document.getElementById("sortirovka-filter");
-const tbody = document.querySelector("tbody");
+function sortTable() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("clients-table");
+  switching = true;
 
-sortSelect.addEventListener("change", function () {
-    sortTable(updateRows());
-});
+  // Set the column index based on the selected value
+  var columnIndex;
+  var sortBy = document.getElementById("sortirovka-filter").value;
+  switch (sortBy) {
+    case "name":
+      columnIndex = 0; // Index of the "ФИО" column
+      break;
+    case "surname":
+      columnIndex = 0; // Index of the "ФИО" column
+      break;
+    case "lastname":
+      columnIndex = 0; // Index of the "ФИО" column
+      break;
+    default:
+      return; // No sorting needed
+  }
 
-function sortTable(rowss) {
-    const sortBy = sortSelect.value;
-    rows = rowss
-    rows.sort((a, b) => {
-        const aText = a.querySelector(".table-colon").textContent.toLowerCase();
-        const bText = b.querySelector(".table-colon").textContent.toLowerCase();
+  while (switching) {
+    switching = false;
+    rows = table.rows;
 
-        if (sortBy === "name") {
-            return aText.localeCompare(bText);
-        } else if (sortBy === "surname") {
-            const aSurname = aText.split(" ")[0];
-            const bSurname = bText.split(" ")[0];
-            return aSurname.localeCompare(bSurname);
-        } else if (sortBy === "lastname") {
-            const aLastname = aText.split(" ")[2] || "";
-            const bLastname = bText.split(" ")[2] || "";
-            return aLastname.localeCompare(bLastname);
-        }
+    for (i = 1; i < rows.length - 1; i++) {
+      shouldSwitch = false;
 
-        return 0;
-    });
+      x = rows[i].getElementsByTagName("td")[columnIndex].innerText.toLowerCase();
+      y = rows[i + 1].getElementsByTagName("td")[columnIndex].innerText.toLowerCase();
 
-    tbody.innerHTML = "";
-    rows.forEach((row) => {
-        tbody.appendChild(row);
-    });
+      if (x > y) {
+        shouldSwitch = true;
+        break;
+      }
+    }
+
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
 }
-
-
-  

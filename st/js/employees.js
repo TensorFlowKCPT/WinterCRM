@@ -21,6 +21,46 @@ document.addEventListener('DOMContentLoaded', function () {
     var addItemForm = document.getElementById('addItemForm');
     addItemForm.addEventListener('submit', function (event) {
         event.preventDefault();
+        var formData = {
+            FIO: document.querySelector('input[name="FIO"]').value,
+        };
 
+        // Отправляем данные на сервер в формате JSON
+        fetch('/employees', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            location.reload()
+            console.log(data);
+        })
+        .catch(error => {
+            // Обработка ошибок
+            console.error('Ошибка:', error);
+        });
     });
+
 });
+function Delete(id){
+    fetch("/delete_employee?ID="+id, {method: "POST"})
+    location.reload()
+}
+function Search(){
+        var searchvalue = document.getElementById('employees__search').value
+        const rows = document.querySelectorAll("table tr");
+        for (let i = 1; i < rows.length; i++) {
+            const row = rows[i];
+            var RowName = row.children[0].textContent;
+            if (RowName.includes(searchvalue)) {
+                row.style.display = "table-row";
+            } else {
+                row.style.display = "none";
+            }
+        } 
+}
+
+
