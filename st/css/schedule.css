@@ -35,6 +35,10 @@ main {
     cursor: pointer;
 }
 
+.buttonName:hover {
+    background-color: rgb(196, 194, 194);
+}
+
 .monthInput {
     font-size: 15px;
     padding-left: 4px;
