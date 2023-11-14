@@ -340,7 +340,9 @@ class Database:
                 }
            
             return output
-        
+    def addEmployee(Name):
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("INSERT INTO Employees (Name) Values(?)",(Name,))
     def getInventory():
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM WinterInventory WHERE NOT Sold = True")
@@ -543,7 +545,9 @@ class Database:
             if row:
                 return row[0]
             return None
-        
+    def DelEmployee(id):
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("DELETE FROM Employees WHERE ID = ?",(id,))
     def getIdWorkStatus(status: str):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT ID FROM Work_status WHERE Status = ?", (status,))

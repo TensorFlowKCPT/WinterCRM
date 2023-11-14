@@ -243,19 +243,12 @@
               </svg>
               <input
                 class="employees__search-input"
+                id="employees__search"
                 type="text"
                 name="search"
                 placeholder="Поиск"
+                oninput="Search()"
               />
-            </div>
-            <div class="employees__filter">
-              <select class="employees-filter" id="employees-filter">
-                <option value="placeholder" disabled selected hidden>
-                  Фильтр
-                </option>
-                <option value="option1">Опция 1</option>
-                <option value="option2">Опция 2</option>
-              </select>
             </div>
             <div class="employees__score">
               <div id="employeesCount" class="employees-score">
@@ -266,29 +259,9 @@
 
           <div class="employees__right">
             <div class="employees__filter">
-              <button id="deleteSelected" class="delSelectedBtn">
-                Удалить выбранных
-              </button>
               <button id="openModalBtn" class="mdlbutton">
                 Добавить сотрудника
               </button>
-              <!-- Пример сортировки (id) -->
-              <select
-                class="employees-filter clietns-sortirovka"
-                id="sortirovka-filter"
-              >
-                <option
-                  value="default"
-                  class="clietns-sortirovka-text"
-                  selected
-                  hidden
-                >
-                  Сортировка
-                </option>
-                <option value="name">По имени</option>
-                <option value="surname">По фамилии</option>
-                <option value="lastname">По отчеству</option>
-              </select>
             </div>
           </div>
         </div>
@@ -298,22 +271,14 @@
             <tr class="table__header">
               <th>ФИО</th>
               <th>Действия</th>
-              <th>Выбрать</th>
             </tr>
             {% for item in data %}
             <tr data-id="{{item['ID']}}">
               <td class="table-colon">{{item['Name']}}</td>
               <td class="table-colon">
-                <button class="delete-button-employee" data-id="{{item['ID']}}">
+                <button class="delete-button-employee" onclick="Delete({{item['ID']}})" data-id="{{item['ID']}}">
                   Удалить
                 </button>
-              </td>
-              <td class="table-colon">
-                <input
-                  type="checkbox"
-                  class="select-checkbox"
-                  data-id="{{item['ID']}}"
-                />
               </td>
             </tr>
             {% endfor %}

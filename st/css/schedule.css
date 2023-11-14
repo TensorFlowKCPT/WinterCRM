@@ -34,7 +34,9 @@ main {
     border: 1px #E5E7EB solid;
     cursor: pointer;
 }
-
+.cell{
+    transition: 1s;
+}
 .buttonName:hover {
     background-color: rgb(196, 194, 194);
 }
