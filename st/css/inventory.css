@@ -290,3 +290,7 @@ input[type="checkbox"]:checked+label::before {
     color: #000;
     background: #2062fc;
 }
+
+.date-picker-rented {
+    display: none;
+}
