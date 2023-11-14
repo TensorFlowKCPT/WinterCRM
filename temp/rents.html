@@ -122,12 +122,17 @@
               >
             </div>
             <div class="slide_menu__button">
-              <svg xmlns="http://www.w3.org/2000/svg" 
-              width="22" 
-              height="22" 
-              viewBox="0 0 24 24">
-              <path fill="#A8A8BD" 
-                d="M12 14ZM2 20V10q0-.825.588-1.413T4 8h3V6q0-.825.588-1.413T9 4h6q.825 0 1.413.588T17 6v2h3q.825 0 1.413.588T22 10v10H2Zm6-5v1H6v-1H4v3h16v-3h-2v1h-2v-1H8Zm-4-5v3h2v-1h2v1h8v-1h2v1h2v-3H4Zm5-2h6V6H9v2Z"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#A8A8BD"
+                  d="M12 14ZM2 20V10q0-.825.588-1.413T4 8h3V6q0-.825.588-1.413T9 4h6q.825 0 1.413.588T17 6v2h3q.825 0 1.413.588T22 10v10H2Zm6-5v1H6v-1H4v3h16v-3h-2v1h-2v-1H8Zm-4-5v3h2v-1h2v1h8v-1h2v1h2v-3H4Zm5-2h6V6H9v2Z"
+                />
+              </svg>
               <a href="/service"
                 ><button class="slide_menu-button">Сервис</button></a
               >
@@ -319,32 +324,31 @@
                     Добавить
                   </button>
                 </div>
+                <div class="pole-container" id="InventoryInfoContainer">
+                  <div class="pole-1">
+                    <div class="pole__name">
+                      Название: <span id="SelectedItemName"></span>
+                    </div>
+                    <div class="pole__size">
+                      Размер: <span id="SelectedItemSize"></span>
+                    </div>
+                    <div class="pole__type">
+                      Тип: <span id="SelectedItemType"></span>
+                    </div>
+                  </div>
+                  <div class="modal__list-container">
+                    <div class="modal__list_left">
+                      <table class="table__inventory" id="service_list"></table>
+                      <button class="addItemButton" id="addServiceButton">
+                        Добавить
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div class="modal_pay__wrapper">
-            <!-- Второе поле -->
-            <div class="pole-container" id="InventoryInfoContainer">
-              <div class="pole-1">
-                <div class="pole__name">
-                  Название: <span id="SelectedItemName"></span>
-                </div>
-                <div class="pole__size">
-                  Размер: <span id="SelectedItemSize"></span>
-                </div>
-                <div class="pole__type">
-                  Тип: <span id="SelectedItemType"></span>
-                </div>
-              </div>
-              <div class="modal__list-container">
-                <div class="modal__list_left">
-                  <table class="table__inventory" id="service_list"></table>
-                  <button class="addItemButton" id="addServiceButton">
-                    Добавить
-                  </button>
-                </div>
-              </div>
-            </div>
             <select
               class="dropdownPayment"
               name="clientDropdown"

@@ -114,6 +114,14 @@ tr {
     text-transform: uppercase;
 }
 
+.th-1 {
+    border-radius: 20px 0 0 0;
+}
+
+.th-2 {
+    border-radius: 0 20px 0 0;
+}
+
 td {
     padding: 16px 24px;
     text-align: center;
@@ -274,7 +282,7 @@ input[type="checkbox"]:checked+label::before {
     background: var(--color-light-mode-primary-primary, #3772FF);
 
     color: #FFF;
-    
+
 
 }
 

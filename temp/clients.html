@@ -122,12 +122,17 @@
               >
             </div>
             <div class="slide_menu__button">
-              <svg xmlns="http://www.w3.org/2000/svg" 
-              width="22" 
-              height="22" 
-              viewBox="0 0 24 24">
-              <path fill="#A8A8BD" 
-                d="M12 14ZM2 20V10q0-.825.588-1.413T4 8h3V6q0-.825.588-1.413T9 4h6q.825 0 1.413.588T17 6v2h3q.825 0 1.413.588T22 10v10H2Zm6-5v1H6v-1H4v3h16v-3h-2v1h-2v-1H8Zm-4-5v3h2v-1h2v1h8v-1h2v1h2v-3H4Zm5-2h6V6H9v2Z"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#A8A8BD"
+                  d="M12 14ZM2 20V10q0-.825.588-1.413T4 8h3V6q0-.825.588-1.413T9 4h6q.825 0 1.413.588T17 6v2h3q.825 0 1.413.588T22 10v10H2Zm6-5v1H6v-1H4v3h16v-3h-2v1h-2v-1H8Zm-4-5v3h2v-1h2v1h8v-1h2v1h2v-3H4Zm5-2h6V6H9v2Z"
+                />
+              </svg>
               <a href="/service"
                 ><button class="slide_menu-button">Сервис</button></a
               >
@@ -248,15 +253,6 @@
                 placeholder="Поиск"
               />
             </div>
-            <div class="clients__filter">
-              <select class="clients-filter" id="clients-filter">
-                <option value="placeholder" disabled selected hidden>
-                  Фильтр
-                </option>
-                <option value="option1">Опция 1</option>
-                <option value="option2">Опция 2</option>
-              </select>
-            </div>
             <div class="clients__score">
               <div id="clientsCount" class="clients-score">
                 {{ data['lenClients'] }}
@@ -297,11 +293,11 @@
         <div>
           <table id="clients-table">
             <thead class="table__header">
-              <th>Фио</th>
+              <th class="th-1">ФИО</th>
               <th>Серия/Номер паспорта</th>
               <th>Номер телефона</th>
               <th>Действия</th>
-              <th>Выбрать</th>
+              <th class="th-2">Выбрать</th>
             </thead>
             {% for item in data['Clients'] %}
             <tr data-id="{{item['ID']}}">

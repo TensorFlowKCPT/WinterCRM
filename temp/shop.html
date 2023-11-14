@@ -249,16 +249,6 @@
                 placeholder="Поиск"
               />
             </div>
-            <!-- Для shop фильтр -->
-            <div class="shop__filter">
-              <select class="shop-filter" id="clients-filter">
-                <option value="placeholder" disabled selected hidden>
-                  Фильтр
-                </option>
-                <option value="option1">Опция 1</option>
-                <option value="option2">Опция 2</option>
-              </select>
-            </div>
             <div class="shop__score">
               <div id="clientsCount" class="shop-score">
               </div>
@@ -270,23 +260,6 @@
               <button id="openModalBtn" class="mdlbutton">
                 Добавить предмет
               </button>
-              <!-- Че будет сортивировать? -->
-              <select
-                class="shop-filter shop-sortirovka"
-                id="sortirovka-filter"
-              >
-                <option
-                  value="default"
-                  class="shop-sortirovka-text"
-                  selected
-                  hidden
-                >
-                  Сортировка
-                </option>
-                <option value="name">По имени</option>
-                <option value="surname">По фамилии</option>
-                <option value="lastname">По отчеству</option>
-              </select>
             </div>
           </div>
         </div>
@@ -295,11 +268,11 @@
         <table>
           <thead class="table__header">
             <tr>
-              <th>Наименование</th>
+              <th class="th-1">Наименование</th>
               <th>Цена</th>
               <th>Остаток</th>
               <th>Продано</th>
-              <th>Удалить</th>
+              <th class="th-2">Удалить</th>
             </tr>
           </thead>
           <!-- Здесь нужно вставить данные из вашей базы данных -->

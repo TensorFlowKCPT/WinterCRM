@@ -122,12 +122,17 @@
               >
             </div>
             <div class="slide_menu__button">
-              <svg xmlns="http://www.w3.org/2000/svg" 
-              width="22" 
-              height="22" 
-              viewBox="0 0 24 24">
-              <path fill="#A8A8BD" 
-                d="M12 14ZM2 20V10q0-.825.588-1.413T4 8h3V6q0-.825.588-1.413T9 4h6q.825 0 1.413.588T17 6v2h3q.825 0 1.413.588T22 10v10H2Zm6-5v1H6v-1H4v3h16v-3h-2v1h-2v-1H8Zm-4-5v3h2v-1h2v1h8v-1h2v1h2v-3H4Zm5-2h6V6H9v2Z"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#A8A8BD"
+                  d="M12 14ZM2 20V10q0-.825.588-1.413T4 8h3V6q0-.825.588-1.413T9 4h6q.825 0 1.413.588T17 6v2h3q.825 0 1.413.588T22 10v10H2Zm6-5v1H6v-1H4v3h16v-3h-2v1h-2v-1H8Zm-4-5v3h2v-1h2v1h8v-1h2v1h2v-3H4Zm5-2h6V6H9v2Z"
+                />
+              </svg>
               <a href="/service"
                 ><button class="slide_menu-button">Сервис</button></a
               >
@@ -297,12 +302,12 @@
         <table>
           <thead class="table__header">
             <tr>
-              <th>Наименование</th>
+              <th class="th-1">Наименование</th>
               <th>Тип</th>
               <th>В аренде ли</th>
               <th>Размер</th>
               <th>Продать</th>
-              <th>Удалить</th>
+              <th class="th-2">Удалить</th>
             </tr>
           </thead>
           <!-- Здесь нужно вставить данные из вашей базы данных -->
@@ -386,14 +391,6 @@
                       required
                     />
                   </div>
-                  <div class="date-picker">
-                    <label>Rented</label>
-                    <input
-                      type="checkbox"
-                      id="rentedCheck"
-                      name="rentedChecker"
-                    />
-                  </div>
                 </div>
                 <input type="submit" value="Добавить" />
               </form>
@@ -403,10 +400,16 @@
         <div class="modal-overlay-sell" id="ModalSell">
           <div class="modal-content-sell">
             <label for="cost">Цена</label>
-            <input type="text" name="cost" id="cost" class="form-input"/>
+            <input type="text" name="cost" id="cost" class="form-input" />
             <label for="comment">Комментарий</label>
-            <input type="text" name="comment" id="comment" class="form-input"/>
-            <input type="submit" name="submit" id="submit" onclick="Sell()" class="sellBtn" />
+            <input type="text" name="comment" id="comment" class="form-input" />
+            <input
+              type="submit"
+              name="submit"
+              id="submit"
+              onclick="Sell()"
+              class="sellBtn"
+            />
           </div>
         </div>
       </div>

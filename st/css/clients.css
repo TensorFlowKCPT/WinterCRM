@@ -105,18 +105,24 @@ tr {
     text-align: center;
 }
 
+.th-1 {
+    border-radius: 20px 0 0 0;
+}
+
+.th-2 {
+    border-radius: 0 20px 0 0;
+}
+
 /* Параметры для колонок */
 .table-colon2 {
     font-weight: 400;
-    font-display: swap;
 }
 
 .table-colon {
     padding: 10px 16px;
     color: var(--slate-800, #1E293B);
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 600;
-    font-display: swap;
     line-height: 20px;
     background-color: #FFF;
     text-align: center;
@@ -241,4 +247,4 @@ tr {
 .clients__container {
     display: flex;
     justify-content: space-between;
-  }
+}

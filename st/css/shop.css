@@ -114,6 +114,14 @@ tr {
     text-transform: uppercase;
 }
 
+.th-1 {
+    border-radius: 20px 0 0 0;
+}
+
+.th-2 {
+    border-radius: 0 20px 0 0;
+}
+
 /* Модал */
 .mdlbutton {
     width: 147px;
@@ -228,7 +236,8 @@ td {
     background: var(--color-light-mode-primary-primary, #3772FF);
     color: #FFF;
 }
- input[id="addQuantityBtn"] {
+
+input[id="addQuantityBtn"] {
     background: none;
     width: 270px;
     height: 66px;
