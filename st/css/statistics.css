@@ -13,8 +13,8 @@ main {
 }
 
 .chart-container {
-    width: 550px;
-    height: 350px;
+    width: 1600px;
+    height: 630px;
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -27,12 +27,17 @@ main {
 }
 
 .main-container {
-    width: 457px;
     height: 167px;
     position: relative;
     background: white;
+    display: flex; /* Use flexbox */
     border-radius: 16px;
     overflow: hidden;
+}
+
+.main-container > * {
+    flex: 1; /* Each child takes equal width */
+    margin-right: 10px; 
 }
 
 /* First Block Styles */

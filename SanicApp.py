@@ -378,6 +378,26 @@ async def clients(request):
     rendered_html = template.render(data=Data)
 
     return html(rendered_html)
+
+@app.route('/clientsCount', methods=['GET'])
+async def clientsCount(request):
+    # Получение клиентов из БД, создание словаря и занесение в него данных.
+    clients = Database.getClients()
+    Data = {}
+    Data['lenClients'] = "0 клиентов"
+    if clients:
+        Data['Clients'] = clients
+        # Динамический показ количества клиентов.
+        lenClients = len(clients)
+        if lenClients % 10 == 1 and lenClients % 100 != 11:
+            lenClients = str(len(clients)) + " клиент"
+        elif 2 <= lenClients % 10 <= 4 and (lenClients % 100 < 10 or lenClients % 100 >= 20):
+            lenClients = str(len(clients)) + " клиента"
+        else:
+            lenClients = str(len(clients)) + " клиентов"
+        Data['lenClients'] = lenClients
+
+    return response.json(Data, status = 200)
 #endregion
 
 #region /inventory
