@@ -130,7 +130,7 @@
     padding: 7px;
     /* display: flex; */
     position: absolute;
-    top: -25%;
+    top: -50%;
     left: 35%;
     gap: 200px;
 }
@@ -150,6 +150,7 @@
 
 .date-picker-container-2 {
     gap: 200px;
+    flex-direction: row-reverse;
 }
 
 .date-picker {
@@ -203,8 +204,8 @@
 }
 
 .date-picker-container-2 input[type="text"] {
-    width: 92px;
-    align-items: center;
+    width: 109px;
+    height: 6px;
 }
 
 /* для списков */
@@ -250,6 +251,19 @@
 }
 
 #addItemForm input[type="submit"]:hover {
+    color: #000;
+    background: #2062fc;
+}
+
+#CreateRentBtn {
+    background: none;
+    width: 105px;
+    border-radius: 10px;
+    background: var(--color-light-mode-primary-primary, #3772FF);
+    color: #FFF;
+}
+
+#CreateRentBtn:hover {
     color: #000;
     background: #2062fc;
 }
