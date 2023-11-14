@@ -1,9 +1,9 @@
  var option = 0
  const statuses = {
-  '0':{'color':"rgb(255, 255, 255)","status":"",'backgroundColor':" style='background-color: rgb(255, 255, 255)'"},
-  '1':{'color':"rgb(207, 232, 255)","status":"Работает",'backgroundColor':" style='background-color: rgb(173, 215, 255)'"},
-  '2':{'color':"rgb(255, 207, 207)","status":"Болеет",'backgroundColor':" style='background-color: rgb(255, 187, 187)'"},
-  '3':{'color':"rgb(255, 255, 174)","status":"Отпуск",'backgroundColor':" style='background-color: rgb(255, 255, 150)'"}
+  '0':{'color':"rgb(255, 255, 255)","status":"",'backgroundColor':" style='color: rgb(255, 255, 255)'"},
+  '1':{'color':"rgb(207, 232, 255)","status":"Работает",'backgroundColor':" style='color: rgb(143, 175, 255)'"},
+  '2':{'color':"rgb(255, 207, 207)","status":"Болеет",'backgroundColor':" style='color: rgb(255, 157, 157)'"},
+  '3':{'color':"rgb(255, 255, 174)","status":"Отпуск",'backgroundColor':" style='color: rgb(235, 225, 110)'"}
  }
  const employeeSelect = document.getElementById('employeeSelect');
 
@@ -112,7 +112,8 @@
           .then(response => response.json())
           .then(data => {
             element.style.background=statuses[selectedRadio.value]['color']
-            element.innerHTML = element.dataset.day +"<br><h1 style="+statuses[data['status_id']]['backgroundColor']+">"+ statuses[data['status_id']]['status']+"</h1>"
+            element.innerHTML = ""
+            element.innerHTML = element.dataset.day +"<br><h1"+statuses[selectedRadio.value]['backgroundColor']+">"+ statuses[selectedRadio.value]['status']+"</h1>"
             console.log('Ответ от сервера:', data);
           })
           .catch(error => {
