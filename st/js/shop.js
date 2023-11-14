@@ -1,16 +1,36 @@
-document.addEventListener('DOMContentLoaded', function () {
-    var modal = document.getElementById('myModal');
-    var openModalButton = document.getElementById('openModalBtn');
-    var closeModalSpan = document.getElementsByClassName('close')[0];
-  
-    openModalButton.onclick = function () {
-      modal.style.display = 'block';
-    };
-  
-    closeModalSpan.onclick = function () {
-      modal.style.display = 'none';
-    };
+
+  var currentItemID;
+
+  function openModal(itemId) {
+    currentItemID = itemId;
+
+    document.getElementById('itemIDInput').value = currentItemID;
+
+    document.getElementById('quantityModal').style.display = 'block';
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    var addButtons = document.querySelectorAll('.addButton');
+        addButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var itemId = 
+            console.log('Clicked. Item ID:', itemId);
+            openModal(itemId);
+        });
+        });
+
+    document.getElementById('closeQuantityModalBtn').addEventListener('click', function () {
+      document.getElementById('quantityModal').style.display = 'none';
+    });
+
+    document.getElementById('quantityForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      var submittedItemID = document.getElementById('itemIDInput').value;
+
+      document.getElementById('quantityModal').style.display = 'none';
+    });
   });
+
 
     function Delete(btnid) {
             fetch("/del-consumable", {
