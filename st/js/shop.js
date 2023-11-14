@@ -1,4 +1,17 @@
 
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('myModal');
+    var openModalButton = document.getElementById('openModalBtn');
+    var closeModalSpan = document.getElementsByClassName('close')[0];
+  
+    openModalButton.onclick = function () {
+      modal.style.display = 'block';
+    };
+  
+    closeModalSpan.onclick = function () {
+      modal.style.display = 'none';
+    };
+  });
   var currentItemID;
 
   function openModal(itemId) {
