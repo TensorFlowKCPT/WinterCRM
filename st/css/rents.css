@@ -115,6 +115,10 @@ tr {
     background-color: var(--gray-50, #F9FAFB);
 }
 
+.table-row:hover {
+    background-color: #F9FAFB;
+}
+
 input[id="rentCheck"] {
     display: none;
 }

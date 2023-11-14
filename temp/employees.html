@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/slide_menu.css" />
     <link rel="stylesheet" href="/static/css/employees.css" />
-    <title>Клиенты</title>
+    <title>Сотрудники</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -58,9 +58,7 @@
                 />
               </svg>
               <a href="/clients"
-                ><button class="slide_menu-button">
-                  Клиенты
-                </button></a
+                ><button class="slide_menu-button">Клиенты</button></a
               >
             </div>
           </div>
@@ -122,12 +120,17 @@
               >
             </div>
             <div class="slide_menu__button">
-              <svg xmlns="http://www.w3.org/2000/svg" 
-              width="22" 
-              height="22" 
-              viewBox="0 0 24 24">
-              <path fill="#A8A8BD" 
-                d="M12 14ZM2 20V10q0-.825.588-1.413T4 8h3V6q0-.825.588-1.413T9 4h6q.825 0 1.413.588T17 6v2h3q.825 0 1.413.588T22 10v10H2Zm6-5v1H6v-1H4v3h16v-3h-2v1h-2v-1H8Zm-4-5v3h2v-1h2v1h8v-1h2v1h2v-3H4Zm5-2h6V6H9v2Z"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#A8A8BD"
+                  d="M12 14ZM2 20V10q0-.825.588-1.413T4 8h3V6q0-.825.588-1.413T9 4h6q.825 0 1.413.588T17 6v2h3q.825 0 1.413.588T22 10v10H2Zm6-5v1H6v-1H4v3h16v-3h-2v1h-2v-1H8Zm-4-5v3h2v-1h2v1h8v-1h2v1h2v-3H4Zm5-2h6V6H9v2Z"
+                />
+              </svg>
               <a href="/service"
                 ><button class="slide_menu-button">Сервис</button></a
               >
@@ -153,7 +156,9 @@
                 />
               </svg>
               <a href="/employees"
-                ><button class="slide_menu-button slide_menu__active-button">Сотрудники</button></a
+                ><button class="slide_menu-button slide_menu__active-button">
+                  Сотрудники
+                </button></a
               >
             </div>
             <div class="slide_menu__button slide_menu__active-button">
@@ -269,14 +274,18 @@
         <div>
           <table id="employees-table">
             <tr class="table__header">
-              <th>ФИО</th>
-              <th>Действия</th>
+              <th class="th-1">ФИО</th>
+              <th class="th-2">Действия</th>
             </tr>
             {% for item in data %}
             <tr data-id="{{item['ID']}}">
               <td class="table-colon">{{item['Name']}}</td>
               <td class="table-colon">
-                <button class="delete-button-employee" onclick="Delete({{item['ID']}})" data-id="{{item['ID']}}">
+                <button
+                  class="delete-button-employee"
+                  onclick="Delete({{item['ID']}})"
+                  data-id="{{item['ID']}}"
+                >
                   Удалить
                 </button>
               </td>
@@ -327,4 +336,3 @@
     </main>
   </body>
 </html>
-
