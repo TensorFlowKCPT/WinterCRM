@@ -115,14 +115,43 @@ tr {
     background-color: var(--gray-50, #F9FAFB);
 }
 
+input[id="rentCheck"] {
+    display: none;
+}
+
+input[type="checkbox"]+label {
+    position: relative;
+    padding-left: 30px;
+}
+
+input[type="checkbox"]+label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    display: block;
+}
+
+input[type="checkbox"]:checked+label::before {
+    content: '✔';
+    font-size: 16px;
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    background-color: #3772FF;
+}
+
 /* Параметры колонок */
 .colone {
     color: var(--gray-500, #6B7280);
     text-align: center;
-    font-size: 24px;
+    font-size: 21px;
     font-weight: 600;
     line-height: 20px;
-    padding: 16px 24px;
+    padding: 16px 18px;
 }
 
 .colone-status {
@@ -150,4 +179,58 @@ tr {
 
 .close2 {
     float: right;
+}
+
+#SelectedInventoryTable td {
+    color: var(--gray-500, #6B7280);
+    text-align: center;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 16px 18px;
+}
+
+#SelectedInventoryTable td:hover {
+    background-color: #c0c0c0;
+}
+
+#NotRentedInventoryTable tr:hover {
+    background-color: #c0c0c0;
+}
+
+.form-input {
+    width: 370px;
+    box-sizing: border-box;
+    padding: 16px 16px 16px 30px;
+    background: #FCFCFD;
+    border-radius: 12px;
+    border: 2px #DFDFE6 solid;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+    display: inline-flex;
+    margin-bottom: 30px;
+}
+
+.service-modal {
+    text-align: center;
+    color: #000;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 30px;
+}
+
+.service-btn {
+    background: none;
+    width: 270px;
+    height: 66px;
+    padding: 20px 0px;
+    border-radius: 10px;
+    background: var(--color-light-mode-primary-primary, #3772FF);
+    color: #FFF;
+}
+
+.service-btn:hover {
+    color: #000;
+    background: #2062fc;
 }

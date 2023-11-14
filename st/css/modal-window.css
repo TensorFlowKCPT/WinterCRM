@@ -127,13 +127,18 @@
 /* ПОЛЕ 1 */
 .pole-container {
     display: none;
-    gap: 5px;
+    gap: 65px;
 }
 
 .pole-1 {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    padding: 0 4px 4px;
+    border-radius: 5px;
+    background: var(--gray-50, #F9FAFB);
+    height: 72px;
+    padding: 10px 10px;
 }
 
 /* Календарь */
@@ -250,6 +255,19 @@
     background: #2062fc;
 }
 
+.SaveRentBtn {
+    background: none;
+    width: 105px;
+    border-radius: 10px;
+    background: var(--color-light-mode-primary-primary, #3772FF);
+    color: #FFF;
+}
+
+.SaveRentBtn:hover {
+    color: #000;
+    background: #2062fc;
+}
+
 #CreateRentBtn {
     background: none;
     width: 105px;
@@ -326,12 +344,12 @@
 
 .service-modal {
     background: #FCFCFD;
-    padding: 10px 5px;
+    padding: 25px 5px;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin: 20px auto 10px;
     display: none;
-    width: 400px;
+    width: 40%;
 }
 
 .service__wrapper {

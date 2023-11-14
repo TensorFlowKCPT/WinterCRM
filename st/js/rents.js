@@ -65,8 +65,14 @@ function UpdateRents(){
         checkbox.type = "checkbox"
         checkbox.checked = dataRow.IsPayed
         checkbox.disabled = true
+        checkbox.style.display="none"
+        var label = document.createElement('label');
+        label.htmlFor = "myCheckbox";
         Payed.appendChild(checkbox)
-        tr.appendChild(Payed);
+        Payed.appendChild(label);
+
+    // Добавляем ячейку в строку
+    tr.appendChild(Payed);
         var Items = document.createElement('td');
         Items.textContent = dataRow.StartItems.length
         tr.appendChild(Items);
@@ -119,7 +125,7 @@ document.getElementById("openCreateRentModalBtn").addEventListener("click", func
       });
       SelectedInventoryTable.appendChild(headerRow)
       ServiceList.innerHTML = ""
-      var headers = ['Поломки'];
+      var headers = ['appendChildПоломки'];
       var headerRow = document.createElement('tr');
 
       headers.forEach(function(headerText) {

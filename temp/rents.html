@@ -445,8 +445,8 @@
                 id="itemsSum"
               />
               <input id="CreateRentBtn" type="submit" value="Создать" />
+              <button class="SaveRentBtn" id="SaveRentBtn">Сохранить</button>
             </div>
-            <button id="SaveRentBtn">Сохранить</button>
           </div>
         </div>
       </div>
@@ -491,7 +491,6 @@
                   fill="#64748B"
                 />
               </svg>
-              <!-- Не парься, главное чтобы выглядело адекватно, подвяжем мы сам -->
               <input
                 id="inventory-searchbox"
                 class="rents__search-input"
@@ -534,12 +533,15 @@
           <div class="service__wrapper">
             <form id="addServiceForm" action="">
               <input
+                class="form-input"
                 type="text"
                 name="ToDo"
                 id="ToDo"
                 placeholder="Что нужно сделать?"
               />
-              <input type="submit" value="Добавить" />
+              <div>
+                <input class="service-btn" type="submit" value="Добавить" />
+              </div>
             </form>
           </div>
         </div>

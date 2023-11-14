@@ -97,7 +97,7 @@ tr {
     color: var(--gray-500, #6B7280);
     font-size: 14px;
     font-weight: 600;
-    line-height: 20px;
+    line-height: 12px;
     align-items: center;
     text-align: start;
     padding: 10px 16px;
