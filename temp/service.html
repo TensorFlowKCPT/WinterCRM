@@ -286,7 +286,7 @@
                 >
                   Сортировка
                 </option>
-                <option value="fio">По ФИО</option>
+                <option value="clients">По клиентам</option>
                 <option value="date">По дате</option>
                 <option value="inventory">По инвентарю</option>
                 <option value="summ">По сумме</option>
@@ -314,17 +314,17 @@
               {% for service in data["service"] %}
               <tr id="{{service["ID"]}}">
                 
-                <th>{{ service['Creation_Date'] }}</th>
-                <th class="content-1">{{ service['Client']['FIO'] }}</th>
-                <th class="content-1">{{ service['Inventory']['Name'] }}</th>
-                <th>{{ service['Task'] }}</th>
-                <th>{{ service['Parts'] }}</th>
-                <th>{{ service['Cost'] }}</th>
-                <th>
+                <td>{{ service['Creation_Date'] }}</td>
+                <td class="content-1">{{ service['Client']['FIO'] }}</td>
+                <td class="content-1">{{ service['Inventory']['Name'] }}</td>
+                <td>{{ service['Task'] }}</td>
+                <td>{{ service['Parts'] }}</td>
+                <td>{{ service['Cost'] }}</td>
+                <td>
                   <input {% if service['IsPayed'] %}checked{% endif %}
                   type="checkbox" name="" id="" onchange="UpdatePaymentStatus({{service["ID"]}})"/>
-                </th>
-                <th><button onclick="Delete({{service['ID']}})">Удалить</button></th>
+                </td>
+                <td><button onclick="Delete({{service['ID']}})">Удалить</button></td>
                 
               </tr>
               {% endfor %}

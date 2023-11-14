@@ -138,55 +138,40 @@ function SearchBox() {
   }
 
   function sortTable() {
-    var table = document.getElementById("Table");
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("Table");
+    switching = true;
     
-    // Проверка наличия tbody в таблице, если его нет - создаем новый
-    var tbody = table.getElementsByTagName("tbody")[0];
-    if (!tbody) {
-        tbody = document.createElement("tbody");
-        table.appendChild(tbody);
+    // Set the column index for sorting
+    var columnIndex = 1; // 1 corresponds to the "Клиент" column
+    
+    while (switching) {
+      switching = false;
+      rows = table.rows;
+
+      for (i = 1; i < rows.length - 1; i++) {
+        shouldSwitch = false;
+
+        x = rows[i].getElementsByTagName("td")[columnIndex].textContent.toLowerCase();
+        y = rows[i + 1].getElementsByTagName("td")[columnIndex].textContent.toLowerCase();
+
+        // Special handling for date column
+        if (columnIndex === 0) {
+          x = new Date(x);
+          y = new Date(y);
+        }
+
+        if (x > y) {
+          shouldSwitch = true;
+          break;
+        }
+      }
+
+      if (shouldSwitch) {
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
     }
+  }
 
-    var rows = Array.from(tbody.getElementsByTagName("tr"));
-    var selectedValue = document.getElementById("sortirovka-filter").value;
-
-    // Сортировка массива в зависимости от выбранного значения
-    switch (selectedValue) {
-        case "fio":
-            rows.sort(function (a, b) {
-                var nameA = a.getElementsByClassName("content-1")[0].textContent.toUpperCase();
-                var nameB = b.getElementsByClassName("content-1")[0].textContent.toUpperCase();
-                return nameA.localeCompare(nameB);
-            });
-            break;
-        case "date":
-            rows.sort(function (a, b) {
-                var dateA = new Date(a.getElementsByTagName("th")[0].textContent);
-                var dateB = new Date(b.getElementsByTagName("th")[0].textContent);
-                return dateA - dateB;
-            });
-            break;
-        case "inventory":
-            rows.sort(function (a, b) {
-                var inventoryA = a.getElementsByClassName("content-1")[1].textContent.toUpperCase();
-                var inventoryB = b.getElementsByClassName("content-1")[1].textContent.toUpperCase();
-                return inventoryA.localeCompare(inventoryB);
-            });
-            break;
-        case "summ":
-            rows.sort(function (a, b) {
-                var sumA = parseInt(a.getElementsByTagName("th")[5].textContent);
-                var sumB = parseInt(b.getElementsByTagName("th")[5].textContent);
-                return sumA - sumB;
-            });
-            break;
-        default:
-            break;
-    }
-
-    // Переставляем строки в DOM в соответствии с порядком в отсортированном массиве
-    rows.forEach(function (row) {
-        tbody.appendChild(row);
-    });
-}
 
