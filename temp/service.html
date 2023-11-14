@@ -314,17 +314,17 @@
               {% for service in data["service"] %}
               <tr id="{{service["ID"]}}">
                 
-                <td>{{ service['Creation_Date'] }}</td>
-                <td class="content-1">{{ service['Client']['FIO'] }}</td>
-                <td class="content-1">{{ service['Inventory']['Name'] }}</td>
-                <td>{{ service['Task'] }}</td>
-                <td>{{ service['Parts'] }}</td>
-                <td>{{ service['Cost'] }}</td>
-                <td>
+                <td class="table-colon">{{ service['Creation_Date'] }}</td>
+                <td class="table-colon">{{ service['Client']['FIO'] }}</td>
+                <td class="table-colon">{{ service['Inventory']['Name'] }}</td>
+                <td class="table-colon">{{ service['Task'] }}</td>
+                <td class="table-colon">{{ service['Parts'] }}</td>
+                <td class="table-colon">{{ service['Cost'] }}</td>
+                <td class="table-colon">
                   <input {% if service['IsPayed'] %}checked{% endif %}
                   type="checkbox" name="" id="" onchange="UpdatePaymentStatus({{service["ID"]}})"/>
                 </td>
-                <td><button onclick="Delete({{service['ID']}})">Удалить</button></td>
+                <td class="table-colon"><button class="delServiceBtn" onclick="Delete({{service['ID']}})">Удалить</button></td>
                 
               </tr>
               {% endfor %}
