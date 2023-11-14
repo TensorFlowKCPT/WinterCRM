@@ -228,6 +228,15 @@ td {
     background: var(--color-light-mode-primary-primary, #3772FF);
     color: #FFF;
 }
+ input[id="addQuantityBtn"] {
+    background: none;
+    width: 270px;
+    height: 66px;
+    padding: 20px 0px;
+    border-radius: 10px;
+    background: var(--color-light-mode-primary-primary, #3772FF);
+    color: #FFF;
+}
 
 #addItemForm input[type="submit"]:hover {
     color: #000;

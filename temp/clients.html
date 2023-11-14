@@ -295,13 +295,13 @@
 
         <div>
           <table id="clients-table">
-            <tr class="table__header">
+            <thead class="table__header">
               <th>Фио</th>
               <th>Серия/Номер паспорта</th>
               <th>Номер телефона</th>
               <th>Действия</th>
               <th>Выбрать</th>
-            </tr>
+            </thead>
             {% for item in data['Clients'] %}
             <tr data-id="{{item['ID']}}">
               <td class="table-colon">{{item['FIO']}}</td>
