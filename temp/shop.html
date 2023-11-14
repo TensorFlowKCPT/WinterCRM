@@ -311,8 +311,8 @@
             <td>{{item['Cost']}}</td>
             <td>{{item['Left']}} <br /> <br /> <button class="td-button" onclick="Add({{item['ID']}})">Добавить</button></td>
             <td>{{item['Sold']}} <br /> <br /> <button class="td-button" onclick="Sell({{item['ID']}})">Продать</button></td>
-            <td><button class="td-button" onclick="Delete({{item['ID']}})"</button>Удалить</td>
-        </tr>
+            <td><button class="td-button" onclick="Delete({{item['ID']}})">Удалить</button></td>
+          </tr>
         {%endfor%}
           <!-- Добавьте другие строки с данными по мере необходимости -->
         </table>

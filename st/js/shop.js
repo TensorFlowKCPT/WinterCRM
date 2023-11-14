@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
   });
 
-function Delete(btnid) {
+    function Delete(btnid) {
             fetch("/del-consumable", {
                 method: "POST",
                 headers: {
@@ -28,7 +28,6 @@ function Delete(btnid) {
                 }
             })
             .then(data => {
-                // Обработка данных после успешного запроса
                 console.log("Успешно удалено", data);
                 location.reload();
             })
@@ -37,12 +36,18 @@ function Delete(btnid) {
             });
         }
         function Add(btnid){
+            const itemData = {
+                id: btnid
+            };
+        
+            console.log("Отправка данных на сервер:", itemData);
+        
             fetch("/add-consumable", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ id: btnid })
+                body: JSON.stringify(itemData)
             })
             .then(response => {
                 if (response.ok) {
@@ -52,7 +57,6 @@ function Delete(btnid) {
                 }
             })
             .then(data => {
-                // Обработка данных после успешного запроса
                 console.log("Успешно добавлено", data);
                 location.reload();
             })
@@ -60,7 +64,9 @@ function Delete(btnid) {
                 console.error("Ошибка при отправке запроса:", error);
             });
         }
+        let sellingInProgress = false;
         function Sell(btnid){
+            console.log("Продажа товара с ID:", btnid);
             fetch("/sell-consumable", {
                 method: "POST",
                 headers: {
@@ -77,7 +83,7 @@ function Delete(btnid) {
             })
             .then(data => {
                 // Обработка данных после успешного запроса
-                console.log("Успешно добавлено", data);
+                console.log("Успешно продано", data);
                 location.reload();
             })
             .catch(error => {
@@ -101,9 +107,18 @@ function Delete(btnid) {
             cells[2].innerText = 0;
             cells[3].innerText = 0;
             var button = document.createElement("button");
+            button.textContent = "Удалить";
+            
+            button.onclick = function () {
+                Delete(id);
+            };
+            
+            cells[4].appendChild(button);
             button.textContent = "Удалить"
             
-            button.onclick = Delete(id)
+            button.onclick = function () {
+                Delete(id);
+            };
             cells[4].appendChild(button)
             
             const formData = new FormData();
