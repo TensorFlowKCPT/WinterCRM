@@ -233,8 +233,8 @@
       <div id="calendarContainer"></div>
 
       <div class="employees__wrapper">
-          <form class="getSchedule" action="">
-            <select id="employeeSelect" class="dropdown" onchange="createCalendar()">
+        <form class="getSchedule" action="">
+          <select id="employeeSelect" class="dropdown" onchange="createCalendar()">
               <option value="placeholder" disabled selected hidden>
                 Выберите сотрудника
               </option>
@@ -242,33 +242,47 @@
               <option value="{{ emp["ID"] }}">{{ emp["Name"] }}</option>
               {% endfor %}
             </select>
-            <label for="monthInput">Выберите месяц и год:</label>
-            <input type="month" id="monthInput" name="month" onchange="createCalendar()">
-          </form>
-        
+          <label class="monthInput" for="monthInput"
+            >Выберите месяц и год:</label
+          >
+          <input
+            type="month"
+            id="monthInput"
+            name="month"
+            onchange="createCalendar()"
+          />
+        </form>
+
         <div style="display: none" class="status">
-          <input type="radio" id="1" name="radioGroup" value="1" />
-          <label style="background-color: rgb(207, 232, 255)" for="option1"
-            >Работает</label
-          >
+          <div class="status__label">
+            <input type="radio" id="1" name="radioGroup" value="1" />
+            <label style="background-color: rgb(207, 232, 255)" for="option1"
+              >Работает</label
+            >
+          </div>
 
-          <input type="radio" id="2" name="radioGroup" value="2" />
-          <label style="background-color: rgb(255, 207, 207)" for="option2"
-            >Болеет</label
-          >
+          <div class="status__label">
+            <input type="radio" id="2" name="radioGroup" value="2" />
+            <label style="background-color: rgb(255, 207, 207)" for="option2"
+              >Болеет</label
+            >
+          </div>
 
-          <input type="radio" id="3" name="radioGroup" value="3" />
-          <label style="background-color: rgb(253, 255, 174)" for="option3"
-            >Отпуск</label
-          >
+          <div class="status__label">
+            <input type="radio" id="3" name="radioGroup" value="3" />
+            <label style="background-color: rgb(253, 255, 174)" for="option3"
+              >Отпуск</label
+            >
+          </div>
 
-          <input type="radio" id="0" name="radioGroup" value="0" />
-          <label style="background-color: rgb(255, 255, 255)" for="option3"
-            >Не Работает</label
-          >
-
+          <div class="status__label">
+            <input type="radio" id="0" name="radioGroup" value="0" />
+            <label style="background-color: rgb(255, 255, 255)" for="option3"
+              >Не работает</label
+            >
+          </div>
         </div>
-        <div>
+        <div class="employees__password">
           <input
             type="password"
             id="password"
