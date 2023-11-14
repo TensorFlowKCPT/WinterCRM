@@ -173,36 +173,40 @@ class Database:
             conn.execute("UPDATE Consumables SET 'Left' = 'Left' - 1 WHERE id = ?", (id,))
             conn.execute("INSERT INTO Shop (ConsumableId) VALUES (?)", (id,))
 
+
     def getConsumableById(id):
         with sqlite3.connect("database.db") as conn:
-            cursor = conn.execute("SELECT * FROM Consumables WHERE id = ?")
-            rows = cursor.fetchone()
-            if not rows:
+            cursor = conn.execute("SELECT * FROM Consumables WHERE id = ?", (id,))
+            row = cursor.fetchone()
+            if not row:
                 return None
-            rows = [row for row in rows]
-            output = {}
-            row = rows[0]
-            output={
-                "ID" : row[0],
+
+            output = {
+                "ID": row[0],
                 "Name": row[1],
-                "Cost" : row[2],
-                "Left" : row[3]}
-            cursor = conn.execute("SELECT Count() FROM Shop WHERE ConsumableId = ?",(id,))
-            rows = cursor.fetchone()
-            if not rows:
-                return output
-            rows = [row for row in rows]
-            output["Sold"] = row[0]
+                "Cost": row[2],
+                "Left": row[3]
+            }
+
+            cursor = conn.execute("SELECT Count() FROM Shop WHERE ConsumableId = ?", (id,))
+            sold_count = cursor.fetchone()
+
+            if sold_count:
+                output["Sold"] = sold_count[0]
+            else:
+                output["Sold"] = 0
+
             return output
         
     def addConsumable(id, howMany):
         with sqlite3.connect("database.db") as conn:
-            conn.execute("UPDATE Consumables SET 'Left' = 'Left' + ? WHERE id = ?", (howMany,id,))
+            conn.execute("UPDATE Consumables SET Left = Left + ? WHERE id = ?", (howMany, id))
+            conn.commit()
         return
     
     def addConsumableType(name, cost):
         with sqlite3.connect("database.db") as conn:
-            conn.execute("INSERT INTO Consumables (Name,Cost,Left) VALUES (?,?,?)", (name, cost, 0,))
+           conn.execute("INSERT INTO Consumables (Name, Cost, Left) VALUES (?, ?, ?)", (name, cost, 0))
         return
     
     def delConsumable(id):

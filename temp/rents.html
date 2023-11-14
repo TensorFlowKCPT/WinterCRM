@@ -122,19 +122,12 @@
               >
             </div>
             <div class="slide_menu__button">
-              <!-- Свг нужно под сервис -->
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-              >
-                <path
-                  d="M16.9133 6.2125L12.5383 1.8375C12.4512 1.75033 12.3478 1.68117 12.234 1.63398C12.1202 1.5868 11.9982 1.56251 11.875 1.5625H4.375C3.9606 1.5625 3.56317 1.72712 3.27015 2.02015C2.97712 2.31317 2.8125 2.7106 2.8125 3.125V16.875C2.8125 17.2894 2.97712 17.6868 3.27015 17.9799C3.56317 18.2729 3.9606 18.4375 4.375 18.4375H15.625C16.0394 18.4375 16.4368 18.2729 16.7299 17.9799C17.0229 17.6868 17.1875 17.2894 17.1875 16.875V6.875C17.1875 6.62656 17.0889 6.38827 16.9133 6.2125ZM12.5 4.45312L14.2969 6.25H12.5V4.45312ZM4.6875 16.5625V3.4375H10.625V7.1875C10.625 7.43614 10.7238 7.6746 10.8996 7.85041C11.0754 8.02623 11.3139 8.125 11.5625 8.125H15.3125V16.5625H4.6875Z"
-                  fill="#A8A8BD"
-                />
-              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" 
+              width="22" 
+              height="22" 
+              viewBox="0 0 24 24">
+              <path fill="#A8A8BD" 
+                d="M12 14ZM2 20V10q0-.825.588-1.413T4 8h3V6q0-.825.588-1.413T9 4h6q.825 0 1.413.588T17 6v2h3q.825 0 1.413.588T22 10v10H2Zm6-5v1H6v-1H4v3h16v-3h-2v1h-2v-1H8Zm-4-5v3h2v-1h2v1h8v-1h2v1h2v-3H4Zm5-2h6V6H9v2Z"/></svg>
               <a href="/service"
                 ><button class="slide_menu-button">Сервис</button></a
               >
@@ -159,7 +152,7 @@
                   fill="#A8A8BD"
                 />
               </svg>
-              <a href="#"
+              <a href="/employees"
                 ><button class="slide_menu-button">Сотрудники</button></a
               >
             </div>
@@ -248,7 +241,6 @@
                   fill="#64748B"
                 />
               </svg>
-              <!-- Не парься, главное чтобы выглядело адекватно, подвяжем мы сам -->
               <input
                 id="rents-searchbox"
                 class="rents__search-input"
@@ -259,7 +251,6 @@
               />
             </div>
             <div class="rents__filter">
-              <!-- Не парься, главное чтобы выглядело адекватно, подвяжем мы сами -->
               <select
                 class="rents-filter"
                 id="rents-filter"
@@ -284,7 +275,6 @@
             </button>
           </div>
         </div>
-        <!-- Таблица с заказами -->
         <div>
           <table id="RentsMainTable" class="RentsMainTable"></table>
         </div>
@@ -355,103 +345,103 @@
                 </div>
               </div>
             </div>
-              <select
-                class="dropdownPayment"
-                name="clientDropdown"
-                id="FormClientSelect"
-                required
-              >
-                <option value="" disabled selected hidden>
-                  Выберите клиента
-                </option>
-                {%for client in data['Clients']%}
-                <option value="{{ client['ID'] }}">{{client['FIO']}}</option>
-                {%endfor%}
-              </select>
+            <select
+              class="dropdownPayment"
+              name="clientDropdown"
+              id="FormClientSelect"
+              required
+            >
+              <option value="" disabled selected hidden>
+                Выберите клиента
+              </option>
+              {%for client in data['Clients']%}
+              <option value="{{ client['ID'] }}">{{client['FIO']}}</option>
+              {%endfor%}
+            </select>
 
-              <select
-                name="paymentMethod"
-                required
-                class="dropdownPayment"
-                id="FormPaymentMethodSelect"
-              >
-                <option value="" disabled selected hidden>
-                  Выберите способ оплаты
-                </option>
-                <option value="creditCard">Банковская карта</option>
-                <option value="cash">Наличные</option>
-                <option value="bankTransfer">Банковский перевод</option>
-              </select>
+            <select
+              name="paymentMethod"
+              required
+              class="dropdownPayment"
+              id="FormPaymentMethodSelect"
+            >
+              <option value="" disabled selected hidden>
+                Выберите способ оплаты
+              </option>
+              <option value="creditCard">Банковская карта</option>
+              <option value="cash">Наличные</option>
+              <option value="bankTransfer">Банковский перевод</option>
+            </select>
 
-              <div class="date-picker-container">
-                <div class="date-picker">
-                  <label for="rentalStartDate">Дата начала аренды</label>
-                  <input
-                    type="date"
-                    id="rentalStartDate"
-                    name="rentalStartDate"
-                    required
-                  />
-                </div>
-                <div class="date-picker">
-                  <label for="rentalStartTime">Время начала аренды</label>
-                  <input
-                    type="time"
-                    id="rentalStartTime"
-                    name="rentalStartTime"
-                    required
-                  />
-                </div>
-                <div class="date-picker">
-                  <label for="rentalEndDate">Дата окончания аренды</label>
-                  <input
-                    type="date"
-                    id="rentalEndDate"
-                    name="rentalEndDate"
-                    required
-                  />
-                </div>
-                <div class="date-picker">
-                  <label for="rentalEndTime">Время окончания аренды</label>
-                  <input
-                    type="time"
-                    id="rentalEndTime"
-                    name="rentalEndTime"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div class="date-picker-container date-picker-container-2">
-                <div class="date-picker">
-                  <label for="isPayed">Оплачено?</label>
-                  <label class="switch" for="isPayed">
-                    <input
-                      class="switch-input"
-                      type="checkbox"
-                      id="isPayed"
-                      required
-                    />
-                    <span class="switch-slider"></span>
-                  </label>
-                </div>
-
-                <div class="date-picker-2">
-                  <label for="deposit">Залог</label>
-                  <input type="text" id="deposit" name="deposit" required />
-                </div>
-              </div>
-
-              <div class="modal_pay__end">
+            <div class="date-picker-container">
+              <div class="date-picker">
+                <label for="rentalStartDate">Дата начала аренды</label>
                 <input
-                  placeholder="Сумма"
-                  type="number"
-                  class="itemsSum"
-                  name=""
-                  id="itemsSum"
+                  type="date"
+                  id="rentalStartDate"
+                  name="rentalStartDate"
+                  required
                 />
-                <input id="CreateRentBtn" type="submit" value="Создать" />
               </div>
+              <div class="date-picker">
+                <label for="rentalStartTime">Время начала аренды</label>
+                <input
+                  type="time"
+                  id="rentalStartTime"
+                  name="rentalStartTime"
+                  required
+                />
+              </div>
+              <div class="date-picker">
+                <label for="rentalEndDate">Дата окончания аренды</label>
+                <input
+                  type="date"
+                  id="rentalEndDate"
+                  name="rentalEndDate"
+                  required
+                />
+              </div>
+              <div class="date-picker">
+                <label for="rentalEndTime">Время окончания аренды</label>
+                <input
+                  type="time"
+                  id="rentalEndTime"
+                  name="rentalEndTime"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="date-picker-container date-picker-container-2">
+              <div class="date-picker">
+                <label for="isPayed">Оплачено?</label>
+                <label class="switch" for="isPayed">
+                  <input
+                    class="switch-input"
+                    type="checkbox"
+                    id="isPayed"
+                    required
+                  />
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+
+              <div class="date-picker">
+                <label for="deposit">Залог</label>
+                <input type="text" id="deposit" name="deposit" required />
+              </div>
+            </div>
+
+            <div class="modal_pay__end">
+              <input
+                placeholder="Сумма"
+                type="number"
+                class="itemsSum"
+                name=""
+                id="itemsSum"
+              />
+              <input id="CreateRentBtn" type="submit" value="Создать" />
+            </div>
             <button id="SaveRentBtn">Сохранить</button>
           </div>
         </div>

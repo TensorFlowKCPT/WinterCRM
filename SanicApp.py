@@ -30,15 +30,20 @@ async def addConsumableType(request):
     Database.addConsumableType(Name,Cost)
     return response.json({'status':'ok'})
 
-@app.post("/sell-consumable")
-async def sellConsumable(request):
-    Database.sellConsumable(request.json.get('id'))
-    return response.json({'response':'OK'}, status = 200)
-
 @app.post("/add-consumable")
 async def addConsumable(request):
     Database.addConsumable(request.json.get('id'), 1)
     return response.json({'response':'OK'}, status = 200)
+
+@app.post("/sell-consumable")
+async def sellConsumable(request):
+    try:
+        item_id = int(request.json.get('id'))
+        Database.sellConsumable(item_id)
+        return response.json({'response':'OK'}, status=200)
+    except Exception as e:
+        print(f"Error in /sell-consumable: {str(e)}")
+        return response.json({'response': 'Error'}, status=500)
 
 @app.post("/del-consumable")
 async def deleteConsumable(request):
