@@ -251,7 +251,7 @@
               <!-- Для сервиса поиск -->
               <input
                 class="service__search-input"
-                type="text"
+                type="search"
                 id="serviceSearch"
                 name="search"
                 placeholder="Поиск"
@@ -285,6 +285,7 @@
               <select
                 class="service-filter service-sortirovka"
                 id="sortirovka-filter"
+                onchange= sortTable()
               >
                 <option
                   value="default"
@@ -294,9 +295,10 @@
                 >
                   Сортировка
                 </option>
-                <option value="name">По имени</option>
-                <option value="surname">По фамилии</option>
-                <option value="lastname">По отчеству</option>
+                <option value="fio">По ФИО</option>
+                <option value="date">По дате</option>
+                <option value="inventory">По инвентарю</option>
+                <option value="summ">По сумме</option>
               </select>
             </div>
           </div>
