@@ -1,4 +1,5 @@
 
+var ItemId
 document.addEventListener('DOMContentLoaded', function () {
     var modal = document.getElementById('myModal');
     var openModalButton = document.getElementById('openModalBtn');
@@ -15,22 +16,13 @@ document.addEventListener('DOMContentLoaded', function () {
   var currentItemID;
 
   function openModal(itemId) {
-    currentItemID = itemId;
-
-    document.getElementById('itemIDInput').value = currentItemID;
-
+    ItemId = itemId;
     document.getElementById('quantityModal').style.display = 'block';
   }
 
+ 
+  
   document.addEventListener('DOMContentLoaded', function () {
-    var addButtons = document.querySelectorAll('.addButton');
-        addButtons.forEach(function (button) {
-        button.addEventListener('click', function () {
-            var itemId = 
-            console.log('Clicked. Item ID:', itemId);
-            openModal(itemId);
-        });
-        });
 
     document.getElementById('closeQuantityModalBtn').addEventListener('click', function () {
       document.getElementById('quantityModal').style.display = 'none';
@@ -169,4 +161,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             event.target.reset();
+            location.reload();
         });
+        
+        document.getElementById("addQuantityBtn").addEventListener('click', function(){
+            fetch("/add-consumable", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ id: ItemId, howmany:document.getElementById('howmanyinput').value })
+            })
+            location.reload()
+          })

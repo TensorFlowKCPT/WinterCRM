@@ -55,6 +55,7 @@ class Database:
             conn.execute("""CREATE TABLE IF NOT EXISTS Shop(
                         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         ConsumableId INTEGER NOT NULL,
+                        Date DATE,
                         FOREIGN KEY (ID) REFERENCES Consumables (ConsumableId)
             )
             """)
@@ -85,16 +86,7 @@ class Database:
                 cursor = conn.execute("SELECT ID FROM Employees WHERE Name = ?", item).fetchone()
                 if not cursor:
                     conn.execute("INSERT OR IGNORE INTO Employees (Name) VALUES (?)", item)
-            conn.execute("""
-                CREATE TABLE IF NOT EXISTS Shop (
-                    ID INTEGER PRIMARY KEY,
-                    Task TEXT NOT NULL,
-                    Performer INT NOT NULL,
-                    Deadline DATE,
-                    Status BOOLEAN NOT NULL,
-                    FOREIGN KEY (ID) REFERENCES Employees (Performer)
-                )
-            """)
+
             conn.execute("""
                 CREATE TABLE IF NOT EXISTS Tasks (
                     ID INTEGER PRIMARY KEY,
@@ -170,8 +162,8 @@ class Database:
     
     def sellConsumable(id):
         with sqlite3.connect("database.db") as conn:
-            conn.execute("UPDATE Consumables SET 'Left' = 'Left' - 1 WHERE id = ?", (id,))
-            conn.execute("INSERT INTO Shop (ConsumableId) VALUES (?)", (id,))
+            conn.execute("UPDATE Consumables SET Left = Left - 1 WHERE id = ?", (id,))
+            conn.execute("INSERT INTO Shop (ConsumableId, Date) VALUES (?,?)", (id,datetime.now().date(),))
 
 
     def getConsumableById(id):
@@ -433,6 +425,12 @@ class Database:
                 
             return output
          
+    def countShopsByDate():
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT Date, COUNT(*) FROM Shop GROUP BY Date")
+            data = cursor.fetchall()
+        return data
+
     def countRentsByDate():
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT Start_Date, COUNT(*) FROM Rents GROUP BY Start_Date")

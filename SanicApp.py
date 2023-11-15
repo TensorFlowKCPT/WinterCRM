@@ -32,7 +32,7 @@ async def addConsumableType(request):
 
 @app.post("/add-consumable")
 async def addConsumable(request):
-    Database.addConsumable(request.json.get('id'), 1)
+    Database.addConsumable(request.json.get('id'), request.json.get('howmany'))
     return response.json({'response':'OK'}, status = 200)
 
 @app.post("/sell-consumable")
@@ -292,6 +292,15 @@ async def rents(request):
 #endregion 
 
 #region /statistics
+@app.route("/getShopInfo")
+async def getShopInfo(request):
+    rent_count_by_date = Database.countShopsByDate()
+    print(rent_count_by_date)
+    if rent_count_by_date:
+        return response.json(rent_count_by_date)
+    else:
+        return response.json({}, status=404)
+
 @app.route("/statistics")
 async def statistic(request):
     staff = Database.getStaffName()
