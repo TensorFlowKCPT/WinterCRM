@@ -191,7 +191,7 @@ document.addEventListener('click', function(event) {
     var searchInput = this.value.toLowerCase();
     var rows = document.querySelectorAll("tbody tr");
     
-    for (var i = 1; i < rows.length; i++) {  // Начинаем с 1, чтобы пропустить строку с заголовками
+    for (var i = 0; i < rows.length; i++) {  // Начинаем с 1, чтобы пропустить строку с заголовками
         var cells = rows[i].querySelectorAll(".table-colon");
         var match = false;
         
