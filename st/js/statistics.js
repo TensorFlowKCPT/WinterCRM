@@ -10,31 +10,66 @@ document.addEventListener('DOMContentLoaded', async function () {
         // Display the total number of clients
         document.getElementById("client-count").innerText = totalClientCount;
 
+        // Fetch shop count data from the /getShopInfo endpoint
+        const responseShop = await fetch('/getShopInfo');
+        const shopCountData = await responseShop.json();
+
+        // Ensure that shopCountData is an array
+        if (!Array.isArray(shopCountData)) {
+            console.error('Error: Shop count data is not an array.');
+            return;
+        }
+
+        // Extract data for shop chart
+        const datesShop = shopCountData.map(entry => entry[0]);
+        const countsShop = shopCountData.map(entry => entry[1]);
+        const totalShopCount = countsShop.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+        // Calculate the declension for the word "заказ" for shop count
+        const declensionShop = calculateDeclensionShop(totalShopCount);
+
+        // Display the total number of shop count
+        document.getElementById("shop-count").innerText = `${totalShopCount} ${declensionShop}`;
+
         // Existing code for rent count chart
         const responseRent = await fetch('/getrentcountbydate');
         const rentCountData = await responseRent.json();
 
-        const dates = rentCountData.map(entry => entry[0]);  
-        const counts = rentCountData.map(entry => entry[1]); 
+        // Extract data for rent chart
+        const dates = rentCountData.map(entry => entry[0]);
+        const counts = rentCountData.map(entry => entry[1]);
         const totalRentCount = counts.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
-        // Calculate the declension for the word "заказ"
-        const declension = calculateDeclension(totalRentCount);
+        // Calculate the declension for the word "заказ" for rent count
+        const declensionRent = calculateDeclension(totalRentCount);
 
-        document.getElementById("rent-count").innerText = `${totalRentCount} ${declension}`;
+        // Display the total number of rent count
+        document.getElementById("rent-count").innerText = `${totalRentCount} ${declensionRent}`;
+
+        // Calculate the declension for the word "заказ" for shop count
+        const declensionShopChart = calculateDeclension(totalShopCount);
 
         var ctx = document.getElementById('rentCountChart').getContext('2d');
         var rentCountChart = new Chart(ctx, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: dates,
-                datasets: [{
-                    label: 'Заказов за день',
-                    data: counts,
-                    backgroundColor: 'rgb(177, 173, 237)',
-                    borderColor: 'rgb(138, 132, 226)',
-                    borderWidth: 5
-                }]
+                datasets: [
+                    {
+                        label: 'Заказов за день (Rent)',
+                        data: counts,
+                        backgroundColor: 'rgb(177, 173, 237)',
+                        borderColor: 'rgb(138, 132, 226)',
+                        borderWidth: 5
+                    },
+                    {
+                        label: 'Заказов в магазине за день (Shop)',
+                        data: countsShop,
+                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        borderWidth: 5
+                    }
+                ]
             },
             options: {
                 scales: {
@@ -66,3 +101,15 @@ function calculateDeclension(number) {
         return "заказов";
     }
 }
+
+function calculateDeclensionShop(number) {
+    // Function to calculate the declension of the word "заказ" based on the given number
+    if (number % 10 === 1 && number % 100 !== 11) {
+        return "продажа";
+    } else if (number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
+        return "продажи";
+    } else {
+        return "продаж";
+    }
+}
+

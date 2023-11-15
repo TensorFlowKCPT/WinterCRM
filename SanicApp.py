@@ -60,6 +60,14 @@ async def shop(request):
     rendered_html = template.render(data=Data)
 
     return html(rendered_html)
+
+@app.route("/getShopInfo")
+async def getShopInfo(request):
+    shop_count = Database.countShopsByDate()
+    if shop_count:
+        return response.json(shop_count)
+    else:
+        return response.json({}, status=404)
 #endregion
 
 #region /task
@@ -292,15 +300,6 @@ async def rents(request):
 #endregion 
 
 #region /statistics
-@app.route("/getShopInfo")
-async def getShopInfo(request):
-    rent_count_by_date = Database.countShopsByDate()
-    print(rent_count_by_date)
-    if rent_count_by_date:
-        return response.json(rent_count_by_date)
-    else:
-        return response.json({}, status=404)
-
 @app.route("/statistics")
 async def statistic(request):
     staff = Database.getStaffName()

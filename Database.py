@@ -437,6 +437,7 @@ class Database:
             data = cursor.fetchall()
         return data
     
+    
     def getRents():
          with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM Rents")
