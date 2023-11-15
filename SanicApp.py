@@ -4,7 +4,6 @@ from sanic.response import text, html
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from Database import Database
 import xml.etree.ElementTree as ET
-from bs4 import BeautifulSoup
 from datetime import datetime
 
 app = Sanic("WinterCRM")
