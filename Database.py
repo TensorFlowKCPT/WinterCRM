@@ -8,7 +8,7 @@ class Database:
             conn.execute("""CREATE TABLE IF NOT EXISTS Clients (
                         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         FIO TEXT NOT NULL,
-                        Passport TEXT NOT NULL,
+                        Documents TEXT NOT NULL,
                         PhoneNumber TEXT NOT NULL
                      )
                  """)
@@ -263,7 +263,7 @@ class Database:
                output.append({
                    "ID" : row[0],
                    "FIO" : row[1],
-                   "Passport" : row[2],
+                   "Documents" : json.loads(row[2]),
                    "PhoneNumber" : row[3]})
            return output
 
@@ -272,10 +272,10 @@ class Database:
             conn.execute("DELETE FROM Clients WHERE ID = ?", (id,))
             conn.commit()
 
-    def addClient(fio, passport, phone_number):
+    def addClient(fio, documents, phone_number):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO Clients (FIO, Passport, PhoneNumber) VALUES (?,?,?)", (fio, passport, phone_number,))
+            cursor.execute("INSERT INTO Clients (FIO, Documents, PhoneNumber) VALUES (?,?,?)", (fio, json.dumps(documents), phone_number,))
             conn.commit()
 
             newid = cursor.lastrowid
@@ -355,7 +355,13 @@ class Database:
                     "Services": services if services else None})
                 services = Database.getServicesForInventory(row[0])
             return output
-        
+    
+    def addClientDocument(id, documentdict):
+        ClientDocs = Database.GetClientById(id)['Documents']
+        list(ClientDocs).append(documentdict)
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("UPDATE Clients SET Documents = ? WHERE ID = ?",(ClientDocs, id,))
+
     def GetClientById(id):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM Clients WHERE ID = ?",(id,))
@@ -365,7 +371,7 @@ class Database:
             client = {
                 "ID" : rows[0],
                 "FIO" : rows[1],
-                "Passport" : rows[2],
+                "Documents" : json.loads(rows[2]),
                 "PhoneNumber" : rows[3]
             }
             return client

@@ -285,7 +285,7 @@
             {% for item in data['Clients'] %}
             <tr data-id="{{item['ID']}}">
               <td class="table-colon">{{item['FIO']}}</td>
-              <td class="table-colon table-colon2">{{item['Passport']}}</td>
+              <td class="table-colon table-colon2">{{item['Documents'][0]['Info']}}</td>
               <td class="table-colon">{{item['PhoneNumber']}}</td>
               <td class="table-colon">
                 <button class="delete-button" data-id="{{item['ID']}}">

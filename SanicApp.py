@@ -353,8 +353,9 @@ async def get_password(request):
 async def addClient(request):
     Fio = request.form.get('FIO')
     Passport = request.form.get('Passport')
+    Document = [{"Name" : 'Паспорт', 'Info': request.form.get('Passport')}]
     PhoneNumber = request.form.get('PhoneNumber')
-    newclient = {"id":Database.addClient(Fio,Passport,PhoneNumber)}
+    newclient = {"id":Database.addClient(Fio,Document,PhoneNumber)}
     return response.json(newclient)
 
 @app.route('/del_client', methods=['DELETE'])
@@ -371,6 +372,13 @@ async def delSelectedClient(request):
         Database.delClientById(i)
     responseData = {"success": True}
     return response.json(responseData)
+
+@app.post('/client-adddocument')
+async def addDocument(request):
+    #Здесь мне нужно "Name" документа и "Info" о нем
+    #json или form - поменять
+    Database.addClientDocument(request.json.get("ClientId"), {"Name" : request.json.get("Name"), 'Info': request.json.get("Info")})
+    return response.json({'status':'ok'},status=200)
 
 @app.route('/clients', methods=['GET'])
 async def clients(request):
@@ -389,7 +397,6 @@ async def clients(request):
         else:
             lenClients = str(len(clients)) + " клиентов"
         Data['lenClients'] = lenClients
-    
     # Добавление данных в шаблонизатор
     template = env.get_template('clients.html')
     rendered_html = template.render(data=Data)
