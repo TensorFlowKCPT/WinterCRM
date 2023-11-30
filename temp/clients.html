@@ -277,7 +277,8 @@
           <table id="clients-table">
             <thead class="table__header">
               <th class="th-1">ФИО</th>
-              <th>Серия/Номер паспорта</th>
+              <th>Залог</th>
+              <th>Номер документа</th>
               <th>Номер телефона</th>
               <th>Действия</th>
               <th class="th-2">Выбрать</th>
@@ -285,7 +286,8 @@
             {% for item in data['Clients'] %}
             <tr data-id="{{item['ID']}}">
               <td class="table-colon">{{item['FIO']}}</td>
-              <td class="table-colon table-colon2">{{item['Documents'][0]['Info']}}</td>
+              <td class="table-colon">{{item['pledge']}}</td>
+              <td class="table-colon table-colon2">{{item['Documents']}}</td>
               <td class="table-colon">{{item['PhoneNumber']}}</td>
               <td class="table-colon">
                 <button class="delete-button" data-id="{{item['ID']}}">
@@ -338,7 +340,14 @@
                 <input
                   class="addItemForm"
                   type="text"
-                  placeholder="Серия/Номер паспорта"
+                  placeholder="Залог"
+                  name="Pledge"
+                  required
+                />
+                <input
+                  class="addItemForm"
+                  type="text"
+                  placeholder="Номер любого документа"
                   name="Passport"
                   required
                 />

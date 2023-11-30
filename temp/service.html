@@ -278,6 +278,7 @@
                 <th>Что нужно сделать?</th>
                 <th>Запчасти</th>
                 <th>Сумма</th>
+                <th>Статус</th>
                 <th>Оплата</th>
                 <th>Удалить</th>
               </tr>
@@ -293,6 +294,13 @@
                 <td class="table-colon">{{ service['Task'] }}</td>
                 <td class="table-colon">{{ service['Parts'] }}</td>
                 <td class="table-colon">{{ service['Cost'] }}</td>
+                <td class="table-colon">
+                  <select name="" id="StatusListBox" data-service-id="{{ service['ID'] }}">
+                    <option value="в Работе" {% if service['Status'] == "В Работе" %} selected {% endif %}>в Работе</option>
+                    <option value="Выполнено" {% if service['Status'] == "Выполнено" %} selected {% endif %}>Выполнено</option>
+                    <option value="Ожидает" {% if service['Status'] == "Ожидает" %} selected {% endif %}>Ожидает</option>
+                  </select>
+                </td>
                 <td class="table-colon">
                   <input {% if service['IsPayed'] %}checked{% endif %}
                   type="checkbox" name="" id="" onchange="UpdatePaymentStatus({{service["ID"]}})"/>
