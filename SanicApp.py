@@ -114,12 +114,14 @@ async def updateTaskStatus(request):
     status = request.json.get('isChecked')
     Database.statusPut(idTask=taskId, status=status)
     return response.json({"status": 200})
+
 #endregion
 
 #region /employees
 @app.post('/employees')
 async def addEmployee(request):
     Database.addEmployee(request.json.get("FIO"))
+
 @app.post('/delete_employee')
 async def delEmployee(request):
     try:
@@ -232,8 +234,9 @@ async def InventoryData(request):
 @app.get("/getNotRentedInventory")
 async def NotRentedInventory(request):
     Inventory = Database.getInventory()
+    print(Inventory)
     if Inventory:
-        NotRentedInventory = list(filter(lambda item: item['Rented'] == False or item['Rented'] == 'false', Inventory))
+        NotRentedInventory = list(filter(lambda item: 'Свободно' in item['Rented'], Inventory))
         return json(NotRentedInventory)
     else: return response.json({},status=404)
 

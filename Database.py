@@ -326,10 +326,36 @@ class Database:
                 "ID" : rows[0],
                 "Name" : rows[1],
                 "Type" : cursor.fetchone()[0],
-                "Rented" : rows[3],
                 "Size" : rows[4],
                 "Services": services if services else None
                 }
+            rents = Database.getRents()
+            #print(rents)
+            current_datetime = datetime.now()
+            unendedrents = [
+                item for item in rents if (
+                    any(start_item['ID'] == output['ID'] for start_item in item['StartItems']) and current_datetime <=
+                    datetime.strptime(item['Return_Date'] + ' ' + item['Return_Time'], '%Y-%m-%d %H:%M')
+                )
+            ]
+            if len(unendedrents) == 0:
+                output[-1]["Rented"] = "Свободно"
+                Database.SetInventoryStatus(False,output['ID'])
+            else:
+                data = [
+                    item for item in unendedrents if (
+                        any(start_item['ID'] == output['ID'] for start_item in item['StartItems']) and
+                        datetime.strptime(item['Start_Date'] + ' ' + item['Start_Time'], '%Y-%m-%d %H:%M') <= current_datetime
+                    )
+                ]
+                unendedrents.sort(key=lambda x: x['Start_Date'])
+                data.sort(key=lambda x: x['Start_Date'])
+                if len(data) == 0:
+                    output["Rented"] = "Свободно до " + unendedrents[0]['Start_Date']+" " +unendedrents[0]['Start_Time']
+                    Database.SetInventoryStatus(False,output['ID'])
+                else:
+                    Database.SetInventoryStatus(True, output['ID'])
+                    output["Rented"] = "В аренде до " + data[0]['Return_Date']+" "+data[0]['Return_Time']
            
             return output
     def addEmployee(Name):
@@ -354,7 +380,36 @@ class Database:
                     "Size" : row[4],
                     "Services": services if services else None})
                 services = Database.getServicesForInventory(row[0])
+                rents = Database.getRents()
+                #print(rents)
+                current_datetime = datetime.now()
+                unendedrents = [
+                    item for item in rents if (
+                        any(start_item['ID'] == row[0] for start_item in item['StartItems']) and current_datetime <=
+                        datetime.strptime(item['Return_Date'] + ' ' + item['Return_Time'], '%Y-%m-%d %H:%M')
+                    )
+                ]
+                if len(unendedrents) == 0:
+                    output[-1]["Rented"] = "Свободно"
+                    Database.SetInventoryStatus(False,row[0])
+                else:
+                    data = [
+                        item for item in unendedrents if (
+                            any(start_item['ID'] == row[0] for start_item in item['StartItems']) and
+                            datetime.strptime(item['Start_Date'] + ' ' + item['Start_Time'], '%Y-%m-%d %H:%M') <= current_datetime
+                        )
+                    ]
+                    unendedrents.sort(key=lambda x: x['Start_Date'])
+                    data.sort(key=lambda x: x['Start_Date'])
+                    if len(data) == 0:
+                        output[-1]["Rented"] = "Свободно до " + unendedrents[0]['Start_Date']+" " +unendedrents[0]['Start_Time']
+                        Database.SetInventoryStatus(False,row[0])
+                    else:
+                        Database.SetInventoryStatus(True, row[0])
+                        output[-1]["Rented"] = "В аренде до " + data[0]['Return_Date']+" "+data[0]['Return_Time']
+            #print(output)
             return output
+            
     
     def addClientDocument(id, documentdict):
         ClientDocs = Database.GetClientById(id)['Documents']
@@ -375,16 +430,7 @@ class Database:
                 "PhoneNumber" : rows[3]
             }
             return client
-        
-    def updateRent(id,Return_Date,Return_Time,ReturnedItems,paymentMethod,Cost,IsPayed):
-        itemsdump = []
-        for item in ReturnedItems:
-            itemsdump.append(Database.getInventoryById(item))
-        with sqlite3.connect("database.db") as conn:
-            for item in ReturnedItems:
-                conn.execute("UPDATE WinterInventory SET Rented = ? WHERE ID = ?",(True,item,))
-            conn.execute("UPDATE Rents SET Return_Date = ?, Return_Time = ?, ReturnedItemsJSON = ?, Cost = ?, IsPayed = ?, paymentMethod = ? WHERE ID = ?", (Return_Date, Return_Time, json.dumps(itemsdump), Cost, IsPayed, paymentMethod, id))
-         
+
     def addRent(Start_Date, Start_Time, Return_Date, Return_Time, StartItems:list, ReturnedItems:list, Client:int, Deposit:str, Cost:int, IsPayed:bool, paymentMethod: str):
         itemsdump = []
         for item in StartItems:
@@ -480,18 +526,11 @@ class Database:
                     "Expired": return_datetime < current_date,
                     "paymentMethod" : row[11]
                     })
-            if output[-1]["Expired"]:
-                    for item in output[-1]['StartItems']:
-                        Database.UnrentInventory(item["ID"])
             return output
          
-    def UnrentInventory(id):
+    def SetInventoryStatus(id,status):
         with sqlite3.connect("database.db") as conn:
-            conn.execute("UPDATE WinterInventory SET Rented = ? WHERE id = ?",(False,id,))
-            rows = conn.execute("SELECT * FROM Rents WHERE Return_Date > ?",(datetime.now().date(),)).fetchall()
-            for row in rows:
-                for i in json.loads(row[5]):
-                    conn.execute("UPDATE WinterInventory SET Rented = ? WHERE id = ?", (True, id,))
+            conn.execute("UPDATE WinterInventory SET Rented = ? WHERE id = ?",(status,id,))
             
     def getStaffName():
         with sqlite3.connect("database.db") as conn:

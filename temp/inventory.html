@@ -261,8 +261,8 @@
               >
                 <option value="all" disabled selected hidden>Аренда</option>
                 <option value="all">Все</option>
-                <option value="1">В аренде</option>
-                <option value="0">Не в аренде</option>
+                <option value="В аренде">В аренде</option>
+                <option value="Свободно">Не в аренде</option>
               </select>
             </div>
 
@@ -287,7 +287,7 @@
             <tr>
               <th class="th-1">Наименование</th>
               <th>Тип</th>
-              <th>В аренде ли</th>
+              <th>Статус</th>
               <th>Размер</th>
               <th>Продать</th>
               <th class="th-2">Удалить</th>
@@ -299,11 +299,9 @@
             <td>{{item['Name']}}</td>
             <td>{{item['Type']}}</td>
             <td class="td-checkbox">
-              <span style="display: none">{{item['Rented']}}</span>
-              <input type="checkbox" id="rentCheck" {% if item['Rented'] == 1 or
-              item['Rented'] == "true" %} checked="true" {%endif%} disabled "
+              <span>{{item['Rented']}}</span>
+              <input type="checkbox" id="rentCheck" {%if "В аренде до" in item['Rented'] %} checked="true" {%endif%} disabled "
               class="active" />
-              <label for="myCheckbox"></label>
             </td>
             <td>{{item['Size']}}</td>
             <td>
