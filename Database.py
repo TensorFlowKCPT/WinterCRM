@@ -8,7 +8,8 @@ class Database:
             conn.execute("""CREATE TABLE IF NOT EXISTS Clients (
                         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         FIO TEXT NOT NULL,
-                        Documents TEXT NOT NULL,
+                        Pledge TEXT NOT NULL,
+                        DataDocument TEXT NOT NULL,
                         PhoneNumber TEXT NOT NULL
                      )
                  """)
@@ -155,6 +156,7 @@ class Database:
                     Parts int,
                     Cost int,
                     IsPayed BOOLEAN,
+                    Status TEXT DEFAULT 'Ожидает' CHECK(Status IN ('в Работе', 'Выполнено', 'Ожидает')),
                     FOREIGN KEY (ID) REFERENCES Clients (Client_Id),
                     FOREIGN KEY (ID) REFERENCES WinterInventory (Inventory_Id)
                 )
@@ -263,8 +265,9 @@ class Database:
                output.append({
                    "ID" : row[0],
                    "FIO" : row[1],
-                   "Documents" : json.loads(row[2]),
-                   "PhoneNumber" : row[3]})
+                   "pledge" : row[2],
+                   "Documents" : row[3],
+                   "PhoneNumber" : row[4]})
            return output
 
     def delClientById(id):
@@ -272,10 +275,10 @@ class Database:
             conn.execute("DELETE FROM Clients WHERE ID = ?", (id,))
             conn.commit()
 
-    def addClient(fio, documents, phone_number):
+    def addClient(fio,pledge, documents, phone_number):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO Clients (FIO, Documents, PhoneNumber) VALUES (?,?,?)", (fio, json.dumps(documents), phone_number,))
+            cursor.execute("INSERT INTO Clients (FIO, Pledge, DataDocument, PhoneNumber) VALUES (?,?,?,?)", (fio, pledge, json.dumps(documents), phone_number,))
             conn.commit()
 
             newid = cursor.lastrowid
@@ -426,7 +429,7 @@ class Database:
             client = {
                 "ID" : rows[0],
                 "FIO" : rows[1],
-                "Documents" : json.loads(rows[2]),
+                "Documents" : rows[2],
                 "PhoneNumber" : rows[3]
             }
             return client
@@ -660,6 +663,10 @@ class Database:
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("INSERT INTO Service (Creation_Date, Client_Id, Inventory_Id, Task, Parts, Cost, IsPayed) VALUES (?, ?, ?, ?, ?, ?, ?);", (creating_date, id_client, id_inventory, task, parts, cost, isPayed))
     
+    def updateServiceStatus(id: int, status: str):
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("UPDATE Service SET Status = ? WHERE ID = ?; ", (status, id))
+
     def delService(id):
         with sqlite3.connect("database.db") as conn:
             conn.execute("DELETE FROM Service WHERE ID = ?",(id,))
@@ -693,6 +700,7 @@ class Database:
                 return None
             output = []
             for row in rows:
+                print(row)
                 client = {"ID": 0, "FIO": "Нет", "Passport": "Нет", "PhoneNumber": "Нет"}
                 if row[2]:
                     client = Database.GetClientById(row[2])
@@ -706,7 +714,8 @@ class Database:
                         "Task":row[4],
                         "Parts":row[5],
                         "Cost":row[6],
-                        "IsPayed":row[7]
+                        "IsPayed":row[7],
+                        "Status":row[8]
                     })
             
             return output

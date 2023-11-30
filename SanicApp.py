@@ -182,6 +182,13 @@ async def service_create(request):
     Database.createService(creating_date=creating_date, id_client=clients, id_inventory=inventory, task=task, parts=parts, cost=cost, isPayed=ispayed)
     return text("норм")
 
+@app.route("/updateStatus", methods=['POST'])
+async def updateStatus(request):
+    id = request.json.get('serviceId')
+    status = request.json.get('newStatus')
+    Database.updateServiceStatus(id, status)
+    return response.json({"status":"ok"}, status=200)
+
 #endregion
 
 #region /rents
@@ -355,10 +362,10 @@ async def get_password(request):
 @app.route('/add_client', methods=['POST'])
 async def addClient(request):
     Fio = request.form.get('FIO')
+    Pledge = request.form.get('Pledge')
     Passport = request.form.get('Passport')
-    Document = [{"Name" : 'Паспорт', 'Info': request.form.get('Passport')}]
     PhoneNumber = request.form.get('PhoneNumber')
-    newclient = {"id":Database.addClient(Fio,Document,PhoneNumber)}
+    newclient = {"id":Database.addClient(Fio,Pledge,Passport,PhoneNumber)}
     return response.json(newclient)
 
 @app.route('/del_client', methods=['DELETE'])
