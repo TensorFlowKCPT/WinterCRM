@@ -386,30 +386,34 @@ class Database:
                 rents = Database.getRents()
                 #print(rents)
                 current_datetime = datetime.now()
-                unendedrents = [
-                    item for item in rents if (
-                        any(start_item['ID'] == row[0] for start_item in item['StartItems']) and current_datetime <=
-                        datetime.strptime(item['Return_Date'] + ' ' + item['Return_Time'], '%Y-%m-%d %H:%M')
-                    )
-                ]
-                if len(unendedrents) == 0:
-                    output[-1]["Rented"] = "Свободно"
-                    Database.SetInventoryStatus(False,row[0])
-                else:
-                    data = [
-                        item for item in unendedrents if (
-                            any(start_item['ID'] == row[0] for start_item in item['StartItems']) and
-                            datetime.strptime(item['Start_Date'] + ' ' + item['Start_Time'], '%Y-%m-%d %H:%M') <= current_datetime
+                try:
+                    unendedrents = [
+                        item for item in rents if (
+                            any(start_item['ID'] == row[0] for start_item in item['StartItems']) and current_datetime <=
+                            datetime.strptime(item['Return_Date'] + ' ' + item['Return_Time'], '%Y-%m-%d %H:%M')
                         )
                     ]
-                    unendedrents.sort(key=lambda x: x['Start_Date'])
-                    data.sort(key=lambda x: x['Start_Date'])
-                    if len(data) == 0:
-                        output[-1]["Rented"] = "Свободно до " + unendedrents[0]['Start_Date']+" " +unendedrents[0]['Start_Time']
+                    if len(unendedrents) == 0:
+                        output[-1]["Rented"] = "Свободно"
                         Database.SetInventoryStatus(False,row[0])
                     else:
-                        Database.SetInventoryStatus(True, row[0])
-                        output[-1]["Rented"] = "В аренде до " + data[0]['Return_Date']+" "+data[0]['Return_Time']
+                        data = [
+                            item for item in unendedrents if (
+                                any(start_item['ID'] == row[0] for start_item in item['StartItems']) and
+                                datetime.strptime(item['Start_Date'] + ' ' + item['Start_Time'], '%Y-%m-%d %H:%M') <= current_datetime
+                            )
+                        ]
+                        unendedrents.sort(key=lambda x: x['Start_Date'])
+                        data.sort(key=lambda x: x['Start_Date'])
+                        if len(data) == 0:
+                            output[-1]["Rented"] = "Свободно до " + unendedrents[0]['Start_Date']+" " +unendedrents[0]['Start_Time']
+                            Database.SetInventoryStatus(False,row[0])
+                        else:
+                            Database.SetInventoryStatus(True, row[0])
+                            output[-1]["Rented"] = "В аренде до " + data[0]['Return_Date']+" "+data[0]['Return_Time']
+                except:
+                    output[-1]["Rented"] = "Свободно"
+                    Database.SetInventoryStatus(False,row[0])
             #print(output)
             return output
             
