@@ -2,7 +2,6 @@
 body {
     background: #F1F1F4;
     margin: 0;
-    max-width: 1920px;
     font-family: 'Inter', sans-serif;
     font-style: normal;
 }
@@ -34,9 +33,11 @@ main {
     border: 1px #E5E7EB solid;
     cursor: pointer;
 }
-.cell{
+
+.cell {
     transition: 1s;
 }
+
 .buttonName:hover {
     background-color: rgb(196, 194, 194);
 }

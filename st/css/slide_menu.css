@@ -4,7 +4,7 @@
     padding: 4px 24px 32px;
     display: flex;
     flex-direction: column;
-    height: 928px;
+    height: 96vh;
 }
 
 .slide_menu__inset {
