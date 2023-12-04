@@ -97,10 +97,10 @@ async def tasks(request):
     data['allTasksCount'] = 0
     data['uncheckedTasksCount'] = 0
     if tasks:
-        data["tasks"] = sorted(tasks, key=lambda x: (x['Status']))
+        order_dict = {"Ожидает": 1, "в Работе": 2, "Выполнено": 3}
+        data["tasks"] = sorted(tasks, key=lambda x: order_dict.get(x['Status'], float('inf')))
         data['allTasksCount'] = len(tasks)
-        data['uncheckedTasksCount'] = sum(1 for task in tasks if task['Status'] == 0)
-        
+        data['uncheckedTasksCount'] = sum(1 for task in tasks if task['Status'] == 'в Работе' or task['Status'] == 'Ожидает' )
     if staff:
         data['staff'] = staff
     
