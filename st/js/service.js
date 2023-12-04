@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function UpdatePaymentStatus(id) {
   var data = {
     ID: id,
-    IsPayed: document.getElementById(id).children[6].children[0].checked,
+    IsPayed: document.getElementById(id).children[7].children[0].checked,
   };
   fetch("/update_service_payment", {
     method: "POST",
