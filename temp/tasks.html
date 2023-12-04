@@ -292,25 +292,28 @@
 
         <div>
           <table>
-            <tr>
-              <td class="table-head">Задача</td>
-              <td class="table-head">Сотрудник</td>
-              <td class="table-head">Дедлайн</td>
-              <td class="table-head">Состояние</td>
-              <td class="table-head">Удалить</td>
-            </tr>
-            {% for task in data['tasks'] %}
+            <thead>
+              <th class="table-head">Задача</th>
+              <th class="table-head">Сотрудник</th>
+              <th class="table-head">Дата создания</th>
+              <th class="table-head">Состояние</th>
+              <th class="table-head">Удалить</th>
+            </thead>
+            <tbody>
+              {% for task in data['tasks'] %}
             <tr
               id="{{task['ID']}}"
               style="background-color: {{ task['Color']}} ;"
             >
               <td class="table-colon">{{ task['Task'] }}</td>
               <td class="table-colon">{{ task['Performer']['Name'] }}</td>
-              <td class="table-colon">{{ task['Deadline'] }}</td>
+              <td class="table-colon">{{ task['DateCreate'] }}</td>
               <td class="table-colon">
-                <input type="checkbox" name="taskStatus" {% if task['Status']
-                %}checked{% endif %} class="task-status-checkbox"
-                data-task-id="{{ task['ID'] }}" />
+                <select onchange='sendSelectedValue({{ task["ID"] }})' name="" id='StatusListBox_{{ task["ID"] }}'>
+                  <option value="в Работе" {% if task['Status'] == "в Работе" %} selected {% endif %}>в Работе</option>
+                  <option value="Выполнено" {% if task['Status'] == "Выполнено" %} selected {% endif %}>Выполнено</option>
+                  <option value="Ожидает" {% if task['Status'] == "Ожидает" %} selected {% endif %}>Ожидает</option>
+                </select>
               </td>
               <td class="table-colon">
                 <button
@@ -322,6 +325,8 @@
               </td>
             </tr>
             {% endfor %}
+            </tbody>
+            
           </table>
 
           <div id="myModal" class="modal">

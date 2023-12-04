@@ -81,7 +81,7 @@ async def addTask(request):
         return response.text('NOT OK, NOT OK', status=500)
     if task == '' or employee == '' or date == None or color == '':
         return response.text('NOT OK, NOT OK', status=500)
-    Database.createTask(task=task, idEployees=employee, deadline=date, status=False, color = color)
+    Database.createTask(task=task, idEployees=employee, datecreate=date, color = color)
     return response.text('OK',status=200)
 
 @app.post("/del-task")
@@ -97,7 +97,7 @@ async def tasks(request):
     data['allTasksCount'] = 0
     data['uncheckedTasksCount'] = 0
     if tasks:
-        data["tasks"] = sorted(tasks, key=lambda x: (x['Status'], x['Deadline']))
+        data["tasks"] = sorted(tasks, key=lambda x: (x['Status']))
         data['allTasksCount'] = len(tasks)
         data['uncheckedTasksCount'] = sum(1 for task in tasks if task['Status'] == 0)
         
@@ -110,8 +110,9 @@ async def tasks(request):
 
 @app.route("/updateTaskStatus", methods=['POST'])
 async def updateTaskStatus(request):
-    taskId = request.json.get('taskId')
-    status = request.json.get('isChecked')
+    taskId = request.json.get('idTask')
+    status = request.json.get('status')
+    print(taskId, status)
     Database.statusPut(idTask=taskId, status=status)
     return response.json({"status": 200})
 

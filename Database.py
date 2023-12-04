@@ -93,8 +93,8 @@ class Database:
                     ID INTEGER PRIMARY KEY,
                     Task TEXT NOT NULL,
                     Performer INT NOT NULL,
-                    Deadline DATE,
-                    Status BOOLEAN NOT NULL,
+                    DateCreate DATE,
+                    Status TEXT DEFAULT 'Ожидает' CHECK(Status IN ('в Работе', 'Выполнено', 'Ожидает')),
                     Color TEXT,
                     FOREIGN KEY (ID) REFERENCES Employees (Performer)
                 )
@@ -636,7 +636,7 @@ class Database:
                         "ID": row[0],
                         "Task": row[1],
                         "Performer" : {"ID":Employee[0],"Name":Employee[1]},
-                        "Deadline" : row[3],
+                        "DateCreate" : row[3],
                         "Status" : row[4],
                         "Color" : row[5]
                     })
@@ -655,11 +655,11 @@ class Database:
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("DELETE FROM Tasks WHERE ID = ?", (idTask,))
 
-    def createTask(task: str, idEployees: int, deadline: str, status: bool, color: str):
+    def createTask(task: str, idEployees: int, datecreate: str, color: str):
         with sqlite3.connect("database.db") as conn:
-            cursor = conn.execute("INSERT INTO Tasks (Task, Performer, Deadline, Status, Color)VALUES (?, ?, ?, ?, ?)", (task, idEployees, deadline, status, color,))
+            cursor = conn.execute("INSERT INTO Tasks (Task, Performer, DateCreate, Color)VALUES (?, ?, ?, ?)", (task, idEployees, datecreate, color,))
 
-    def statusPut(idTask: int, status: bool):
+    def statusPut(idTask: int, status: str):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("UPDATE Tasks SET Status = ? WHERE id = ?", (status, idTask))
 
