@@ -21,9 +21,8 @@ table {
 .tasks__wrapper {
     display: flex;
     flex-direction: column;
-    padding: 24px 32px;
-    width: 544px;
-    flex: 1;
+    padding: 24px 24px 0 76px;
+    width: 100%;
 }
 
 /* Верхняя часть */

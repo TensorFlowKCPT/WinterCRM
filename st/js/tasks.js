@@ -202,3 +202,12 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     };
   });
+
+  // Для slide-bar
+const body = document.querySelector("body"),
+  sidebar = body.querySelector(".slide_menu__wrapper"),
+  toggle = body.querySelector(".toggle");
+
+  toggle.addEventListener("click", () => {
+    sidebar.classList.toggle("close");
+  })

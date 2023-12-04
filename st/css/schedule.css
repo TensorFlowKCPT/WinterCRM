@@ -11,6 +11,10 @@ main {
     position: relative;
 }
 
+#calendarContainer {
+    padding: 7px 24px 0 76px
+}
+
 /* Кнопки имен соотрудников */
 .employees__wrapper {
     position: absolute;
@@ -20,7 +24,7 @@ main {
     flex-direction: column;
     width: 182px;
     gap: 10px;
-    padding: 10px;
+    padding: 14px 10px 0 0px
 }
 
 .buttonName {

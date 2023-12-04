@@ -1,10 +1,16 @@
 /* Общий вид слад-меню */
 .slide_menu__wrapper {
-    background-color: var(--grey-0, #FFF);
-    padding: 4px 24px 32px;
-    display: flex;
-    flex-direction: column;
-    height: 96vh;
+    background-color: #FFF;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 210px;
+    padding: 0 20px;
+}
+
+.slide_menu__wrapper.close {
+    width: 20px;
 }
 
 .slide_menu__inset {
@@ -13,7 +19,6 @@
     padding: 28px 0 28px;
     border-bottom: 1px solid #F1F1F4;
     gap: 28px;
-    width: 230px;
 }
 
 .slide_menu__inset_center {
@@ -36,6 +41,17 @@
     line-height: normal;
     letter-spacing: 1px;
     text-transform: uppercase;
+    transition: all 0.4 ease;
+    white-space: nowrap;
+}
+
+.slide_menu__wrapper.close .slide_menu-button,
+.slide_menu__wrapper.close .slide_menu__active-button,
+.slide_menu__wrapper.close .slide_menu-text,
+.slide_menu__wrapper.close .slide_menu__active-button,
+.slide_menu__wrapper.close .slide_menu__active,
+.slide_menu__wrapper.close .slide_menu-svg {
+    display: none;
 }
 
 /* Кнопки */
@@ -53,6 +69,8 @@
     background: none;
     border: none;
     cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 1;
 }
 
 .slide_menu-button:hover {
@@ -71,4 +89,25 @@
 
 .slide_menu__active-button {
     color: #8A84E2;
+}
+
+.slide_menu__header {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+/* Стрелка чтоб разварачивать */
+.slide_menu-arrow {
+    position: absolute;
+    right: -15%;
+    transform: translateY(50%) rotate(180deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #8A84E2;
+    border-radius: 50%;
+}
+
+.slide_menu__wrapper.close .slide_menu-arrow {
+    transform: translateY(50%);
 }

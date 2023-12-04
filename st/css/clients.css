@@ -15,7 +15,7 @@ main {
 .clients__wrapper {
     display: flex;
     flex-direction: column;
-    padding: 0 24px;
+    padding: 0 24px 0 76px;
     width: 100%;
 }
 
@@ -51,6 +51,7 @@ main {
     line-height: 20px;
     border: none;
     background: none;
+    width: 100%;
 }
 
 /* Для "фильтра" и "сортировки" */
