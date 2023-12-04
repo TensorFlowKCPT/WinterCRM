@@ -93,8 +93,8 @@ class Database:
                     ID INTEGER PRIMARY KEY,
                     Task TEXT NOT NULL,
                     Performer INT NOT NULL,
-                    Deadline DATE,
-                    Status BOOLEAN NOT NULL,
+                    DateCreate DATE,
+                    Status TEXT DEFAULT 'Ожидает' CHECK(Status IN ('в Работе', 'Выполнено', 'Ожидает')),
                     Color TEXT,
                     FOREIGN KEY (ID) REFERENCES Employees (Performer)
                 )
@@ -335,31 +335,34 @@ class Database:
             rents = Database.getRents()
             #print(rents)
             current_datetime = datetime.now()
-            unendedrents = [
-                item for item in rents if (
-                    any(start_item['ID'] == output['ID'] for start_item in item['StartItems']) and current_datetime <=
-                    datetime.strptime(item['Return_Date'] + ' ' + item['Return_Time'], '%Y-%m-%d %H:%M')
-                )
-            ]
-            if len(unendedrents) == 0:
-                output[-1]["Rented"] = "Свободно"
-                Database.SetInventoryStatus(False,output['ID'])
-            else:
-                data = [
-                    item for item in unendedrents if (
-                        any(start_item['ID'] == output['ID'] for start_item in item['StartItems']) and
-                        datetime.strptime(item['Start_Date'] + ' ' + item['Start_Time'], '%Y-%m-%d %H:%M') <= current_datetime
+            try:
+                unendedrents = [
+                    item for item in rents if (
+                        any(start_item['ID'] == output['ID'] for start_item in item['StartItems']) and current_datetime <=
+                        datetime.strptime(item['Return_Date'] + ' ' + item['Return_Time'], '%Y-%m-%d %H:%M')
                     )
                 ]
-                unendedrents.sort(key=lambda x: x['Start_Date'])
-                data.sort(key=lambda x: x['Start_Date'])
-                if len(data) == 0:
-                    output["Rented"] = "Свободно до " + unendedrents[0]['Start_Date']+" " +unendedrents[0]['Start_Time']
+                if len(unendedrents) == 0:
+                    output[-1]["Rented"] = "Свободно"
                     Database.SetInventoryStatus(False,output['ID'])
                 else:
-                    Database.SetInventoryStatus(True, output['ID'])
-                    output["Rented"] = "В аренде до " + data[0]['Return_Date']+" "+data[0]['Return_Time']
-           
+                    data = [
+                        item for item in unendedrents if (
+                            any(start_item['ID'] == output['ID'] for start_item in item['StartItems']) and
+                            datetime.strptime(item['Start_Date'] + ' ' + item['Start_Time'], '%Y-%m-%d %H:%M') <= current_datetime
+                        )
+                    ]
+                    unendedrents.sort(key=lambda x: x['Start_Date'])
+                    data.sort(key=lambda x: x['Start_Date'])
+                    if len(data) == 0:
+                        output["Rented"] = "Свободно до " + unendedrents[0]['Start_Date']+" " +unendedrents[0]['Start_Time']
+                        Database.SetInventoryStatus(False,output['ID'])
+                    else:
+                        Database.SetInventoryStatus(True, output['ID'])
+                        output["Rented"] = "В аренде до " + data[0]['Return_Date']+" "+data[0]['Return_Time']
+            except:
+                    output["Rented"] = "Свободно"
+                    Database.SetInventoryStatus(False,output['ID'])
             return output
     def addEmployee(Name):
         with sqlite3.connect("database.db") as conn:
@@ -636,7 +639,7 @@ class Database:
                         "ID": row[0],
                         "Task": row[1],
                         "Performer" : {"ID":Employee[0],"Name":Employee[1]},
-                        "Deadline" : row[3],
+                        "DateCreate" : row[3],
                         "Status" : row[4],
                         "Color" : row[5]
                     })
@@ -655,11 +658,11 @@ class Database:
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("DELETE FROM Tasks WHERE ID = ?", (idTask,))
 
-    def createTask(task: str, idEployees: int, deadline: str, status: bool, color: str):
+    def createTask(task: str, idEployees: int, datecreate: str, color: str):
         with sqlite3.connect("database.db") as conn:
-            cursor = conn.execute("INSERT INTO Tasks (Task, Performer, Deadline, Status, Color)VALUES (?, ?, ?, ?, ?)", (task, idEployees, deadline, status, color,))
+            cursor = conn.execute("INSERT INTO Tasks (Task, Performer, DateCreate, Color)VALUES (?, ?, ?, ?)", (task, idEployees, datecreate, color,))
 
-    def statusPut(idTask: int, status: bool):
+    def statusPut(idTask: int, status: str):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("UPDATE Tasks SET Status = ? WHERE id = ?", (status, idTask))
 

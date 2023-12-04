@@ -81,7 +81,7 @@ async def addTask(request):
         return response.text('NOT OK, NOT OK', status=500)
     if task == '' or employee == '' or date == None or color == '':
         return response.text('NOT OK, NOT OK', status=500)
-    Database.createTask(task=task, idEployees=employee, deadline=date, status=False, color = color)
+    Database.createTask(task=task, idEployees=employee, datecreate=date, color = color)
     return response.text('OK',status=200)
 
 @app.post("/del-task")
@@ -97,10 +97,10 @@ async def tasks(request):
     data['allTasksCount'] = 0
     data['uncheckedTasksCount'] = 0
     if tasks:
-        data["tasks"] = sorted(tasks, key=lambda x: (x['Status'], x['Deadline']))
+        order_dict = {"Ожидает": 1, "в Работе": 2, "Выполнено": 3}
+        data["tasks"] = sorted(tasks, key=lambda x: order_dict.get(x['Status'], float('inf')))
         data['allTasksCount'] = len(tasks)
-        data['uncheckedTasksCount'] = sum(1 for task in tasks if task['Status'] == 0)
-        
+        data['uncheckedTasksCount'] = sum(1 for task in tasks if task['Status'] == 'в Работе' or task['Status'] == 'Ожидает' )
     if staff:
         data['staff'] = staff
     
@@ -110,8 +110,9 @@ async def tasks(request):
 
 @app.route("/updateTaskStatus", methods=['POST'])
 async def updateTaskStatus(request):
-    taskId = request.json.get('taskId')
-    status = request.json.get('isChecked')
+    taskId = request.json.get('idTask')
+    status = request.json.get('status')
+    print(taskId, status)
     Database.statusPut(idTask=taskId, status=status)
     return response.json({"status": 200})
 
