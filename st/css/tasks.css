@@ -115,9 +115,6 @@ h1 {
 
 /* Для сотрудника */
 .employees {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
     border-radius: 12px;
     border: 2px solid var(--color-light-light-3, #DFDFE6);
     background: var(--color-light-light, #FCFCFD);
@@ -141,12 +138,6 @@ h1 {
     position: absolute;
     left: 3%;
     top: 28%;
-}
-
-.task-strelka {
-    position: absolute;
-    right: 4%;
-    top: 30%;
 }
 
 /* Кнопка */
