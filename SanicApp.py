@@ -455,6 +455,7 @@ async def inventoryPage(request):
     inventory = Database.getInventory()
     if inventory:
         Data['Inventory'] = inventory
+        Data['lenInventory'] = len(inventory)
     Data['InventoryTypes'] = Database.getInventoryTypes()
     template = env.get_template('inventory.html')
     return response.html(template.render(data = Data))
