@@ -80,7 +80,7 @@ function Delete(id) {
 document.addEventListener("DOMContentLoaded", function () {
   var modal = document.getElementById("myModal");
   var openModalButton = document.getElementById("openModalBtn");
-  var closeModalSpan = document.getElementsByClassName("close")[0];
+  var closeModalSpan = document.getElementsByClassName("close")[1];
 
   openModalButton.onclick = function () {
     modal.style.display = "block";
