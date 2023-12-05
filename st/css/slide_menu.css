@@ -50,7 +50,8 @@
 .slide_menu__wrapper.close .slide_menu-text,
 .slide_menu__wrapper.close .slide_menu__active-button,
 .slide_menu__wrapper.close .slide_menu__active,
-.slide_menu__wrapper.close .slide_menu-svg {
+.slide_menu__wrapper.close .slide_menu-svg,
+.slide_menu__wrapper.close .slide_menu__inset {
     display: none;
 }
 
@@ -106,6 +107,7 @@
     align-items: center;
     background-color: #8A84E2;
     border-radius: 50%;
+    cursor: pointer;
 }
 
 .slide_menu__wrapper.close .slide_menu-arrow {

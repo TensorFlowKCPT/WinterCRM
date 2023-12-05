@@ -13,7 +13,7 @@ function formatClientCount(count) {
 }
 
 function openModal() {
-  madal = document.getElementById("myModal");
+  modal = document.getElementById("myModal");
   modal.style.display = "block";
 }
 
@@ -100,11 +100,19 @@ document
   });
 
 var modal = document.getElementById("myModal");
-var openModalBtn = document.getElementById("openModalBtn");
+
 var closeModalBtn = document.getElementById("closeModalBtn");
 
-openModalBtn.addEventListener("click", openModal);
+
 closeModalBtn.addEventListener("click", closeModal);
+
+// Получите все кнопки, например, по классу
+var modalButtons = document.getElementsByClassName("mdlbutton");
+
+// Добавьте обработчик событий к каждой кнопке
+for (var i = 0; i < modalButtons.length; i++) {
+    modalButtons[i].addEventListener("click", openModal);
+}
 
 window.addEventListener("click", function (event) {
   if (event.target === modal) {
@@ -287,3 +295,8 @@ const body = document.querySelector("body"),
   toggle.addEventListener("click", () => {
     sidebar.classList.toggle("close");
   })
+
+  function toggleMenu() {
+  var mobileMenu = document.getElementById("mobileMenu");
+  mobileMenu.classList.toggle("show");
+}

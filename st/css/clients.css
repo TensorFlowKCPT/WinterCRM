@@ -59,7 +59,7 @@ main {
     border-radius: 6px;
     border: 1px solid #E5E7EB;
     background: #FFF;
-    padding: 4px 8px;
+    padding: 4px 5px;
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
@@ -174,13 +174,12 @@ tr {
     cursor: pointer;
 }
 
-
 /* Центрирование кнопки "Добавить" */
 #addItemForm input[type="submit"] {
     background: none;
-    width: 270px;
-    height: 66px;
-    padding: 20px 0px;
+    width: 100%;
+    height: 64px;
+    text-align: center;
     border-radius: 10px;
     background: #3772FF;
     color: #FFF;
@@ -247,4 +246,176 @@ tr {
 .clients__container {
     display: flex;
     justify-content: space-between;
+}
+
+.clients__wrapper-for_mobile {
+    display: none;
+}
+
+.slide_menu__clients {
+    display: none;
+}
+
+.menu-toggle {
+    cursor: pointer;
+}
+
+
+.mobile-menu {
+    display: none;
+}
+
+@media (max-width: 980px) {
+    .modal-content {
+        width: 60%;
+    }
+}
+
+@media (max-width: 910px) {
+    .clients__header {
+        display: none;
+    }
+
+    .clients__wrapper-for_mobile {
+        display: flex;
+        padding: 12px 0 18px 24px;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .slide_menu__clients {
+        padding: 9px 19px 9px 19px;
+        margin: 10px 10px 0 0;
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20%;
+        gap: 10px;
+    }
+
+    .mobile-menu.show {
+        display: flex;
+    }
+
+    .clients__filter {
+        display: flex;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 867px) {
+    .table-colon {
+        font-size: 14px;
+        line-height: 15px;
+    }
+
+    .delete-button {
+        width: 67px;
+        height: 27px;
+        padding: 1px 1px 1px 3px;
+    }
+}
+
+@media (max-width: 797px) {
+    .slide_menu__wrapper.close {
+        height: 6vh;
+    }
+
+    .clients__wrapper {
+        padding: 0 24px 0 11px;
+    }
+
+    .clients__wrapper-for_mobile {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 761px) {
+    .table__header th {
+        font-size: 13px;
+        padding: 8px 9px 5px 5px;
+    }
+}
+
+@media (max-width: 698px) {
+    .table-colon {
+        font-size: 12px;
+    }
+
+    .delete-button {
+        width: 56px;
+        height: 22px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 625px) {
+    .table__header th {
+        font-size: 10px;
+        padding: 1px 5px 1px 1px;
+    }
+
+    .clients__wrapper {
+        padding: 0 3px;
+    }
+
+}
+
+@media (max-width: 595px) {
+    .table-colon {
+        padding: 7px 10px;
+        font-size: 10px;
+    }
+
+    .delete-button {
+        width: 49px;
+        height: 19px;
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 540px) {
+    .clients__wrapper-for_mobile {
+        flex-direction: column;
+        justify-self: center;
+        padding: 12px 0;
+
+    }
+
+    .modal-content {
+        width: 75%;
+    }
+}
+
+@media (max-width: 500px) {
+    .table-colon {
+        padding: 7px 4px;
+    }
+
+    .delSelectedBtn {
+        font-size: 10px;
+    }
+
+    .mdlbutton {
+        font-size: 10px;
+        width: 105px;
+    }
+
+    .clietns-sortirovka {
+        font-size: 10px;
+        width: 94px;
+    }
+}
+
+@media (max-width: 425px) {
+    .clients__search {
+        width: 190px;
+        height: 25px;
+    }
 }

@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/static/css/clients.css" />
     <link rel="stylesheet" href="/static/css/slide_menu.css" />
+    <link rel="stylesheet" href="/static/css/clients.css" />
     <title>Клиенты</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -270,7 +270,66 @@
               <button id="openModalBtn" class="mdlbutton">
                 Добавить клиента
               </button>
-              <!-- Пример сортировки (id) -->
+              <select
+                class="clients-filter clietns-sortirovka"
+                id="sortirovka-filter"
+                onchange="sortTable()"
+              >
+                <option
+                  value="default"
+                  class="clietns-sortirovka-text"
+                  selected
+                  hidden
+                >
+                  Сортировка
+                </option>
+                <option value="name">По имени</option>
+                <option value="surname">По фамилии</option>
+                <option value="lastname">По отчеству</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="clients__wrapper-for_mobile">
+          <div class="clients__search">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="none"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M7.2 2.8a4.4 4.4 0 1 0 0 8.8 4.4 4.4 0 0 0 0-8.8ZM1.6 7.2a5.6 5.6 0 1 1 9.962 3.513l2.662 2.663a.6.6 0 1 1-.848.848l-2.663-2.662A5.6 5.6 0 0 1 1.6 7.2Z"
+                fill="#64748B"
+              />
+            </svg>
+            <input
+              class="clients__search-input"
+              type="text"
+              name="search"
+              placeholder="Поиск"
+            />
+          </div>
+          <div class="clients__score">
+            <div id="clientsCount" class="clients-score">
+              {{ data['lenClients'] }}
+            </div>
+          </div>
+        </div>
+
+        <div class="slide_menu__clients">
+          <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+          <div class="mobile-menu" id="mobileMenu">
+            <div class="clients__filter">
+              <button id="deleteSelected" class="delSelectedBtn">
+                Удалить выбранных
+              </button>
+              <button id="openModalBtn" class="mdlbutton">
+                Добавить клиента
+              </button>
               <select
                 class="clients-filter clietns-sortirovka"
                 id="sortirovka-filter"
