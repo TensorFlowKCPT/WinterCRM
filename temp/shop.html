@@ -289,7 +289,7 @@
             <td>{{item['Sold']}} <br /> <br /> <button class="td-button" onclick="Sell({{item['ID']}})">Продать</button></td>
             <td><button class="td-button" onclick="Delete({{item['ID']}})">Удалить</button></td>
           </tr>
-        {%endfor%}
+            {%endfor%}
             <!-- Добавьте другие строки с данными по мере необходимости -->
           </table>
         </div>
@@ -298,7 +298,6 @@
           <div class="modal-container">
             <div class="modal__wrapper">
               <div class="modal__list-header">
-                Добавить новую запись
                 <svg
                   class="close"
                   xmlns="http://www.w3.org/2000/svg"
@@ -319,6 +318,7 @@
                     fill="#23262F"
                   />
                 </svg>
+                Добавить новую запись
               </div>
               <form class="form" id="addItemForm">
                 <input
@@ -343,8 +343,7 @@
         <div id="quantityModal" class="modal">
           <div class="modal-container">
             <div class="modal__wrapper">
-              <div class="modal__list-header">
-                Указать количество товара
+              <div class="modal__list-header list-header-2">
                 <svg
                   class="close"
                   id="closeQuantityModalBtn"
@@ -367,6 +366,7 @@
                     fill="#23262F"
                   />
                 </svg>
+                Указать количество товара
               </div>
               <form>
                 <input
