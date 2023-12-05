@@ -265,12 +265,6 @@ tr {
     display: none;
 }
 
-@media (max-width: 980px) {
-    .modal-content {
-        width: 60%;
-    }
-}
-
 @media (max-width: 910px) {
     .clients__header {
         display: none;
@@ -387,10 +381,6 @@ tr {
         padding: 12px 0;
 
     }
-
-    .modal-content {
-        width: 75%;
-    }
 }
 
 @media (max-width: 500px) {
@@ -417,5 +407,17 @@ tr {
     .clients__search {
         width: 190px;
         height: 25px;
+    }
+}
+
+@media (min-width: 300px) {
+    .modal-content {
+        width: 75%;
+    }
+}
+
+@media (min-width: 627px) {
+    .modal-content {
+        width: 470px;
     }
 }
