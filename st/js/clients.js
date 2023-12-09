@@ -106,10 +106,8 @@ var closeModalBtn = document.getElementById("closeModalBtn");
 
 closeModalBtn.addEventListener("click", closeModal);
 
-// Получите все кнопки, например, по классу
 var modalButtons = document.getElementsByClassName("mdlbutton");
 
-// Добавьте обработчик событий к каждой кнопке
 for (var i = 0; i < modalButtons.length; i++) {
     modalButtons[i].addEventListener("click", openModal);
 }

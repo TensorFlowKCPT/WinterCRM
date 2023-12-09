@@ -252,7 +252,7 @@ tr {
     display: none;
 }
 
-.slide_menu__clients {
+.slide_menu__small {
     display: none;
 }
 
@@ -278,7 +278,7 @@ tr {
         gap: 10px;
     }
 
-    .slide_menu__clients {
+    .slide_menu__small {
         padding: 9px 19px 9px 19px;
         margin: 10px 10px 0 0;
         position: fixed;

@@ -135,3 +135,14 @@ const body = document.querySelector("body"),
   toggle.addEventListener("click", () => {
     sidebar.classList.toggle("close");
   })
+
+  function toggleMenu() {
+  var mobileMenu = document.getElementById("mobileMenu");
+  mobileMenu.classList.toggle("show");
+}
+
+var modalButtons = document.getElementsByClassName("mdlbutton");
+
+for (var i = 0; i < modalButtons.length; i++) {
+    modalButtons[i].addEventListener("click", openModal);
+}
