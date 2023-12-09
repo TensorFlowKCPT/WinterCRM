@@ -1,8 +1,8 @@
 var ItemId = 0
-document.getElementById("openModalButton").addEventListener("click", function() {
+function openModal () {
     document.querySelector(".modal-container").style.display = "flex";
     document.querySelector(".modal").style.display = "block";
-});
+}
 
 document.querySelectorAll(".close").forEach(function(element) {
     element.addEventListener("click", function() {
