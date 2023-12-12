@@ -317,14 +317,11 @@
                 </svg>
               </div>
               <div class="modal__list-container">
-                <div class="modal__list_left">
+                <!-- <div class="modal__list_left">
                   <table
                     class="table__inventory"
                     id="SelectedInventoryTable"
                   ></table>
-                  <button class="addItemButton" id="addItemButton">
-                    Добавить
-                  </button>
                 </div>
                 <div class="pole-container" id="InventoryInfoContainer">
                   <div class="pole-1">
@@ -346,7 +343,60 @@
                       </button>
                     </div>
                   </div>
+                </div> -->
+                <div class="itmes__wrapper">
+                  <!-- пример -->
+                  <div class="item-card">
+                    <div class="item_card-left">
+                      <div class="pole__name">
+                        Название: <span id="SelectedItemName"></span>
+                      </div>
+                      <div class="pole__size">
+                        Размер: <span id="SelectedItemSize"></span>
+                      </div>
+                      <div class="pole__type">
+                        Тип: <span id="SelectedItemType"></span>
+                      </div>
+                    </div>
+                    <div class="item_card-right">
+                      <div id="service_list"></div>
+                      <button
+                        class="addItemButton card-right"
+                        id="addServiceButton"
+                      >
+                        Добавить
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="item-card">
+                    <div class="item_card-left">
+                      <div class="item_card-left">
+                        <div class="pole__name">
+                          Название: <span id="SelectedItemName"></span>
+                        </div>
+                        <div class="pole__size">
+                          Размер: <span id="SelectedItemSize"></span>
+                        </div>
+                        <div class="pole__type">
+                          Тип: <span id="SelectedItemType"></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="item_card-right">
+                      <div id="service_list"></div>
+                      <button
+                        class="addItemButton card-right"
+                        id="addServiceButton"
+                      >
+                        Добавить
+                      </button>
+                    </div>
+                  </div>
                 </div>
+                <button class="addItemButton buttonCenter" id="addItemButton">
+                  Добавить
+                </button>
               </div>
             </div>
           </div>

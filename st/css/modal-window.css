@@ -31,7 +31,7 @@
 .mdlbutton {
     width: 137px;
     height: 32px;
-    background: white;
+    background: #FFF;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     border-radius: 6px;
     border: 1px #E5E7EB solid;
@@ -55,9 +55,8 @@
 
 .modal__list-container {
     display: flex;
-    gap: 122px;
+    flex-direction: column;
 }
-
 
 .modal__list_right {
     flex: 1;
@@ -84,7 +83,7 @@
     padding: 12px 16px;
     font-size: 20px;
     font-weight: normal;
-    background: var(--White, #FFF);
+    background: #FFF;
     box-shadow: rgba(0, 0, 0, 0.87);
 }
 
@@ -97,7 +96,7 @@
     background: none;
     cursor: pointer;
     border-radius: 10px;
-    background: var(--color-light-mode-primary-primary, #3772FF);
+    background: #3772FF;
     font-size: 16px;
     font-weight: 400;
     line-height: 16px;
@@ -105,6 +104,7 @@
     text-align: center;
     color: #FFF;
     padding: 20px 0;
+    transition: all 0.3s ease;
 }
 
 /* Вторая */
@@ -136,7 +136,7 @@
     gap: 5px;
     padding: 0 4px 4px;
     border-radius: 5px;
-    background: var(--gray-50, #F9FAFB);
+    background: #F9FAFB;
     height: 72px;
     padding: 10px 10px;
 }
@@ -164,8 +164,8 @@
     width: 232px;
     padding: 16px;
     border-radius: 12px;
-    border: 2px solid var(--color-light-light-3, #DFDFE6);
-    background: var(--color-light-light, #FCFCFD);
+    border: 2px solid #DFDFE6;
+    background: #FCFCFD;
     margin-bottom: 32px
 }
 
@@ -174,8 +174,8 @@
     width: 232px;
     padding: 16px;
     border-radius: 12px;
-    border: 2px solid var(--color-light-light-3, #DFDFE6);
-    background: var(--color-light-light, #FCFCFD);
+    border: 2px solid #DFDFE6;
+    background: #FCFCFD;
     margin-bottom: 32px
 }
 
@@ -184,8 +184,8 @@
     width: 232px;
     padding: 16px;
     border-radius: 12px;
-    border: 2px solid var(--color-light-light-3, #DFDFE6);
-    background: var(--color-light-light, #FCFCFD);
+    border: 2px solid #DFDFE6;
+    background: #FCFCFD;
     margin-bottom: 32px
 }
 
@@ -196,7 +196,7 @@
 }
 
 .date-picker-container label {
-    color: var(--color-dark-dark-2, #87898E);
+    color: #87898E;
     font-size: 14px;
     font-weight: 400;
     line-height: 16px;
@@ -235,8 +235,8 @@
     padding: 16px;
     text-align: center;
     border-radius: 12px;
-    border: 2px solid var(--color-light-light-3, #DFDFE6);
-    background: var(--color-light-light, #FCFCFD);
+    border: 2px solid #DFDFE6;
+    background: #FCFCFD;
     margin-bottom: 32px;
 }
 
@@ -246,7 +246,7 @@
     height: 66px;
     padding: 20px 0px;
     border-radius: 10px;
-    background: var(--color-light-mode-primary-primary, #3772FF);
+    background: #3772FF;
     color: #FFF;
 }
 
@@ -259,26 +259,28 @@
     background: none;
     width: 105px;
     border-radius: 10px;
-    background: var(--color-light-mode-primary-primary, #3772FF);
+    background: #3772FF;
     color: #FFF;
 }
 
 .SaveRentBtn:hover {
     color: #000;
     background: #2062fc;
+    transition: all 0.3s ease;
 }
 
 #CreateRentBtn {
     background: none;
     width: 105px;
     border-radius: 10px;
-    background: var(--color-light-mode-primary-primary, #3772FF);
+    background: #3772FF;
     color: #FFF;
 }
 
 #CreateRentBtn:hover {
     color: #000;
     background: #2062fc;
+    transition: all 0.3s ease;
 }
 
 /* Модал 2 */
@@ -314,7 +316,7 @@
 .list_content {
     align-items: center;
     padding: 12px 16px;
-    background: var(--White, #FFF);
+    background: #FFF;
     color: #000;
     font-size: 20px;
     font-weight: normal;
@@ -361,6 +363,13 @@
 .close3 {
     float: right;
     cursor: pointer;
+}
+
+.card-right {
+    width: 110px;
+    height: 40px;
+    padding: 1px;
+    margin-top: 2px;
 }
 
 /* switch */
