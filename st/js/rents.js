@@ -545,29 +545,6 @@ function OpenRentInfo(id){
   rentalStartDate.disabled = true
   rentalStartTime.disabled = true
   deposit.disabled = true
-  var headers = ['Предметы'];
-      var headerRow = document.createElement('tr');
-
-      headers.forEach(function(headerText) {
-          var th = document.createElement('th');
-          th.textContent = headerText;
-          //th.classList.add("")
-          headerRow.appendChild(th);
-          headerRow.classList.add("table__header")
-      });
-      SelectedInventoryTable.appendChild(headerRow)
-      ServiceList.innerHTML = ""
-      var headers = ['Поломки'];
-      var headerRow = document.createElement('tr');
-
-      headers.forEach(function(headerText) {
-          var th = document.createElement('th');
-          th.textContent = headerText;
-          //th.classList.add("")
-          headerRow.appendChild(th);
-          headerRow.classList.add("table__header")
-      });
-      ServiceList.appendChild(headerRow)
   fetch('/getrentbyid?ID='+id)
     .then(response => {
         if (!response.ok) {
