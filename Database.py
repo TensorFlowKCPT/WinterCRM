@@ -451,6 +451,14 @@ class Database:
             conn.execute("INSERT INTO Rents (Start_Date, Start_Time, Return_Date, Return_Time, StartItemsJSON, ReturnedItemsJSON, Client, Deposit, Cost, IsPayed, paymentMethod) VALUES (?,?,?,?,?,?,?,?,?,?,?)", (Start_Date, Start_Time, Return_Date, Return_Time, json.dumps(itemsdump), json.dumps(ReturnedItems), Client, Deposit, Cost, IsPayed, paymentMethod))
         return
     
+    def updateRent(ID, Return_Date, Return_Time, ReturnedItems, paymentMethod, IsPayed, Cost):
+        itemsdump = []
+        for item in ReturnedItems:
+            itemsdump.append(Database.getInventoryById(item))
+        with sqlite3.connect("database.db") as conn:
+            conn.execute("UPDATE Rents SET Return_Date = ?, Return_Time = ?, ReturnedItemsJSON = ?, paymentMethod = ?, IsPayed = ?, Cost = ? WHERE ID = ?",(Return_Date, Return_Time, json.dumps(itemsdump), paymentMethod, IsPayed, Cost, ID))
+        return
+    
     def getRentsWithParams(IsExpired:bool, Search:str):
          with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM Rents")

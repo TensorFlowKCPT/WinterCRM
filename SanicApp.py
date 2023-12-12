@@ -242,7 +242,6 @@ async def InventoryData(request):
 @app.get("/getNotRentedInventory")
 async def NotRentedInventory(request):
     Inventory = Database.getInventory()
-    print(Inventory)
     if Inventory:
         NotRentedInventory = list(filter(lambda item: 'Свободно' in item['Rented'], Inventory))
         return json(NotRentedInventory)
@@ -283,12 +282,12 @@ async def updaterent(request):
         Cost = request.json.get('Cost')
         IsPayed = request.json.get('IsPayed')
         paymentMethod = request.json.get('paymentMethod')
-        Database.updateRent(id = id,
+        Database.updateRent(ID = id,
                          Return_Date=ReturnDate,
                          Return_Time=ReturnTime,
                          ReturnedItems=ReturnedItems,
                          paymentMethod=paymentMethod,
-                         Cost=Cost, 
+                         Cost=Cost,
                          IsPayed=IsPayed)
     except Exception as exception:
         return response.json({'error':str(exception)}, status=500)

@@ -113,30 +113,7 @@ document.getElementById("openCreateRentModalBtn").addEventListener("click", func
     RentMainModalContainer.style.display = "flex";
     RentMainModal.style.display = "block";
     addItemButton.style.display = "block"
-    var headers = ['Название', 'Удалить'];
-      var headerRow = document.createElement('tr');
-
-      headers.forEach(function(headerText) {
-          var th = document.createElement('th');
-          th.textContent = headerText;
-          //th.classList.add("")
-          headerRow.appendChild(th);
-          headerRow.classList.add("table__header")
-      });
-      SelectedInventoryTable.appendChild(headerRow)
-      ServiceList.innerHTML = ""
-      var headers = ['appendChildПоломки'];
-      var headerRow = document.createElement('tr');
-
-      headers.forEach(function(headerText) {
-          var th = document.createElement('th');
-          th.textContent = headerText;
-          //th.classList.add("")
-          headerRow.appendChild(th);
-          headerRow.classList.add("table__header")
-      });
-      ServiceList.appendChild(headerRow)
-      UpdateNotRentedInventory()
+    UpdateNotRentedInventory()
 });
 
 document.getElementById("closeCreateRentModalBtn").addEventListener("click", function() {
@@ -192,7 +169,7 @@ function UpdateNotRentedInventory(){
     ////console.log(data)
     //headers
     NotRentedInventoryTable.innerHTML = ''
-    var headers = ['Название', 'Размер', 'Тип'];
+    var headers = ['Название', 'Размер', 'Тип','Статус'];
     var headerRow = document.createElement('tr');
 
     headers.forEach(function(headerText) {
@@ -222,6 +199,9 @@ function UpdateNotRentedInventory(){
       var Type = document.createElement('td');
       Type.textContent = dataRow.Type
       tr.appendChild(Type);
+      var Status = document.createElement('td');
+      Status.textContent = dataRow.Rented
+      tr.appendChild(Status);
       tr.onclick = function(){AddInventoryToList(dataRow.ID), NotRentedInventoryTable.removeChild(tr)}
       tr.classList.add('table-row')
       Array.from(tr.children).forEach(row => row.classList.add('colone'))
@@ -242,26 +222,76 @@ function AddInventoryToList(id){
         }
         return response.json();
     })
-    .then(dataRow => {
+    .then(async dataRow => {
       //Логика обновления данных в таблице
       //console.log(dataRow)
-      var tr = document.createElement('tr');
-      var Name = document.createElement('td');
-      Name.textContent = dataRow.Name
-      Name.onclick = function(){ShowSelectedInventoryData(dataRow.ID)}
-      tr.appendChild(Name);
-      var Delete = document.createElement('td');
-      Delete.textContent = "Удалить"
-      Delete.onclick = function(){SelectedInventoryTable.removeChild(tr);DeleteSelectedInventory(dataRow.ID)}
-      tr.appendChild(Delete);
-      tr.dataset.id = dataRow.ID
-      tr.classList.add('table-row')
-      
-      Array.from(tr.children).forEach(row => row.classList.add('colone'))
-      SelectedInventoryTable.appendChild(tr)
-      
-    })
-    .catch(error => {
+      // Create a div with class "item-card"
+        const div = document.createElement('div');
+        div.classList.add("item-card");
+
+        // Create left section
+        const divLeft = document.createElement('div');
+        divLeft.classList.add("item_card-left");
+        const divName = document.createElement('div');
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = dataRow.Name;
+        divName.appendChild(nameSpan);
+        divLeft.appendChild(divName);
+
+        // Create center section
+        const divCenter = document.createElement('div');
+        divCenter.classList.add("item_card-center");
+        const divSize = document.createElement('div');
+        const sizeSpan = document.createElement('span');
+        sizeSpan.textContent = "Размер:" + dataRow.Size;
+        divSize.appendChild(sizeSpan);
+        divCenter.appendChild(divSize);
+        const divType = document.createElement('div');
+        const typeSpan = document.createElement('span');
+        typeSpan.textContent = "Тип:" + dataRow.Type;
+        divType.appendChild(typeSpan);
+        divCenter.appendChild(divType);
+
+        // Create damage section
+        const divDamage = document.createElement('div');
+        divDamage.classList.add("item_card-damage");
+        const damageTable = document.createElement('table');
+        const th = document.createElement("th");
+        th.textContent = "Поломки";
+        damageTable.appendChild(th);
+        if(dataRow.Services){
+          dataRow.Services.forEach(element => {
+            const tr = document.createElement("tr");
+            const td = document.createElement("td");
+            td.textContent = element.Task;
+            tr.appendChild(td);
+            damageTable.appendChild(tr);
+        });
+        }
+
+        divDamage.appendChild(damageTable);
+
+        // Create delete button
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = "Удалить";
+        deleteButton.classList.add("addItemButton", "card-right");
+        deleteButton.onclick = function () {
+            SelectedInventoryTable.removeChild(div);
+            DeleteSelectedInventory(dataRow.ID);
+        };
+
+        // Append all elements to the main div
+        div.appendChild(divLeft);
+        div.appendChild(divCenter);
+        div.appendChild(divDamage);
+        div.appendChild(deleteButton);
+
+        // Set dataset ID and append to SelectedInventoryTable
+        div.dataset.id = dataRow.ID;
+        SelectedInventoryTable.appendChild(div);
+
+        })
+        .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
     });
 }
@@ -333,24 +363,11 @@ function ShowOldInventoryData(data){
 
     
     
-    InventoryInfoContainer.style.display="flex";
+    InventoryInfoContainer.style.display="flex"
  
 }
-function ShowSelectedInventoryData(id){
-  ItemId = id
-  ServiceList.innerHTML = ""
-  var headers = ['Поломки'];
-      var headerRow = document.createElement('tr');
-
-      headers.forEach(function(headerText) {
-          var th = document.createElement('th');
-          th.textContent = headerText;
-          //th.classList.add("")
-          headerRow.appendChild(th);
-          headerRow.classList.add("table__header")
-      });
-      ServiceList.appendChild(headerRow)
-  fetch('/getInventoryData?ID='+id)
+async function GetInventoryData(id){
+  return await fetch('/getInventoryData?ID='+id)
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -358,24 +375,11 @@ function ShowSelectedInventoryData(id){
         return response.json();
     })
     .then(dataRow => {
-      ////console.log(dataRow)
-      SelectedItemName.textContent = dataRow.Name;
-      SelectedItemSize.textContent = dataRow.Size;
-      SelectedItemType.textContent = dataRow.Type;
-      
-      dataRow.Services.forEach(function(row) {
-        var tr = document.createElement('tr');
-        tr.textContent = row.Task;
-        //th.classList.add("")
-        ServiceList.appendChild(tr);
-        tr.classList.add("colon")});
+      console.log(dataRow)
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
     });
-    
-    InventoryInfoContainer.style.display="flex";
- 
 }
 document.getElementById("closeNotRentedInventoryModal").addEventListener("click",function(){
   NotRentedInventoryModalContainer.style.display = "none";
@@ -445,7 +449,7 @@ const deposit = document.getElementById('deposit')
 const isPayed = document.getElementById('isPayed')
 const itemsSum = document.getElementById('itemsSum')
 document.getElementById("CreateRentBtn").addEventListener("click", function(){
-  var rows = SelectedInventoryTable.querySelectorAll('tr');
+  var rows = SelectedInventoryTable.querySelectorAll('div');
   var idInventoryArray = [];
   rows.forEach(function (row) {
     var idInventory = row.dataset.id;
@@ -488,8 +492,9 @@ document.getElementById("CreateRentBtn").addEventListener("click", function(){
     });
 
 });
+
 document.getElementById('SaveRentBtn').addEventListener('click',function(){
-  var rows = SelectedInventoryTable.querySelectorAll('tr');
+  var rows = SelectedInventoryTable.querySelectorAll('div');
   var idInventoryArray = [];
   rows.forEach(function (row) {
     var idInventory = row.dataset.id;
@@ -570,35 +575,82 @@ function OpenRentInfo(id){
         }
         return response.json();
     })
-    .then(data => {
-      console.log(data)
-      clients = data.Client.ID
-      var itemsarr
-      if(data.ReturnedItems!==null){
-        itemsarr = data.ReturnedItems
+    .then(resp => {
+      var data
+      if(resp.ReturnedItems){
+        data = resp.ReturnedItems
       }
       else{
-        itemsarr = data.StartItems
+        data = resp.StartItems
       }
-      itemsarr.forEach(function(item) {
-        var tr = document.createElement('tr');
-        var Name = document.createElement('td');
-        Name.textContent = item.Name;
-        Name.onclick = function(){ShowOldInventoryData(item)}
-        tr.dataset.id = item.ID
-        tr.appendChild(Name)
-        SelectedInventoryTable.appendChild(tr);
-        SelectedInventoryTable.classList.add("colon");});
-        FormClientSelect.value = data.Client.ID
-        FormPaymentMethodSelect.value = data.paymentMethod
-        rentalStartDate.value = data.Start_Date
-        rentalStartTime.value = data.Start_Time
-        rentalEndDate.value = data.Return_Date
-        rentalEndTime.value = data.Return_Time
-        isPayed.checked = (data.IsPayed === 1 || data.IsPayed)
-        deposit.value = data.Deposit
-        itemsSum.value = data.Cost
+      
+      data.forEach(dataRow => {
+        
+      
+      const div = document.createElement('div');
+        div.classList.add("item-card");
 
+        // Create left section
+        const divLeft = document.createElement('div');
+        divLeft.classList.add("item_card-left");
+        const divName = document.createElement('div');
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = dataRow.Name;
+        divName.appendChild(nameSpan);
+        divLeft.appendChild(divName);
+
+        // Create center section
+        const divCenter = document.createElement('div');
+        divCenter.classList.add("item_card-center");
+        const divSize = document.createElement('div');
+        const sizeSpan = document.createElement('span');
+        sizeSpan.textContent = "Размер:" + dataRow.Size;
+        divSize.appendChild(sizeSpan);
+        divCenter.appendChild(divSize);
+        const divType = document.createElement('div');
+        const typeSpan = document.createElement('span');
+        typeSpan.textContent = "Тип:" + dataRow.Type;
+        divType.appendChild(typeSpan);
+        divCenter.appendChild(divType);
+
+        // Create damage section
+        const divDamage = document.createElement('div');
+        divDamage.classList.add("item_card-damage");
+        const damageTable = document.createElement('table');
+        const th = document.createElement("th");
+        th.textContent = "Поломки";
+        damageTable.appendChild(th);
+        if(dataRow.Services){
+          dataRow.Services.forEach(element => {
+            const tr = document.createElement("tr");
+            const td = document.createElement("td");
+            td.textContent = element.Task;
+            tr.appendChild(td);
+            damageTable.appendChild(tr);
+        });
+        }
+
+        divDamage.appendChild(damageTable);
+
+        // Append all elements to the main div
+        div.appendChild(divLeft);
+        div.appendChild(divCenter);
+        div.appendChild(divDamage);
+
+        // Set dataset ID and append to SelectedInventoryTable
+        div.dataset.id = dataRow.ID;
+        SelectedInventoryTable.appendChild(div);
+      });
+      
+      FormClientSelect.value = resp.Client.ID
+      FormPaymentMethodSelect.value = resp.paymentMethod
+      rentalStartDate.value = resp.Start_Date
+      rentalStartTime.value = resp.Start_Time
+      rentalEndDate.value = resp.Return_Date
+      rentalEndTime.value = resp.Return_Time
+      isPayed.checked = (resp.IsPayed === 1 || resp.IsPayed)
+      deposit.value = resp.Deposit
+      itemsSum.value = resp.Cost
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
