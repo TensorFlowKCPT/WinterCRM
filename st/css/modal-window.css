@@ -14,7 +14,7 @@
 
 .modal {
     background: #FCFCFD;
-    padding: 20px;
+    padding: 20px 0;
     border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin: 20px auto 10px;
@@ -50,7 +50,7 @@
 
 /* Первая */
 .modal_list__wrapper {
-    padding: 19px 49px 35px 30px;
+    padding: 19px;
 }
 
 .modal__list-container {
@@ -305,7 +305,6 @@
     margin: 20px auto 10px;
     position: relative;
     display: none;
-    width: 586px;
 }
 
 .list {
