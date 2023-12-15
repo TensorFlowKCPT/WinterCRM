@@ -149,6 +149,7 @@ tr {
 }
 
 .modal {
+    padding-top: 15px;
     display: none;
     position: fixed;
     top: 0;
@@ -158,6 +159,7 @@ tr {
     background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
+    z-index: 1;
 }
 
 .modal-container {

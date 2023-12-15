@@ -282,6 +282,63 @@
             </button>
           </div>
         </div>
+        <div class="rents__wrapper-for_mobile">
+          <div class="rents__search">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="none"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M7.2 2.8a4.4 4.4 0 1 0 0 8.8 4.4 4.4 0 0 0 0-8.8ZM1.6 7.2a5.6 5.6 0 1 1 9.962 3.513l2.662 2.663a.6.6 0 1 1-.848.848l-2.663-2.662A5.6 5.6 0 0 1 1.6 7.2Z"
+                fill="#64748B"
+              />
+            </svg>
+            <input
+              id="rents-searchbox"
+              class="rents__search-input"
+              type="text"
+              name="search"
+              placeholder="Поиск"
+              oninput="SearchBoxChanged()"
+            />
+          </div>
+          <div class="rents__score">
+            <div class="rents-score">Заказов в списке:</div>
+            <div id="rentsCount" class="rents-score"></div>
+          </div>
+
+          <div class="slide_menu__small">
+            <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+            <div class="mobile-menu" id="mobileMenu">
+              <div class="rents__filter">
+                <select
+                  class="rents-filter"
+                  id="rents-filter"
+                  onchange="filterChanged()"
+                >
+                  <option value="placeholder" disabled selected hidden>
+                    Фильтр
+                  </option>
+                  <option value="all">Все</option>
+                  <option value="false">Активные</option>
+                  <option value="true">Возвращеные?</option>
+                </select>
+              </div>
+              <div class="rents__right">
+                <button
+                  id="openCreateRentModalBtn"
+                  class="mdlbutton rents-button"
+                >
+                  Добавить заказ
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div>
           <table id="RentsMainTable" class="RentsMainTable"></table>
         </div>
@@ -292,7 +349,6 @@
           <div class="modal__wrapper">
             <div class="modal_list__wrapper">
               <div class="modal__list-header">
-                Создать аренду
                 <svg
                   class="close"
                   id="closeCreateRentModalBtn"
@@ -315,6 +371,7 @@
                     fill="#23262F"
                   />
                 </svg>
+                Создать аренду
               </div>
               <div class="modal__list-container">
                 <div class="pole-container" id="InventoryInfoContainer">

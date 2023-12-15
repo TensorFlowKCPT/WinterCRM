@@ -49,6 +49,7 @@ main {
     line-height: 20px;
     border: none;
     background: none;
+    width: 100%;
 }
 
 /* Для "фильтра" */
@@ -106,7 +107,7 @@ tr {
 }
 
 .table__header th {
-    color: var(--gray-500, #6B7280);
+    color: #6B7280;
     font-size: 16px;
     font-weight: 500;
     line-height: 16px;
@@ -140,21 +141,39 @@ input[type="checkbox"]+label::before {
 
 input[type="checkbox"]:checked+label::before {
     content: '✔';
-    font-size: 16px;
+    font-size: 15px;
     line-height: 20px;
     text-align: center;
     color: #fff;
     background-color: #3772FF;
 }
 
+.rents__wrapper-for_mobile {
+    display: none;
+}
+
+.slide_menu__small {
+    display: none;
+}
+
+.menu-toggle {
+    cursor: pointer;
+}
+
+
+.mobile-menu {
+    display: none;
+}
+
 /* Параметры колонок */
 .colone {
-    color: var(--gray-500, #6B7280);
+    color: #6B7280;
     text-align: center;
     font-size: 21px;
     font-weight: 600;
     line-height: 20px;
     padding: 16px 18px;
+    cursor: pointer;
 }
 
 .colone-status {
@@ -182,6 +201,7 @@ input[type="checkbox"]:checked+label::before {
 
 .close2 {
     float: right;
+    cursor: pointer;
 }
 
 #NotRentedInventoryTable tr:hover {
@@ -291,4 +311,103 @@ input[type="checkbox"]:checked+label::before {
 #RentMainModal {
     overflow-y: scroll;
     height: 80vh;
+}
+
+/* Адаптив */
+@media (max-width: 819px) {
+    .rents__header {
+        display: none;
+    }
+
+    .rents__wrapper-for_mobile {
+        display: flex;
+        padding: 12px 0 18px 24px;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .slide_menu__small {
+        padding: 9px 19px 9px 19px;
+        margin: 10px 10px 0 0;
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20%;
+        gap: 10px;
+    }
+
+    .mobile-menu.show {
+        display: flex;
+        gap: 6px;
+    }
+
+    .colone {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 752px) {
+    .slide_menu__wrapper.close {
+        height: 6vh;
+    }
+
+    .rents__wrapper {
+        padding: 0 8px;
+    }
+
+    .rents__wrapper-for_mobile {
+        justify-content: center;
+    }
+
+    .colone {
+        font-size: 14px;
+        padding: 10px 1px;
+    }
+}
+
+@media (max-width: 635px) {
+    .rents__wrapper-for_mobile {
+        flex-direction: column-reverse;
+    }
+}
+
+@media (max-width: 615px) {
+    .table__header th {
+        font-size: 14px;
+        padding: 2px 4px 2px 2px;
+    }
+}
+
+@media (max-width: 418px) {
+    .table__header th {
+        font-size: 12px;
+        padding: 2px 4px;
+    }
+
+    .rents__search {
+        width: 190px;
+        height: 20px;
+    }
+
+    .rents__wrapper-for_mobile {
+        padding: 12px 0 18px;
+    }
+
+    .rents-score {
+        font-size: 13px;
+    }
+
+    .colone {
+        font-size: 11px;
+    }
+
+    .slide_menu__small {
+        padding: 9px 17px 9px 14px;
+    }
 }

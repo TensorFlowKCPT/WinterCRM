@@ -163,6 +163,7 @@ tr {
     justify-content: center;
     align-items: center;
     padding-top: 15px;
+    z-index: 1;
 }
 
 .modal-container {
