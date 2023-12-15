@@ -248,7 +248,6 @@
                   fill="#64748B"
                 />
               </svg>
-              <!-- Для сервиса поиск -->
               <input
                 class="service__search-input"
                 type="search"
@@ -258,7 +257,6 @@
                 oninput="SearchBox()"
               />
             </div>
-            <!-- Для сервиса счет -->
             <div class="service__score">
               <div id="clientsCount" class="service-score">
                 {{ data['lenClients'] }}
@@ -319,7 +317,7 @@
               <td class="table-colon">{{ service['Parts'] }}</td>
               <td class="table-colon">{{ service['Cost'] }}</td>
               <td class="table-colon">
-                <select name="" id="StatusListBox" data-service-id="{{ service['ID'] }}">
+                <select class="service-filter status-list" name="" id="StatusListBox" data-service-id="{{ service['ID'] }}">
                     <option value="в Работе" {% if service['Status'] == "В Работе" %} selected {% endif %}>в Работе</option>
                     <option value="Выполнено" {% if service['Status'] == "Выполнено" %} selected {% endif %}>Выполнено</option>
                     <option value="Ожидает" {% if service['Status'] == "Ожидает" %} selected {% endif %}>Ожидает</option>
@@ -339,85 +337,85 @@
         </div>
       </div>
 
-      <div id="myModal" class="modal">
-        <div class="modal-container">
-          <svg
-            class="close"
-            id="closeModalBtn"
-            xmlns="http://www.w3.org/2000/svg"
-            width="39"
-            height="39"
-            viewBox="0 0 39 39"
-            fill="none"
-          >
-            <path
-              d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
-              fill="#DFDFE6"
-            />
-            <path
-              d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
-              fill="#23262F"
-            />
-            <path
-              d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
-              fill="#23262F"
-            />
-          </svg>
+      <div id="myModal" class="modal-container">
+        <div class="modal">
           <div class="modal__wrapper">
-            <div class="create__service">
-              <div class="create__service_item">
-                <label for="creating_date">Дата создания</label>
-                <input type="date" name="creating_date" id="" />
+            <svg
+              class="close"
+              id="closeModalBtn"
+              xmlns="http://www.w3.org/2000/svg"
+              width="39"
+              height="39"
+              viewBox="0 0 39 39"
+              fill="none"
+            >
+              <path
+                d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
+                fill="#DFDFE6"
+              />
+              <path
+                d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
+                fill="#23262F"
+              />
+              <path
+                d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
+                fill="#23262F"
+              />
+            </svg>
+              <div class="create__service">
+                <div class="create__service_item">
+                  <label for="creating_date">Дата создания</label>
+                  <input type="date" name="creating_date" id="" />
+                </div>
+                <div class="create__service_item">
+                  <label for="clients">Клиенты</label>
+                  <select name="clients" id="">
+                    {% for client in data['clients'] %}
+                    <option value="{{ client['ID'] }}">
+                      {{ client['FIO'] }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="create__service_item">
+                  <label for="inventory">Инвентарь</label>
+                  <select name="inventory" id="">
+                    {% for client in data['inventory'] %}
+                    <option value="{{ client['ID'] }}">
+                      {{ client['Name'] }}
+                    </option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="create__service_item">
+                  <label for="task">Что нужно сделать?</label>
+                  <input class="item" type="text" name="task" id="" />
+                </div>
+                <div class="create__service_item">
+                  <label for="parts">Запчасти</label>
+                  <input class="item" type="number" name="parts" id="" />
+                </div>
+                <div class="create__service_item">
+                  <label for="cost">Сумма</label>
+                  <input class="item" type="number" name="cost" id="" />
+                </div>
+                <div class="create__service_item-2">
+                  <label for="ispayed">Оплата</label>
+                  <label class="switch" for="ispayed">
+                    <input
+                      for="ispayed"
+                      class="switch-input"
+                      type="checkbox"
+                      name="ispayed"
+                      id="ispayed"
+                    />
+                    <span class="switch-slider"></span>
+                  </label>
+                </div>
+                <button class="create__service-button" id="CreateServiceBtn">
+                  Сохранить
+                </button>
               </div>
-              <div class="create__service_item">
-                <label for="clients">Клиенты</label>
-                <select name="clients" id="">
-                  {% for client in data['clients'] %}
-                  <option value="{{ client['ID'] }}">
-                    {{ client['FIO'] }}
-                  </option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="create__service_item">
-                <label for="inventory">Инвентарь</label>
-                <select name="inventory" id="">
-                  {% for client in data['inventory'] %}
-                  <option value="{{ client['ID'] }}">
-                    {{ client['Name'] }}
-                  </option>
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="create__service_item">
-                <label for="task">Что нужно сделать?</label>
-                <input class="item" type="text" name="task" id="" />
-              </div>
-              <div class="create__service_item">
-                <label for="parts">Запчасти</label>
-                <input class="item" type="number" name="parts" id="" />
-              </div>
-              <div class="create__service_item">
-                <label for="cost">Сумма</label>
-                <input class="item" type="number" name="cost" id="" />
-              </div>
-              <div class="create__service_item-2">
-                <label for="ispayed">Оплата</label>
-                <label class="switch" for="ispayed">
-                  <input
-                    for="ispayed"
-                    class="switch-input"
-                    type="checkbox"
-                    name="ispayed"
-                    id="ispayed"
-                  />
-                  <span class="switch-slider"></span>
-                </label>
-              </div>
-              <button class="create__service-button" id="CreateServiceBtn">
-                Сохранить
-              </button>
-            </div>
           </div>
         </div>
       </div>

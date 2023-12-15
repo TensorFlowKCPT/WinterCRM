@@ -98,7 +98,6 @@ tr {
     font-size: 12px;
     font-weight: 500;
     line-height: 16px;
-    letter-spacing: 0.6px;
     text-transform: uppercase;
     align-items: center;
     background: #F9FAFB;
@@ -148,7 +147,7 @@ tr {
     padding: 10px 20px;
 }
 
-.modal {
+.modal-container {
     padding-top: 15px;
     display: none;
     position: fixed;
@@ -162,19 +161,16 @@ tr {
     z-index: 1;
 }
 
-.modal-container {
+.modal {
     background-color: #fefefe;
     border-radius: 15px;
     box-sizing: border-box;
-    margin: auto;
-    width: 30%;
+    margin: 0 auto;
 }
 
 .modal__wrapper {
-    padding: 25px;
+    padding: 25px 0px 25px 65px;
 }
-
-
 
 /* Для "Добавить сервис" контент */
 .create__service {
@@ -298,7 +294,6 @@ tr {
 
 .table-colon2 {
     font-weight: 400;
-    font-display: swap;
 }
 
 .table-colon {
@@ -306,7 +301,6 @@ tr {
     color: #1E293B;
     font-size: 17px;
     font-weight: 600;
-    font-display: swap;
     line-height: 20px;
     background-color: #FFF;
     text-align: center;
@@ -319,4 +313,82 @@ tr {
     border-radius: 10px;
     background: #3772FF;
     color: #FFF;
+    cursor: pointer;
+}
+
+.delServiceBtn:hover {
+    color: #000;
+    background: #2062fc;
+}
+
+.status-list {
+    width: 108px;
+    padding: 1px 1px;
+}
+
+@media (max-width: 1150px) {
+    .table__header th {
+        padding: 8px;
+    }
+
+    .table-colon {
+        padding: 7px 6px;
+        font-size: 14px;
+    }
+
+    .status-list {
+        width: 89px;
+        font-size: 11px;
+    }
+}
+
+@media (min-width: 300px) {
+    .modal {
+        width: 95%;
+    }
+}
+
+@media (min-width: 370px) {
+    .modal {
+        width: 350px;
+    }
+}
+
+@media (max-width: 951px) {
+    .slide_menu__wrapper.close {
+        height: 6vh;
+    }
+
+    .service__wrapper {
+        padding: 0 11px;
+    }
+
+    .service__header {
+        padding: 26px 0 26px 60px;
+    }
+}
+
+@media (max-width: 811px) {
+    .table-colon {
+        padding: 7px 2px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 751px) {
+    .delServiceBtn {
+        font-size: 11px;
+        width: 60px;
+        height: 28px;
+    }
+
+    .table-colon {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 731px) {
+    .service__wrapper {
+        padding: 0 3px;
+    }
 }
