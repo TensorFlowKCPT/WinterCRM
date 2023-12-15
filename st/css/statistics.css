@@ -13,12 +13,12 @@ main {
 }
 
 .chart-container {
-    width: 1600px;
     height: 465px;
+    margin-bottom: 40px;
+    margin-left: 86px;
     background-color: white;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
 }
 
 #orderChart {
@@ -28,16 +28,18 @@ main {
 
 .main-container {
     height: 167px;
+    margin: 30px 89px;
     position: relative;
     background: white;
-    display: flex; /* Use flexbox */
+    display: flex;
+    width: 56vw;
     border-radius: 16px;
-    overflow: hidden;
 }
 
-.main-container > * {
-    flex: 1; /* Each child takes equal width */
-    margin-right: 10px; 
+.main-container>* {
+    flex: 1;
+    /* Each child takes equal width */
+    margin-right: 10px;
 }
 
 /* First Block Styles */
