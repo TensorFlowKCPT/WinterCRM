@@ -48,9 +48,9 @@ h1 {
 /* Строчка "Название задачи" */
 .task {
     border-radius: 12px;
-    border: 2px solid var(--color-light-light-3, #DFDFE6);
-    background: var(--color-light-light, #FCFCFD);
-    color: var(--color-dark-dark-2, #87898E);
+    border: 2px solid #DFDFE6;
+    background: #FCFCFD;
+    color: #87898E;
     font-size: 14px;
     font-weight: 400;
     line-height: 16px;
@@ -67,7 +67,7 @@ h1 {
 }
 
 .tasks__center-text {
-    color: var(--color-dark-dark-2, #87898E);
+    color: #87898E;
     font-size: 16px;
     font-weight: 400;
     line-height: 16px;
@@ -81,7 +81,7 @@ h1 {
 }
 
 .text-color {
-    color: var(--color-dark-dark, #23262F);
+    color: #23262F;
     font-size: 16px;
     font-weight: 500;
     line-height: 24px;
@@ -115,13 +115,13 @@ h1 {
 /* Для сотрудника */
 .employees {
     border-radius: 12px;
-    border: 2px solid var(--color-light-light-3, #DFDFE6);
-    background: var(--color-light-light, #FCFCFD);
+    border: 2px solid #DFDFE6;
+    background: #FCFCFD;
     padding: 5px 55px;
     font-size: 14px;
     font-weight: 400;
     line-height: 16px;
-    color: var(--color-dark-dark-2, #87898E);
+    color: #87898E;
     width: 100%;
     height: 56px;
     cursor: pointer;
@@ -149,13 +149,13 @@ h1 {
 .addTaskButton {
     padding: 20px 0;
     border-radius: 10px;
-    background: var(--color-light-mode-primary-primary, #3772FF);
+    background: #3772FF;
     width: 270px;
     font-size: 16px;
     font-weight: 400;
     line-height: 16px;
     cursor: pointer;
-    color: var(--color-light-light, #FCFCFD);
+    color: #FCFCFD;
 }
 
 .addTaskButton:hover {
@@ -181,7 +181,6 @@ section {
     display: flex;
     flex-direction: column;
     padding: 0 24px;
-    flex: 1;
 }
 
 .modal__header {
@@ -190,6 +189,7 @@ section {
     align-items: center;
     justify-content: space-between;
     margin-top: 20px;
+    font-weight: 600;
 }
 
 /* Настройка для левой стороны header */
@@ -216,19 +216,26 @@ section {
     line-height: 20px;
     border: none;
     background: none;
+    width: 100%;
 }
 
 /* Для "фильтра" и "сортировки" */
 .tasks-filter {
-    border-radius: var(--border-radius-rounded-md, 6px);
-    border: 1px solid var(--gray-200, #E5E7EB);
-    background: var(--White, #FFF);
+    border-radius: 6px;
+    border: 1px solid #E5E7EB;
+    background: #FFF;
     padding: 4px 5px;
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
     height: 32px;
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+}
+
+.status-filter {
+    padding: 1px;
+    width: 107px;
+    height: 28px;
 }
 
 .tasks-sortirovka {
@@ -247,7 +254,7 @@ section {
 
 /* Параметры текста клиентов */
 .clients-score {
-    color: var(--slate-500, #64748B);
+    color: #64748B;
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
@@ -263,34 +270,32 @@ table,
 td,
 th,
 tr {
-    border-top: 1px solid var(--gray-200, #E5E7EB);
-    border-bottom: 1px solid var(--gray-200, #E5E7EB);
+    border-top: 1px solid #E5E7EB;
+    border-bottom: 1px solid #E5E7EB;
 }
 
 .table-head {
-    color: var(--gray-500, #6B7280);
+    color: #6B7280;
     font-size: 12px;
     font-weight: 500;
     line-height: 16px;
     letter-spacing: 0.6px;
     text-transform: uppercase;
-    background: var(--gray-50, #F9FAFB);
+    background: #F9FAFB;
     text-align: center;
-    padding: var(--spacing-3, 12px) var(--spacing-6, 24px);
+    padding: 12px 24px;
 }
 
 /* Параметры для колонок */
 .table-colon2 {
     font-weight: 400;
-    font-display: swap;
 }
 
 .table-colon {
-    padding: 10px 16px;
-    color: var(--slate-800, #1E293B);
+    padding: 10px 7px;
+    color: #1E293B;
     font-size: 20px;
     font-weight: 600;
-    font-display: swap;
     line-height: 20px;
     text-align: center;
 }
@@ -298,10 +303,11 @@ tr {
 .table-colon-button {
     background: none;
     border-radius: 10px;
-    background: var(--color-light-mode-primary-primary, #3772FF);
+    background: #3772FF;
     padding: 5px 10px;
     color: #fff;
     cursor: pointer;
+    height: 28px;
 }
 
 .table-colon-button:hover {
@@ -311,6 +317,7 @@ tr {
 
 /* Модальное окно */
 .modal {
+    padding-top: 107px;
     display: none;
     position: fixed;
     top: 0;
@@ -320,16 +327,14 @@ tr {
     background-color: rgba(0, 0, 0, 0.5);
     justify-content: center;
     align-items: center;
-    overflow-y: scroll;
+    z-index: 1;
 }
 
 .modal-content {
     background-color: #fefefe;
-    width: 540px;
-    height: 560px;
     border-radius: 15px;
-    box-sizing: border-box;
-    margin: auto;
+    height: 560px;
+    margin: 0 auto;
 }
 
 .close {
@@ -344,9 +349,8 @@ tr {
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     border-radius: 6px;
     border: 1px #E5E7EB solid;
-    font-weight: bolder;
+    font-weight: 600;
     align-items: center;
-    width: 100%;
 }
 
 .mdlbutton:hover {
@@ -359,7 +363,7 @@ tr {
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     border-radius: 6px;
     border: 1px #E5E7EB solid;
-    font-weight: bolder;
+    font-weight: 600;
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
@@ -371,7 +375,7 @@ input[type="date"] {
     padding: 15px;
     position: absolute;
     transform: translate(-50%, -50%);
-    top: 39%;
+    top: 45%;
     left: 50%;
     color: #ffffff;
     font-size: 18px;
@@ -388,5 +392,99 @@ input[type="date"] {
 }
 
 .date {
-    margin-bottom: 20%;
+    margin-bottom: 105px;
+}
+
+@media (max-width: 1060px) {
+    .tasks__header {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .tasks__left {
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 815px) {
+    .slide_menu__wrapper.close {
+        height: 6vh;
+    }
+
+    .tasks__wrapper {
+        padding: 24px 5px 0 5px;
+    }
+}
+
+@media (max-width: 740px) {
+    .table-colon {
+        font-size: 13px;
+    }
+
+    .table-head {
+        font-size: 10px;
+        padding: 12px 10px;
+    }
+}
+
+@media (max-width: 560px) {
+    .table-colon {
+        padding: 10px 2px;
+    }
+
+    .status-filter {
+        font-size: 13px;
+        width: 101px;
+    }
+}
+
+@media (max-width: 500px) {
+    .table-head {
+        font-size: 9px;
+        padding: 12px 2px;
+    }
+
+    .table-colon-button {
+        padding: 5px 7px;
+    }
+}
+
+@media (max-width: 438px) {
+    .table-colon {
+        font-size: 11px;
+    }
+
+    .status-filter {
+        font-size: 11px;
+        width: 90px;
+    }
+}
+
+@media (max-width: 406px) {
+    .tasks__score {
+        font-size: 14px;
+    }
+
+    .tasks-filter {
+        font-size: 13px;
+    }
+
+    .status-filter {
+        font-size: 11px;
+        width: 90px;
+    }
+}
+
+@media (min-width: 320px) {
+    .modal-content {
+        width: 95%;
+    }
+}
+
+@media (min-width: 460px) {
+    .modal-content {
+        width: 437px;
+    }
 }

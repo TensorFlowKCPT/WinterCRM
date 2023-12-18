@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -329,32 +329,31 @@
             </thead>
             <tbody>
               {% for task in data['tasks'] %}
-            <tr
-              id="{{task['ID']}}"
-              style="background-color: {{ task['Color']}} ;"
-            >
-              <td class="table-colon">{{ task['Task'] }}</td>
-              <td class="table-colon">{{ task['Performer']['Name'] }}</td>
-              <td class="table-colon">{{ task['DateCreate'] }}</td>
-              <td class="table-colon">
-                <select onchange='sendSelectedValue({{ task["ID"] }})' name="" id='StatusListBox_{{ task["ID"] }}'>
+              <tr
+                id="{{task['ID']}}"
+                style="background-color: {{ task['Color']}} ;"
+              >
+                <td class="table-colon">{{ task['Task'] }}</td>
+                <td class="table-colon">{{ task['Performer']['Name'] }}</td>
+                <td class="table-colon">{{ task['DateCreate'] }}</td>
+                <td class="table-colon">
+                  <select class="tasks-filter status-filter" onchange='sendSelectedValue({{ task["ID"] }})' name="" id='StatusListBox_{{ task["ID"] }}'>
                   <option value="в Работе" {% if task['Status'] == "в Работе" %} selected {% endif %}>в Работе</option>
                   <option value="Выполнено" {% if task['Status'] == "Выполнено" %} selected {% endif %}>Выполнено</option>
                   <option value="Ожидает" {% if task['Status'] == "Ожидает" %} selected {% endif %}>Ожидает</option>
                 </select>
-              </td>
-              <td class="table-colon">
-                <button
-                  class="table-colon-button"
-                  onclick="Delete({{ task['ID'] }})"
-                >
-                  Удалить
-                </button>
-              </td>
-            </tr>
-            {% endfor %}
+                </td>
+                <td class="table-colon">
+                  <button
+                    class="table-colon-button"
+                    onclick="Delete({{ task['ID'] }})"
+                  >
+                    Удалить
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
             </tbody>
-            
           </table>
 
           <div id="myModal" class="modal">
