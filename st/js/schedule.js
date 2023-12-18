@@ -201,3 +201,8 @@ const body = document.querySelector("body"),
   toggle.addEventListener("click", () => {
     sidebar.classList.toggle("close");
   })
+
+  function toggleMenu() {
+  var mobileMenu = document.getElementById("mobileMenu");
+  mobileMenu.classList.toggle("show");
+}
