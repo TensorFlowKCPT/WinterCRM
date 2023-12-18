@@ -10,8 +10,14 @@
     z-index: 1;
 }
 
+.slide_menu__wrapper-shedule.close {
+    height: 6vh;
+}
+
 .slide_menu__wrapper.close {
     width: 20px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
 }
 
 .slide_menu__inset {

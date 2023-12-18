@@ -15,7 +15,7 @@
   </head>
   <body>
     <main>
-      <nav class="slide_menu__wrapper close">
+      <nav class="slide_menu__wrapper slide_menu__wrapper-shedule close">
         <div class="slide_menu__header">
           <div class="slide_menu-arrow toggle">
             <svg
@@ -231,13 +231,13 @@
         </div>
       </nav>
 
+      <button id="menuButton">&#9776;</button>
+
       <div id="calendarContainer"></div>
 
       <div class="employees__wrapper">
-        <div class="slide_menu__small">
-          <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-          <div class="mobile-menu" id="mobileMenu">
-            <form class="getSchedule" action="">
+        <div id="menuForm">
+          <form class="getSchedule" action="">
           <select
             id="employeeSelect"
             class="dropdown"
@@ -261,54 +261,45 @@
           />
           </form>
 
-            <div style="display: none" class="status">
-              <div class="status__label">
-                <input type="radio" id="1" name="radioGroup" value="1" />
-                <label
-                  style="background-color: rgb(207, 232, 255)"
-                  for="option1"
-                  >Работает</label
-                >
-              </div>
-
-              <div class="status__label">
-                <input type="radio" id="2" name="radioGroup" value="2" />
-                <label
-                  style="background-color: rgb(255, 207, 207)"
-                  for="option2"
-                  >Болеет</label
-                >
-              </div>
-
-              <div class="status__label">
-                <input type="radio" id="3" name="radioGroup" value="3" />
-                <label
-                  style="background-color: rgb(253, 255, 174)"
-                  for="option3"
-                  >Отпуск</label
-                >
-              </div>
-
-              <div class="status__label">
-                <input type="radio" id="0" name="radioGroup" value="0" />
-                <label
-                  style="background-color: rgb(255, 255, 255)"
-                  for="option3"
-                  >Не работает</label
-                >
-              </div>
+          <div style="display: none" class="status">
+            <div class="status__label">
+              <input type="radio" id="1" name="radioGroup" value="1" />
+              <label style="background-color: rgb(207, 232, 255)" for="option1"
+                >Работает</label
+              >
             </div>
-            <div class="employees__password">
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Пароль"
-                required
-              />
-              <br />
-              <button id="passwordButton" class="buttonName">Отправить</button>
+
+            <div class="status__label">
+              <input type="radio" id="2" name="radioGroup" value="2" />
+              <label style="background-color: rgb(255, 207, 207)" for="option2"
+                >Болеет</label
+              >
             </div>
+
+            <div class="status__label">
+              <input type="radio" id="3" name="radioGroup" value="3" />
+              <label style="background-color: rgb(253, 255, 174)" for="option3"
+                >Отпуск</label
+              >
+            </div>
+
+            <div class="status__label">
+              <input type="radio" id="0" name="radioGroup" value="0" />
+              <label style="background-color: rgb(255, 255, 255)" for="option3"
+                >Не работает</label
+              >
+            </div>
+          </div>
+          <div class="employees__password">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Пароль"
+              required
+            />
+            <br />
+            <button id="passwordButton" class="buttonName">Отправить</button>
           </div>
         </div>
       </div>

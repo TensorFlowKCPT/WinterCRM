@@ -183,3 +183,35 @@ table {
     font-size: 24px;
     cursor: pointer;
 }
+
+/* Меню-кнопка справа */
+#menuButton {
+    position: fixed;
+    top: 1%;
+    right: 2%;
+    font-size: 24px;
+    cursor: pointer;
+    background: #fff;
+    border: none;
+    border-radius: 10px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+}
+
+#menuForm {
+    display: none;
+    position: fixed;
+    top: 6%;
+    right: 5%;
+    padding: 10px;
+    background-color: #f3f4f6;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.getSchedule {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+}

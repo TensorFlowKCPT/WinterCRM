@@ -198,6 +198,17 @@ const body = document.querySelector("body"),
   sidebar = body.querySelector(".slide_menu__wrapper"),
   toggle = body.querySelector(".toggle");
 
-  toggle.addEventListener("click", () => {
-    sidebar.classList.toggle("close");
-  })
+document.addEventListener('DOMContentLoaded', function () {
+  var menuButton = document.getElementById('menuButton');
+  var menuForm = document.getElementById('menuForm');
+
+  menuButton.addEventListener('click', function () {
+    if (menuForm.style.display === 'block') {
+      menuForm.style.display = 'none';
+      menuButton.innerHTML = '&#9776;';
+    } else {
+      menuForm.style.display = 'block';
+      menuButton.innerHTML = '&#8601;'; 
+    }
+  });
+});
