@@ -695,16 +695,17 @@ class Database:
             rows = [row for row in rows]
             output = []
             for row in rows:
-                output.append({
-                        "ID":row[0],
-                        "Creation_Date":row[1],
-                        "Client_Id":row[2],
-                        "Inventory_Id":row[3],
-                        "Task":row[4],
-                        "Parts":row[5],
-                        "Cost":row[6],
-                        "IsPayed":row[7]
-                    })
+                if(row[8]!="Выполнено"):
+                    output.append({
+                            "ID":row[0],
+                            "Creation_Date":row[1],
+                            "Client_Id":row[2],
+                            "Inventory_Id":row[3],
+                            "Task":row[4],
+                            "Parts":row[5],
+                            "Cost":row[6],
+                            "IsPayed":row[7]
+                        })
             return output
                  
     def getService():
@@ -715,7 +716,6 @@ class Database:
                 return None
             output = []
             for row in rows:
-                print(row)
                 client = {"ID": 0, "FIO": "Нет", "Passport": "Нет", "PhoneNumber": "Нет"}
                 if row[2]:
                     client = Database.GetClientById(row[2])
