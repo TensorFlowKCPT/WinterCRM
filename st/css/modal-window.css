@@ -305,8 +305,6 @@
     margin: 20px auto 10px;
     position: relative;
     display: none;
-    overflow-y: scroll;
-    overflow-x: scroll;
 }
 
 .list {
@@ -445,7 +443,7 @@
 
 @media (max-width: 386px) {
     .rents-filter {
-        width: 100px;
+        width: 123px;
         font-size: 13px;
     }
 
@@ -459,6 +457,13 @@
     .item-card {
         flex-direction: column;
         gap: 25px;
+    }
+}
+
+@media (max-width: 615px) {
+    .modal2 {
+        overflow-y: scroll;
+        overflow-x: scroll;
     }
 }
 

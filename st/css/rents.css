@@ -298,10 +298,6 @@ input[type="checkbox"]:checked+label::before {
 
 /* Адаптив */
 @media (max-width: 870px) {
-    .rents__filter {
-        display: none;
-    }
-
     .rents__header {
         flex-direction: column;
         gap: 8px;
