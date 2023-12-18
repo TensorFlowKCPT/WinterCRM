@@ -41,7 +41,6 @@ async def sellConsumable(request):
         Database.sellConsumable(item_id)
         return response.json({'response':'OK'}, status=200)
     except Exception as e:
-        print(f"Error in /sell-consumable: {str(e)}")
         return response.json({'response': 'Error'}, status=500)
 
 @app.post("/del-consumable")
@@ -112,7 +111,6 @@ async def tasks(request):
 async def updateTaskStatus(request):
     taskId = request.json.get('idTask')
     status = request.json.get('status')
-    print(taskId, status)
     Database.statusPut(idTask=taskId, status=status)
     return response.json({"status": 200})
 
