@@ -123,3 +123,9 @@
 .slide_menu__wrapper.close .slide_menu-arrow {
     transform: translateY(50%);
 }
+
+@media (max-width: 768px) {
+    .slide_menu__wrapper-shedule.close {
+        height: 7vh;
+    }
+}

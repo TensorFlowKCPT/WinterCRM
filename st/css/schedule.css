@@ -123,6 +123,7 @@ table {
   position: relative;
 }
 
+
 /* Стили для части стрелочки вниз */
 .arrow-part {
   width: 8.01px;
@@ -208,5 +209,11 @@ table {
 }
 
 td span {
-  font-size: 100%;
+  font-size: 17px;
+}
+
+@media (max-width: 720px) {
+  td span {
+    font-size: 14px;
+  }
 }
