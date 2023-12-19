@@ -356,7 +356,9 @@ tr {
 
 @media (max-width: 951px) {
     .slide_menu__wrapper.close {
-        height: 6vh;
+        height: 5vh;
+        border-radius: 10px;
+        border: 1px solid #ccc;
     }
 
     .service__wrapper {

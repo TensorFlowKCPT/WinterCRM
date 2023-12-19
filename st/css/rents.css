@@ -312,9 +312,19 @@ input[type="checkbox"]:checked+label::before {
     }
 }
 
+@media (max-width: 768px) {
+    .modal-container {
+        padding: 8px 0;
+    }
+}
+
 @media (max-width: 752px) {
     .slide_menu__wrapper.close {
-        height: 6vh;
+        height: 7vh;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        top: 1%;
+        left: 1%;
     }
 
     .rents__wrapper {

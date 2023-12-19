@@ -83,9 +83,18 @@ document.addEventListener('DOMContentLoaded', async function () {
                             text: 'Кол-во заказов'
                         }
                     }
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom' // Adjust legend position as needed
+                    }
                 }
             }
         });
+        
     } catch (error) {
         console.error('Error fetching data:', error);
     }

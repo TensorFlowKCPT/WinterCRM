@@ -1,217 +1,219 @@
 /* default settings */
 body {
-    background: #F1F1F4;
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    font-style: normal;
+  background: #f1f1f4;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
 }
 
 main {
-    display: flex;
-    position: relative;
+  display: flex;
+  position: relative;
 }
 
 #calendarContainer {
-    padding: 7px 24px 0 76px
+  padding: 81px 0px 0 18px;
+  width: 100%;
 }
 
 /* Кнопки имен соотрудников */
 .employees__wrapper {
-    position: absolute;
-    right: 0%;
-    top: 0%;
-    display: flex;
-    flex-direction: column;
-    width: 182px;
-    gap: 10px;
-    padding: 14px 10px 0 0px
+  position: absolute;
+  right: 0%;
+  top: 0%;
+  display: flex;
+  flex-direction: column;
+  width: 182px;
+  gap: 10px;
+  padding: 14px 10px 0 0px;
 }
 
 .buttonName {
-    width: 98%;
-    height: 32px;
-    padding: 4px 12px;
-    background: #fff;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-    border-radius: 6px;
-    border: 1px #E5E7EB solid;
-    cursor: pointer;
+  width: 98%;
+  height: 32px;
+  padding: 4px 12px;
+  background: #fff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  border: 1px #e5e7eb solid;
+  cursor: pointer;
 }
 
 .cell {
-    transition: 1s;
+  transition: 1s;
 }
 
 .buttonName:hover {
-    background-color: rgb(196, 194, 194);
+  background-color: rgb(196, 194, 194);
 }
 
 .monthInput {
-    font-size: 15px;
-    padding-left: 4px;
+  font-size: 15px;
+  padding-left: 4px;
 }
 
 #monthInput {
-    width: 168px;
-    height: 20px;
-    padding: 4px 0 4px 7px;
-    background: white;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-    border-radius: 6px;
-    border: 1px #E5E7EB solid;
-    text-align: center;
+  width: 168px;
+  height: 20px;
+  padding: 4px 0 4px 7px;
+  background: white;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  border: 1px #e5e7eb solid;
+  text-align: center;
 }
 
 .employees__password {
-    width: 100%;
+  width: 100%;
 }
 
 .employees__password input {
-    width: 153px;
-    height: 20px;
-    padding: 3px 12px;
-    background: #fff;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-    border-radius: 6px;
-    border: 1px #E5E7EB solid;
-    margin-bottom: 2px;
+  width: 153px;
+  height: 20px;
+  padding: 3px 12px;
+  background: #fff;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  border: 1px #e5e7eb solid;
+  margin-bottom: 2px;
 }
 
 /* Календарь */
-h2 {
-    color: #8A84E2;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: normal;
-}
-
 td {
-    width: 185px;
-    height: 154px;
-    padding: 12px;
-    border: 1px solid #E8E8E8;
-    background: #FAFCFF;
+  max-width: 76px;
+  height: 40px;
+  padding: 2px 12px;
+  background: #fafcff;
+  border: 1px solid #e8e8e8;
 }
 
 table {
-    border-collapse: collapse;
-    border: 1px solid #E8E8E8;
-}
-
-.schedule {
-    padding: 20px 258px 10px 36px;
+  border-collapse: collapse;
+  border: 1px solid #e8e8e8;
+  width: 98%;
 }
 
 /* Стили для выпадающего списка */
 .dropdown {
-    width: 177px;
-    height: 32px;
-    padding: 4px 0 4px 12px;
-    background: white;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
-    border-radius: 6px;
-    border: 1px #E5E7EB solid;
-    cursor: pointer;
-    margin-bottom: 6px;
+  width: 177px;
+  height: 32px;
+  padding: 4px 0 4px 12px;
+  background: white;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  border: 1px #e5e7eb solid;
+  cursor: pointer;
+  margin-bottom: 6px;
 }
 
 /* Стили для опций внутри выпадающего списка */
 .dropdown option {
-    /* Пример стилей для опций, вы можете настроить их по своему усмотрению */
-    background-color: white;
-    color: #1F2937;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 20px;
+  /* Пример стилей для опций, вы можете настроить их по своему усмотрению */
+  background-color: white;
+  color: #1f2937;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
 }
 
 /* Стили для стрелочки вниз внутри выпадающего списка */
 .dropdown-arrow {
-    width: 16px;
-    height: 16px;
-    position: relative;
+  width: 16px;
+  height: 16px;
+  position: relative;
 }
+
 
 /* Стили для части стрелочки вниз */
 .arrow-part {
-    width: 8.01px;
-    height: 4.81px;
-    left: 4px;
-    top: 5.59px;
-    position: absolute;
-    background: #64748B;
+  width: 8.01px;
+  height: 4.81px;
+  left: 4px;
+  top: 5.59px;
+  position: absolute;
+  background: #64748b;
 }
 
 /* status */
 .status__label {
-    margin-bottom: 6px;
+  margin-bottom: 6px;
 }
 
 .status__label label {
-    padding: 2px 1px;
-    border-radius: 5px;
+  padding: 2px 1px;
+  border-radius: 5px;
 }
 
 /* The Modal */
 .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Modal Content */
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 /* Close Button */
 .svg-cross {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    font-size: 24px;
-    cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 /* Меню-кнопка справа */
 #menuButton {
-    position: fixed;
-    top: 1%;
-    right: 2%;
-    font-size: 24px;
-    cursor: pointer;
-    background: #fff;
-    border: none;
-    border-radius: 10px;
-    width: 40px;
-    height: 40px;
-    border: 1px solid #ccc;
+  position: fixed;
+  top: 1%;
+  right: 2%;
+  font-size: 24px;
+  cursor: pointer;
+  background: #fff;
+  border: none;
+  border-radius: 10px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ccc;
 }
 
 #menuForm {
-    display: none;
-    position: fixed;
-    top: 6%;
-    right: 5%;
-    padding: 10px;
-    background-color: #f3f4f6;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+  display: none;
+  position: fixed;
+  top: 6%;
+  right: 5%;
+  padding: 10px;
+  background-color: #f3f4f6;
+  border: 1px solid #ccc;
+  border-radius: 10px;
 }
 
 .getSchedule {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+}
+
+td span {
+  font-size: 17px;
+}
+
+@media (max-width: 720px) {
+  td span {
+    font-size: 14px;
+  }
 }

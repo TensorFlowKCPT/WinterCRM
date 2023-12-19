@@ -10,14 +10,17 @@
     z-index: 1;
 }
 
+/* Потом надо у всех поставить */
 .slide_menu__wrapper-shedule.close {
     height: 6vh;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    top: 1%;
+    left: 1%;
 }
 
 .slide_menu__wrapper.close {
     width: 20px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
 }
 
 .slide_menu__inset {
@@ -119,4 +122,10 @@
 
 .slide_menu__wrapper.close .slide_menu-arrow {
     transform: translateY(50%);
+}
+
+@media (max-width: 768px) {
+    .slide_menu__wrapper-shedule.close {
+        height: 7vh;
+    }
 }
