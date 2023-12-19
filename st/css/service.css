@@ -50,6 +50,7 @@ main {
     line-height: 20px;
     border: none;
     background: none;
+    width: 100%;
 }
 
 /* Для "фильтра" и "сортировки" */
@@ -170,6 +171,7 @@ tr {
 
 .modal__wrapper {
     padding: 25px 0px 25px 65px;
+    overflow-y: scroll;
 }
 
 /* Для "Добавить сервис" контент */
@@ -359,6 +361,8 @@ tr {
         height: 5vh;
         border-radius: 10px;
         border: 1px solid #ccc;
+        top: 1%;
+        left: 1%;
     }
 
     .service__wrapper {
@@ -392,5 +396,25 @@ tr {
 @media (max-width: 731px) {
     .service__wrapper {
         padding: 0 3px;
+    }
+}
+
+@media (max-width: 600px) {
+    .service__header {
+        padding: 26px 1px 26px 1px;
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .service__filter {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 400px) {
+    .service__search {
+        width: 180px;
     }
 }
