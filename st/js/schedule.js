@@ -197,7 +197,11 @@ document.querySelector('.getSchedule').addEventListener('submit', function(event
 const body = document.querySelector("body"),
   sidebar = body.querySelector(".slide_menu__wrapper"),
   toggle = body.querySelector(".toggle");
+  toggle.addEventListener("click", () => {
+    sidebar.classList.toggle("close");
+  })
 
+  // для меню
 document.addEventListener('DOMContentLoaded', function () {
   var menuButton = document.getElementById('menuButton');
   var menuForm = document.getElementById('menuForm');

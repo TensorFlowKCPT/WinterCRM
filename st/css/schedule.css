@@ -12,7 +12,8 @@ main {
 }
 
 #calendarContainer {
-    padding: 7px 24px 0 76px
+    padding: 81px 0px 0 18px;
+    width: 100%;
 }
 
 /* Кнопки имен соотрудников */
@@ -78,29 +79,20 @@ main {
 }
 
 /* Календарь */
-h2 {
-    color: #8A84E2;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: normal;
-}
-
 td {
-    width: 185px;
-    height: 154px;
-    padding: 12px;
-    border: 1px solid #E8E8E8;
+    width: 184px;
+    height: 117px;
+    padding: 2px 12px;
     background: #FAFCFF;
+    border: 1px solid #E8E8E8;
 }
 
 table {
     border-collapse: collapse;
     border: 1px solid #E8E8E8;
+    width: 98%;
 }
 
-.schedule {
-    padding: 20px 258px 10px 36px;
-}
 
 /* Стили для выпадающего списка */
 .dropdown {
