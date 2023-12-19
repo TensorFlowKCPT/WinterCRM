@@ -179,8 +179,8 @@ table {
 /* Меню-кнопка справа */
 #menuButton {
   position: fixed;
-  top: 7%;
-  right: 13%;
+  top: 1%;
+  right: 2%;
   font-size: 24px;
   cursor: pointer;
   background: #fff;
@@ -194,7 +194,7 @@ table {
 #menuForm {
   display: none;
   position: fixed;
-  top: 6%;
+  top: 5%;
   right: 5%;
   padding: 10px;
   background-color: #f3f4f6;
@@ -210,6 +210,42 @@ table {
 
 td span {
   font-size: 17px;
+}
+
+@media (max-width: 1260px) {
+  #menuForm {
+    right: 5%;
+  }
+}
+
+@media (max-width: 1150px) {
+  #menuForm {
+    right: 6%;
+  }
+}
+
+@media (max-width: 785px) {
+  #menuForm {
+    right: 7%;
+  }
+}
+
+@media (max-width: 650px) {
+  #menuForm {
+    right: 9%;
+  }
+}
+
+@media (max-width: 470px) {
+  #menuForm {
+    right: 11%;
+  }
+}
+
+@media (max-width: 374px) {
+  #menuForm {
+    right: 14%;
+  }
 }
 
 @media (max-width: 720px) {
