@@ -179,8 +179,8 @@ table {
 /* Меню-кнопка справа */
 #menuButton {
   position: fixed;
-  top: 1%;
-  right: 2%;
+  top: 7%;
+  right: 13%;
   font-size: 24px;
   cursor: pointer;
   background: #fff;
