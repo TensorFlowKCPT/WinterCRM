@@ -143,30 +143,36 @@ tr {
 .modal-content {
     background-color: #fefefe;
     margin: 50px auto;
-    /* Центрирование по вертикали и горизонтали */
     padding: 20px;
     border: 1px solid #888;
     width: 40%;
     text-align: center;
     border-radius: 15px;
-    /* Скругление углов */
     box-sizing: border-box;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #000;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 140%;
 }
 
 /* Центрирование input */
 .addItemForm {
     width: 100%;
     box-sizing: border-box;
-    margin-bottom: 10px;
     padding: 16px;
     background: #FCFCFD;
-    border-radius: 12px;
+    border-radius: 5px;
     border: 2px #DFDFE6 solid;
     justify-content: flex-start;
     align-items: center;
     gap: 8px;
     display: inline-flex;
-    margin-bottom: 32px;
 }
 
 .close {
@@ -189,6 +195,7 @@ tr {
     color: #000;
     background: #2062fc;
 }
+
 
 .mdlbutton {
     width: 137px;
@@ -224,14 +231,13 @@ tr {
 }
 
 .delete-button {
-    width: 73px;
-    height: 32px;
+    width: 87px;
+    height: 35px;
     background: white;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
     border-radius: 6px;
     border: 1px #E5E7EB solid;
     font-weight: bolder;
-    display: inline-flex;
     align-items: center;
 }
 
@@ -239,13 +245,24 @@ tr {
     background-color: #c0c0c0;
 }
 
-.addItemForm-first {
-    margin-top: 5%;
+.btn-editAndDelete {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
 }
 
 .clients__container {
     display: flex;
     justify-content: space-between;
+}
+
+/* для 1 строчки label с input */
+.form-flex {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 13px;
+    margin-bottom: 18px;
 }
 
 @media (max-width: 910px) {
@@ -266,9 +283,13 @@ tr {
     }
 
     .delete-button {
-        width: 67px;
-        height: 27px;
+        width: 80px;
         padding: 1px 1px 1px 3px;
+    }
+
+    .btn-editAndDelete {
+        display: flex;
+        flex-direction: column;
     }
 }
 
@@ -299,8 +320,7 @@ tr {
     }
 
     .delete-button {
-        width: 56px;
-        height: 22px;
+        width: 70px;
         font-size: 11px;
     }
 }
@@ -324,8 +344,7 @@ tr {
     }
 
     .delete-button {
-        width: 49px;
-        height: 19px;
+        width: 57px;
         font-size: 9px;
     }
 }
@@ -347,6 +366,14 @@ tr {
     .clietns-sortirovka {
         font-size: 10px;
         width: 97px;
+    }
+
+    .modal-header {
+        font-size: 17px;
+    }
+
+    .form-flex {
+        font-size: 13px;
     }
 }
 
