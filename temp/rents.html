@@ -290,6 +290,7 @@
             <div class="modal__wrapper">
               <div class="modal_list__wrapper">
                 <div class="modal__list-header">
+                  Создать аренду
                   <svg
                     class="close"
                     id="closeCreateRentModalBtn"
@@ -312,8 +313,8 @@
                       fill="#23262F"
                     />
                   </svg>
-                  Создать аренду
                 </div>
+                <!-- Это за предметы
                 <div class="modal__list-container">
                   <div class="pole-container" id="InventoryInfoContainer">
                     <div class="pole-1">
@@ -343,7 +344,7 @@
                   <button class="addItemButton buttonCenter" id="addItemButton">
                     Добавить
                   </button>
-                </div>
+                </div> -->
               </div>
             </div>
             <div class="modal_pay__wrapper">
@@ -374,6 +375,12 @@
                 <option value="cash">Наличные</option>
                 <option value="bankTransfer">Банковский перевод</option>
               </select>
+
+              <!-- на вскидку кинул -->
+              <div class="passport-container">
+                <label for="passport">Паспорт</label>
+                <input type="number" placeholder="71 62 831234" name="" id="" />
+              </div>
 
               <div class="date-picker-container">
                 <div class="date-picker">
@@ -414,6 +421,7 @@
                 </div>
               </div>
 
+              <!-- Оплачено было и залог
               <div class="date-picker-container date-picker-container-2">
                 <div class="date-picker">
                   <label for="isPayed">Оплачено?</label>
@@ -432,7 +440,7 @@
                   <label for="deposit">Залог</label>
                   <input type="text" id="deposit" name="deposit" required />
                 </div>
-              </div>
+              </div> -->
               <div class="modal_pay__end">
                 <input
                   placeholder="Сумма"
@@ -502,6 +510,7 @@
           </div>
         </div>
 
+        <!-- Это отвечало за поломку
         <div class="service-container" id="serviceModalContainer">
           <div class="service-modal" id="serviceModal">
             Создание поломки
@@ -542,7 +551,7 @@
               </form>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <script src="/static/js/rents.js"></script>

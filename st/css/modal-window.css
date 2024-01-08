@@ -63,6 +63,9 @@
 }
 
 .modal__list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     text-align: center;
     color: #000;
     font-size: 36px;
@@ -484,8 +487,14 @@
     }
 }
 
+@media (max-width: 445px) {
+    .modal__list-header {
+        font-size: 30px;
+    }
+}
+
 @media (max-width: 390px) {
     .modal__list-header {
-        font-size: 34px;
+        font-size: 25px;
     }
 }

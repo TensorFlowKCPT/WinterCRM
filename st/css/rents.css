@@ -296,6 +296,21 @@ input[type="checkbox"]:checked+label::before {
     height: 80vh;
 }
 
+.passport-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    align-items: center;
+}
+
+.passport-container input {
+    width: 100%;
+    padding: 9px 16px 9px 13px;
+    background: #FCFCFD;
+    border-radius: 12px;
+    border: 2px #DFDFE6 solid;
+}
+
 /* Адаптив */
 @media (max-width: 870px) {
     .rents__header {
