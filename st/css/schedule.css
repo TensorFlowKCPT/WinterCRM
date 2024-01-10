@@ -1,6 +1,11 @@
 /* default settings */
 body {
-  background: #f1f1f4;
+  background: rgb(238, 174, 202);
+  background: radial-gradient(
+    circle,
+    rgba(238, 174, 202, 1) 0%,
+    rgba(148, 187, 233, 1) 100%
+  );
   margin: 0;
   font-family: "Inter", sans-serif;
   font-style: normal;
@@ -12,7 +17,7 @@ main {
 }
 
 #calendarContainer {
-  padding: 81px 0px 0 18px;
+  padding: 110px 0px 0 18px;
   width: 100%;
 }
 
@@ -68,7 +73,7 @@ main {
 }
 
 .employees__password input {
-  width: 153px;
+  width: 147px;
   height: 20px;
   padding: 3px 12px;
   background: #fff;
@@ -81,15 +86,18 @@ main {
 /* Календарь */
 td {
   max-width: 76px;
-  height: 40px;
+  height: 86px;
   padding: 2px 12px;
   background: #fafcff;
   border: 1px solid #e8e8e8;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 table {
-  border-collapse: collapse;
-  border: 1px solid #e8e8e8;
   width: 98%;
 }
 
@@ -122,7 +130,6 @@ table {
   height: 16px;
   position: relative;
 }
-
 
 /* Стили для части стрелочки вниз */
 .arrow-part {
@@ -248,8 +255,22 @@ td span {
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 762px) {
+  td .cell, td {
+    font-size: 13px;
+  }
+
   td span {
-    font-size: 14px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 645px) {
+  td .cell, td {
+    font-size: 12px;
+  }
+
+  td span {
+    font-size: 12px;
   }
 }
