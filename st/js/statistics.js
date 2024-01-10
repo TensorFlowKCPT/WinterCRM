@@ -56,14 +56,14 @@ document.addEventListener('DOMContentLoaded', async function () {
                 labels: dates,
                 datasets: [
                     {
-                        label: 'Заказов за день (Rent)',
+                        label: 'Заказов за день',
                         data: counts,
                         backgroundColor: 'rgb(177, 173, 237)',
                         borderColor: 'rgb(138, 132, 226)',
                         borderWidth: 5
                     },
                     {
-                        label: 'Заказов в магазине за день (Shop)',
+                        label: 'Продаж в магазине за день',
                         data: countsShop,
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
