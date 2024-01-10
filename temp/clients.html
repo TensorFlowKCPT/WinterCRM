@@ -403,6 +403,70 @@
         </div>
       </div>
 
+      <div id="myModal2" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            Изменение клиента
+            <svg
+              class="close"
+              id="closeModalBtn"
+              xmlns="http://www.w3.org/2000/svg"
+              width="39"
+              height="39"
+              viewBox="0 0 39 39"
+              fill="none"
+            >
+              <path
+                d="M19.5 36.9688C9.86375 36.9688 2.03125 29.1362 2.03125 19.5C2.03125 9.86375 9.86375 2.03125 19.5 2.03125C29.1362 2.03125 36.9688 9.86375 36.9688 19.5C36.9688 29.1362 29.1362 36.9688 19.5 36.9688ZM19.5 4.46875C11.2125 4.46875 4.46875 11.2125 4.46875 19.5C4.46875 27.7875 11.2125 34.5312 19.5 34.5312C27.7875 34.5312 34.5312 27.7875 34.5312 19.5C34.5312 11.2125 27.7875 4.46875 19.5 4.46875Z"
+                fill="#DFDFE6"
+              />
+              <path
+                d="M14.9012 25.3175C14.5925 25.3175 14.2837 25.2037 14.04 24.96C13.5687 24.4887 13.5687 23.7087 14.04 23.2375L23.2375 14.04C23.7087 13.5687 24.4887 13.5687 24.96 14.04C25.4312 14.5112 25.4312 15.2912 24.96 15.7625L15.7625 24.96C15.535 25.2037 15.21 25.3175 14.9012 25.3175Z"
+                fill="#23262F"
+              />
+              <path
+                d="M24.0987 25.3175C23.79 25.3175 23.4812 25.2037 23.2375 24.96L14.04 15.7625C13.5687 15.2912 13.5687 14.5112 14.04 14.04C14.5112 13.5687 15.2912 13.5687 15.7625 14.04L24.96 23.2375C25.4312 23.7087 25.4312 24.4887 24.96 24.96C24.7162 25.2037 24.4075 25.3175 24.0987 25.3175Z"
+                fill="#23262F"
+              />
+            </svg>
+          </div>
+          <form id="addItemForm">
+            <div class="form-flex">
+              <label for="FIO">ФИО</label>
+              <input
+                class="addItemForm"
+                type="text"
+                name="FIO"
+                required
+              />
+            </div>
+            <div class="form-flex">
+              <label for="PhoneNumber">Контакты</label>
+              <input
+                class="addItemForm"
+                type="text"
+                name="PhoneNumber"
+                required
+              />
+            </div>
+            <div class="form-flex">
+              <label for="Pledge">Документ</label>
+              <input class="addItemForm" name="Pledge" type="text">
+            </div>
+            <div class="form-flex">
+              <label for="Passport">Номер документа</label>
+              <input
+                class="addItemForm"
+                type="text"
+                name="Passport"
+                required
+              />
+            </div>
+            <input type="submit" value="Изменить" />
+          </form>
+        </div>
+      </div>
+
       <script src="/static/js/clients.js"></script>
     </main>
   </body>

@@ -22,6 +22,16 @@ function closeModal() {
   modal.style.display = "none";
 }
 
+function openModal2() {
+  modal = document.getElementById("myModal2");
+  modal.style.display = "block";
+}
+
+function closeModal2() {
+  modal = document.getElementById("myModal2");
+  modal.style.display = "none";
+}
+
 // Функция для обновления массива rows
 function updateRows() {
   rows = Array.from(tbody.querySelectorAll("tr")).slice(1);
