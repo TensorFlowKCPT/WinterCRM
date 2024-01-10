@@ -230,7 +230,7 @@ tr {
     background-color: #c0c0c0;
 }
 
-.delete-button {
+.delete-button, .change-button {
     width: 87px;
     height: 35px;
     background: white;
@@ -241,7 +241,7 @@ tr {
     align-items: center;
 }
 
-.delete-button:hover {
+.delete-button:hover, .change-button:hover {
     background-color: #c0c0c0;
 }
 
