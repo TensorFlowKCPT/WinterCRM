@@ -40,7 +40,7 @@ class Database:
                         ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         Name TEXT NOT NULL,
                         Type INTEGER NOT NULL,
-                        Rented BOOLEAN NOT NULL,
+                        Rented TEXT NOT NULL,
                         Size INTEGER,
                         Sold BOOLEAN,
                         FOREIGN KEY (ID) REFERENCES WinterInventoryTypes (Type)
@@ -167,7 +167,31 @@ class Database:
             conn.execute("UPDATE Consumables SET Left = Left - 1 WHERE id = ?", (id,))
             conn.execute("INSERT INTO Shop (ConsumableId, Date) VALUES (?,?)", (id,datetime.now().date(),))
 
-
+    def CheckInventoryStatuses():
+        with sqlite3.connect("database.db") as conn:
+            cursor = conn.execute("SELECT * FROM WinterInventory")
+            Inventory = cursor.fetchall()
+            current_datetime = datetime.now()
+            for i in Inventory:
+                ClosestRentStart = datetime.now() + timedelta(days=99999)
+                ClosestRentStartPrev = ClosestRentStart
+                cursor = conn.execute(f"SELECT * FROM Rents WHERE StartItemsJSON LIKE '%\"ID\": {i[0]}%'")
+                if ClosestRentStartPrev == ClosestRentStart:
+                        conn.execute(f"UPDATE WinterInventory SET Rented = 'Свободно' WHERE ID = '{i[0]}'")
+                for Rent in cursor.fetchall():
+                    StartDateTime = datetime.strptime(Rent[1] + ' ' + Rent[2], '%Y-%m-%d %H:%M')
+                    ReturnDateTime = datetime.strptime(Rent[3] + ' ' + Rent[4], '%Y-%m-%d %H:%M')
+                    if ReturnDateTime < current_datetime:
+                        continue
+                    elif StartDateTime < current_datetime and ReturnDateTime > current_datetime:
+                        conn.execute(f"UPDATE WinterInventory SET Rented = 'В аренде до {ReturnDateTime}' WHERE ID = '{i[0]}'")
+                        break
+                    elif StartDateTime > current_datetime and ClosestRentStart > StartDateTime:
+                        ClosestRentStart = StartDateTime
+                    
+                    if ClosestRentStartPrev != ClosestRentStart:
+                        conn.execute(f"UPDATE WinterInventory SET Rented = 'Свободно до {ClosestRentStart}' WHERE ID = '{i[0]}'")
+                
     def getConsumableById(id):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM Consumables WHERE id = ?", (id,))
@@ -265,7 +289,7 @@ class Database:
                output.append({
                    "ID" : row[0],
                    "FIO" : row[1],
-                   "pledge" : row[2],
+                   "Pledge" : row[2],
                    "Documents" : row[3],
                    "PhoneNumber" : row[4]})
            return output
@@ -275,10 +299,13 @@ class Database:
             conn.execute("DELETE FROM Clients WHERE ID = ?", (id,))
             conn.commit()
 
+    def updateClient(id, FIO, Pledge, DataDocument, PhoneNumber):
+        with sqlite3.connect("database.db") as conn:
+            conn.execute(f"UPDATE Clients SET FIO = ?, Pledge = ?, DataDocument = ?, PhoneNumber = ? WHERE ID = {id}", (FIO, Pledge, DataDocument, PhoneNumber,))
     def addClient(fio,pledge, documents, phone_number):
         with sqlite3.connect("database.db") as conn:
             cursor = conn.cursor()
-            cursor.execute("INSERT INTO Clients (FIO, Pledge, DataDocument, PhoneNumber) VALUES (?,?,?,?)", (fio, pledge, json.dumps(documents), phone_number,))
+            cursor.execute("INSERT INTO Clients (FIO, Pledge, DataDocument, PhoneNumber) VALUES (?,?,?,?)", (fio, pledge, documents, phone_number,))
             conn.commit()
 
             newid = cursor.lastrowid
@@ -300,7 +327,7 @@ class Database:
         
     def addInventory(name:str, type: int, rented: bool, size: int):
         with sqlite3.connect("database.db") as conn:
-            conn.execute("INSERT INTO WinterInventory (Name, Type, Rented, Size, Sold) VALUES (?,?,?,?,?)", (name, type, rented, size, False,))
+            conn.execute("INSERT INTO WinterInventory (Name, Type, Rented, Size, Sold) VALUES (?,?,?,?,?)", (name, type, 'Свободно', size, False,))
             conn.commit()
 
     def sellInventory(id, Cost, Comment):
@@ -315,6 +342,7 @@ class Database:
             conn.commit()
 
     def getInventoryById(id):
+        Database.CheckInventoryStatuses()
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM WinterInventory WHERE NOT Sold = True AND ID = ?",(id,))
             rows = cursor.fetchone()
@@ -329,45 +357,16 @@ class Database:
                 "ID" : rows[0],
                 "Name" : rows[1],
                 "Type" : cursor.fetchone()[0],
+                "Rented":rows[3],
                 "Size" : rows[4],
                 "Services": services if services else None
                 }
-            rents = Database.getRents()
-            #print(rents)
-            current_datetime = datetime.now()
-            try:
-                unendedrents = [
-                    item for item in rents if (
-                        any(start_item['ID'] == output['ID'] for start_item in item['StartItems']) and current_datetime <=
-                        datetime.strptime(item['Return_Date'] + ' ' + item['Return_Time'], '%Y-%m-%d %H:%M')
-                    )
-                ]
-                if len(unendedrents) == 0:
-                    output[-1]["Rented"] = "Свободно"
-                    Database.SetInventoryStatus(False,output['ID'])
-                else:
-                    data = [
-                        item for item in unendedrents if (
-                            any(start_item['ID'] == output['ID'] for start_item in item['StartItems']) and
-                            datetime.strptime(item['Start_Date'] + ' ' + item['Start_Time'], '%Y-%m-%d %H:%M') <= current_datetime
-                        )
-                    ]
-                    unendedrents.sort(key=lambda x: x['Start_Date'])
-                    data.sort(key=lambda x: x['Start_Date'])
-                    if len(data) == 0:
-                        output["Rented"] = "Свободно до " + unendedrents[0]['Start_Date']+" " +unendedrents[0]['Start_Time']
-                        Database.SetInventoryStatus(False,output['ID'])
-                    else:
-                        Database.SetInventoryStatus(True, output['ID'])
-                        output["Rented"] = "В аренде до " + data[0]['Return_Date']+" "+data[0]['Return_Time']
-            except:
-                    output["Rented"] = "Свободно"
-                    Database.SetInventoryStatus(False,output['ID'])
             return output
     def addEmployee(Name):
         with sqlite3.connect("database.db") as conn:
             conn.execute("INSERT INTO Employees (Name) Values(?)",(Name,))
     def getInventory():
+        Database.CheckInventoryStatuses()
         with sqlite3.connect("database.db") as conn:
             cursor = conn.execute("SELECT * FROM WinterInventory WHERE NOT Sold = True")
             rows = cursor.fetchall()
@@ -385,38 +384,6 @@ class Database:
                     "Rented" : row[3],
                     "Size" : row[4],
                     "Services": services if services else None})
-                services = Database.getServicesForInventory(row[0])
-                rents = Database.getRents()
-                #print(rents)
-                current_datetime = datetime.now()
-                try:
-                    unendedrents = [
-                        item for item in rents if (
-                            any(start_item['ID'] == row[0] for start_item in item['StartItems']) and current_datetime <=
-                            datetime.strptime(item['Return_Date'] + ' ' + item['Return_Time'], '%Y-%m-%d %H:%M')
-                        )
-                    ]
-                    if len(unendedrents) == 0:
-                        output[-1]["Rented"] = "Свободно"
-                        Database.SetInventoryStatus(False,row[0])
-                    else:
-                        data = [
-                            item for item in unendedrents if (
-                                any(start_item['ID'] == row[0] for start_item in item['StartItems']) and
-                                datetime.strptime(item['Start_Date'] + ' ' + item['Start_Time'], '%Y-%m-%d %H:%M') <= current_datetime
-                            )
-                        ]
-                        unendedrents.sort(key=lambda x: x['Start_Date'])
-                        data.sort(key=lambda x: x['Start_Date'])
-                        if len(data) == 0:
-                            output[-1]["Rented"] = "Свободно до " + unendedrents[0]['Start_Date']+" " +unendedrents[0]['Start_Time']
-                            Database.SetInventoryStatus(False,row[0])
-                        else:
-                            Database.SetInventoryStatus(True, row[0])
-                            output[-1]["Rented"] = "В аренде до " + data[0]['Return_Date']+" "+data[0]['Return_Time']
-                except:
-                    output[-1]["Rented"] = "Свободно"
-                    Database.SetInventoryStatus(False,row[0])
             #print(output)
             return output
             
@@ -436,8 +403,9 @@ class Database:
             client = {
                 "ID" : rows[0],
                 "FIO" : rows[1],
-                "Documents" : rows[2],
-                "PhoneNumber" : rows[3]
+                "Pledge" : rows[2],
+                "DataDocument": rows[3],
+                "PhoneNumber" : rows[4]
             }
             return client
 
@@ -526,7 +494,10 @@ class Database:
                 try:
                     return_datetime = datetime.strptime(f"{row[3]} {row[4]}", "%Y-%m-%d %H:%M")
                 except:
-                    return_datetime = datetime.now() + timedelta(days=1)
+                    try:
+                        return_datetime = datetime.strptime(f"{row[3]} {row[4]}", "%Y-%m-%d %H:%M:%S")
+                    except:
+                        return_datetime = datetime.now() + timedelta(days=1)
                 output.append({
                     "ID" : row[0],
                     "Start_Date" : row[1],
@@ -783,3 +754,4 @@ class Database:
                 """, (name, date))
             return cursor.fetchall()
 Database.StartDataBase()
+Database.CheckInventoryStatuses()

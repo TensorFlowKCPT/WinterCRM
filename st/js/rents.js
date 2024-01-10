@@ -34,7 +34,7 @@ function UpdateRents(){
       ////console.log(data)
       //headers
       RentsMainTable.innerHTML = ''
-      var headers = ['Оплачено', 'Предметы', 'Имя клиента', 'Время взятия', 'Время возврата'];
+      var headers = ['Предметы', 'Имя клиента', 'Время взятия', 'Время возврата'];
       var headerRow = document.createElement('tr');
 
       headers.forEach(function(headerText) {
@@ -60,19 +60,9 @@ function UpdateRents(){
 
       data.forEach(function(dataRow) {
         var tr = document.createElement('tr');
-        var Payed = document.createElement('td');
-        var checkbox = document.createElement('input')
-        checkbox.type = "checkbox"
-        checkbox.checked = dataRow.IsPayed
-        checkbox.disabled = true
-        checkbox.style.display="none"
-        var label = document.createElement('label');
-        label.htmlFor = "myCheckbox";
-        Payed.appendChild(checkbox)
-        Payed.appendChild(label);
 
     // Добавляем ячейку в строку
-    tr.appendChild(Payed);
+        console.log(dataRow)
         var Items = document.createElement('td');
         Items.textContent = dataRow.StartItems.length
         tr.appendChild(Items);
@@ -116,6 +106,8 @@ document.getElementById("openCreateRentModalBtn").addEventListener("click", func
     UpdateNotRentedInventory()
 });
 
+
+
 document.getElementById("closeCreateRentModalBtn").addEventListener("click", function() {
       RentMainModalContainer.style.display = "none";
       RentMainModalContainer.style.display = "none";
@@ -130,7 +122,6 @@ document.getElementById("closeCreateRentModalBtn").addEventListener("click", fun
       rentalEndDate.value = null
       rentalEndTime.value = null
       itemsSum.value = null
-      isPayed.checked = false // Не работает, фронтам надо фиксить
       deposit.value = null
       FormClientSelect.disabled = false
       rentalStartDate.disabled = false
@@ -445,7 +436,7 @@ const rentalEndDate = document.getElementById('rentalEndDate')
 const rentalEndTime = document.getElementById('rentalEndTime')
 const FormClientSelect = document.getElementById('FormClientSelect')
 const FormPaymentMethodSelect = document.getElementById('FormPaymentMethodSelect')
-const deposit = document.getElementById('deposit')
+const deposit = document.getElementById('passportLabel')
 const isPayed = document.getElementById('isPayed')
 const itemsSum = document.getElementById('itemsSum')
 document.getElementById("CreateRentBtn").addEventListener("click", function(){
@@ -465,8 +456,8 @@ document.getElementById("CreateRentBtn").addEventListener("click", function(){
     StartItems: idInventoryArray,
     Client: FormClientSelect.value,
     paymentMethod: FormPaymentMethodSelect.value,
-    Deposit: deposit.value,
-    IsPayed: isPayed.checked,
+    Deposit: document.getElementById('passportLabel').innerText,
+    IsPayed: false,
     Cost: itemsSum.value
   };
   fetch('/rents', {
@@ -509,7 +500,7 @@ document.getElementById('SaveRentBtn').addEventListener('click',function(){
     ReturnedItems: idInventoryArray,
     paymentMethod: FormPaymentMethodSelect.value,
     Deposit: deposit.value,
-    IsPayed: isPayed.checked,
+    IsPayed: false,
     Cost: itemsSum.value
   };
   fetch('/updaterent', {
@@ -544,7 +535,6 @@ function OpenRentInfo(id){
   FormClientSelect.disabled = true
   rentalStartDate.disabled = true
   rentalStartTime.disabled = true
-  deposit.disabled = true
   fetch('/getrentbyid?ID='+id)
     .then(response => {
         if (!response.ok) {
@@ -625,12 +615,31 @@ function OpenRentInfo(id){
       rentalStartTime.value = resp.Start_Time
       rentalEndDate.value = resp.Return_Date
       rentalEndTime.value = resp.Return_Time
-      isPayed.checked = (resp.IsPayed === 1 || resp.IsPayed)
-      deposit.value = resp.Deposit
+      console.log(resp)
+      deposit.innerText = resp.Deposit
+      document.getElementById('passportText').value = resp.Client.DataDocument
       itemsSum.value = resp.Cost
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
+    });
+}
+
+function ClientChanged(){
+  currentClientId = document.getElementById("FormClientSelect").value
+  console.log(currentClientId)
+  fetch(`/get_client?ID=`+currentClientId, {
+    method: "GET"
+  })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data)
+        document.getElementById('passportLabel').innerText = data['Pledge']
+        document.getElementById('passportText').value = data['DataDocument']
+    })
+    .catch((error) => {
+      console.error("Ошибка сети: " + error);
+      return
     });
 }
 

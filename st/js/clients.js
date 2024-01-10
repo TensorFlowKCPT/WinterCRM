@@ -21,8 +21,23 @@ function closeModal() {
   modal = document.getElementById("myModal");
   modal.style.display = "none";
 }
-
-function openModal2() {
+var currentClientId = 0
+function openModal2(id) {
+  currentClientId = id
+  fetch(`/get_client?ID=`+id, {
+    method: "GET"
+  })
+    .then((response) => response.json())
+    .then((data) => {
+        document.getElementById('ChangeClientFIO').value = data['FIO']
+        document.getElementById('ChangeClientPhoneNumber').value = data['PhoneNumber']
+        document.getElementById('ChangeClientPledge').value = data['Pledge']
+        document.getElementById('ChangeClientNumber').value = data['DataDocument']
+    })
+    .catch((error) => {
+      console.error("Ошибка сети: " + error);
+      return
+    });
   modal = document.getElementById("myModal2");
   modal.style.display = "block";
 }
@@ -30,6 +45,7 @@ function openModal2() {
 function closeModal2() {
   modal = document.getElementById("myModal2");
   modal.style.display = "none";
+
 }
 
 // Функция для обновления массива rows
@@ -37,6 +53,8 @@ function updateRows() {
   rows = Array.from(tbody.querySelectorAll("tr")).slice(1);
   return rows;
 }
+
+
 
 document
   .getElementById("addItemForm")
@@ -168,6 +186,8 @@ document.addEventListener("click", function (event) {
   }
 });
 
+
+
 document.addEventListener("click", function (event) {
   if (event.target && event.target.id === "deleteSelected") {
     const selectedCheckboxes = document.querySelectorAll(
@@ -217,7 +237,30 @@ document.addEventListener("click", function (event) {
     }
   }
 });
-
+document
+  .getElementById("ChangeItemForm")
+  .addEventListener("submit", function (event) {
+    event.preventDefault();
+    const ID = currentClientId
+    const Fio = event.target.FIO.value;
+    const Pledge = event.target.Pledge.value;
+    const Passport = event.target.Passport.value;
+    const PhoneNumber = event.target.PhoneNumber.value;
+    fetch("/update_old_client", {
+      method: "POST",
+      body: JSON.stringify({ id: ID,FIO:Fio,Pledge:Pledge, DataDocument:Passport,PhoneNumber:PhoneNumber }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        location.reload()
+      })
+      .catch((error) => {
+        console.error("Ошибка сети: " + error);
+      });
+  });
 document
   .querySelector(".clients__search-input")
   .addEventListener("input", function () {

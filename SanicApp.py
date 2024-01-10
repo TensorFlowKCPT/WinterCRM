@@ -200,7 +200,7 @@ async def addRent(request):
             StartDate = datetime.now().date().strftime("%Y-%m-%d")
         StartTime = request.json.get('Start_Time')
         if not StartTime:
-            StartTime = datetime.now().time().strftime("%H:%M:%S")
+            StartTime = datetime.now().time().strftime("%H:%M")
         ReturnDate = request.json.get('Return_Date')
 
         ReturnTime = request.json.get('Return_Time')
@@ -372,7 +372,13 @@ async def delClient(request):
     Database.delClientById(idClient)
     responseData = {"success": True}
     return response.json(responseData)
-
+@app.post('/update_old_client')
+async def update_client(request):
+    Database.updateClient(request.json.get('id'),request.json.get("FIO"),request.json.get("Pledge"),request.json.get("DataDocument"),request.json.get("PhoneNumber"))
+    return response.json('ok',status=200)
+@app.get('/get_client')
+async def get_client(request):
+    return json(Database.GetClientById(request.args.get('ID')))
 @app.route('/del_selected_clients', methods=['POST'])
 async def delSelectedClient(request):
     idsClient = request.json.get('ids')

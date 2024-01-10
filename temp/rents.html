@@ -351,6 +351,7 @@
                 class="dropdownPayment"
                 name="clientDropdown"
                 id="FormClientSelect"
+                onchange="ClientChanged()"
                 required
               >
                 <option value="" disabled selected hidden>
@@ -374,11 +375,9 @@
                 <option value="cash">Наличные</option>
                 <option value="bankTransfer">Банковский перевод</option>
               </select>
-
-              <!-- на вскидку кинул -->
               <div class="passport-container">
-                <label for="passport">Паспорт</label>
-                <input type="number" placeholder="71 62 831234" name="" id="" />
+                <label id="passportLabel" for="passport">Паспорт</label>
+                <input id="passportText" type="text" disabled/>
               </div>
 
               <div class="date-picker-container">

@@ -303,7 +303,7 @@
           {% for item in data['Clients'] %}
           <tr data-id="{{item['ID']}}">
             <td class="table-colon">{{item['FIO']}}</td>
-            <td class="table-colon">{{item['pledge']}}</td>
+            <td class="table-colon">{{item['Pledge']}}</td>
             <td class="table-colon table-colon2">{{item['Documents']}}</td>
             <td class="table-colon">{{item['PhoneNumber']}}</td>
             <td class="table-colon">
@@ -312,7 +312,7 @@
                   Удалить
                 </button>
                 <!-- добавил кнопку изменить, нужно бэк -->
-                <button class="change-button" data-id="{{item['ID']}}">
+                <button class="change-button" onclick="openModal2({{item['ID']}})" data-id="{{item['ID']}}">
                   Изменить
                 </button>
               </div>
@@ -336,6 +336,7 @@
                 class="close"
                 id="closeModalBtn"
                 xmlns="http://www.w3.org/2000/svg"
+                
                 width="39"
                 height="39"
                 viewBox="0 0 39 39"
@@ -403,13 +404,14 @@
         </div>
       </div>
 
-      <div id="myModal2" class="modal">
-        <div class="modal-content">
+      <div id="myModal2" class="modal" >
+        <div class="modal-content" >
           <div class="modal-header">
             Изменение клиента
             <svg
               class="close"
               id="closeModalBtn"
+              onclick="closeModal2()"
               xmlns="http://www.w3.org/2000/svg"
               width="39"
               height="39"
@@ -430,13 +432,14 @@
               />
             </svg>
           </div>
-          <form id="addItemForm">
+          <form id="ChangeItemForm">
             <div class="form-flex">
               <label for="FIO">ФИО</label>
               <input
                 class="addItemForm"
                 type="text"
                 name="FIO"
+                id="ChangeClientFIO"
                 required
               />
             </div>
@@ -446,12 +449,20 @@
                 class="addItemForm"
                 type="text"
                 name="PhoneNumber"
+                id="ChangeClientPhoneNumber"
                 required
               />
             </div>
             <div class="form-flex">
               <label for="Pledge">Документ</label>
-              <input class="addItemForm" name="Pledge" type="text">
+              <select class="addItemForm" name="Pledge" id="ChangeClientPledge">
+                <option value="Паспорт">Паспорт</option>
+                <option value="Водительское-удостоверение">
+                  Водительское удостоверение
+                </option>
+                <option value="Загран-паспорт">Загран паспорт</option>
+                <option value="Другое">Другое</option>
+              </select>
             </div>
             <div class="form-flex">
               <label for="Passport">Номер документа</label>
@@ -459,6 +470,7 @@
                 class="addItemForm"
                 type="text"
                 name="Passport"
+                id="ChangeClientNumber"
                 required
               />
             </div>
