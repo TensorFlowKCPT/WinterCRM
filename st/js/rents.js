@@ -242,6 +242,11 @@ function AddInventoryToList(id){
         typeSpan.textContent = "Тип:" + dataRow.Type;
         divType.appendChild(typeSpan);
         divCenter.appendChild(divType);
+        const divRent = document.createElement('div');
+        const rentSpan = document.createElement('span');
+        rentSpan.textContent = dataRow.Rented;
+        divRent.appendChild(rentSpan);
+        divCenter.appendChild(divRent);
 
         // Create damage section
         const divDamage = document.createElement('div');
@@ -579,7 +584,7 @@ function OpenRentInfo(id){
         typeSpan.textContent = "Тип:" + dataRow.Type;
         divType.appendChild(typeSpan);
         divCenter.appendChild(divType);
-
+        
         // Create damage section
         const divDamage = document.createElement('div');
         divDamage.classList.add("item_card-damage");

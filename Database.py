@@ -385,6 +385,7 @@ class Database:
                     "Size" : row[4],
                     "Services": services if services else None})
             #print(output)
+            output.reverse()
             return output
             
     
@@ -703,7 +704,7 @@ class Database:
                         "IsPayed":row[7],
                         "Status":row[8]
                     })
-            
+            output.reverse()
             return output
     
     def getRentById(id):
