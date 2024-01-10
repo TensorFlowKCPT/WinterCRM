@@ -44,7 +44,7 @@ function filterTasks() {
     gray: "rgb(204, 204, 204)",
   };
 
-  for (let i = 1; i < rows.length; i++) {
+  for (let i = 0; i < rows.length; i++) {
     const row = rows[i];
     const rowColor = row.style.backgroundColor;
     const performerName = row.querySelector(
