@@ -99,10 +99,11 @@ const CreateRentBtn = document.getElementById("CreateRentBtn")
 document.getElementById("openCreateRentModalBtn").addEventListener("click", function() {
     SaveRentBtn.style.display = 'none'
     CreateRentBtn.style.display = 'block'
+
+  NotRentedInventoryModal.style.display = "block";
     clients = null
     RentMainModalContainer.style.display = "flex";
     RentMainModal.style.display = "block";
-    addItemButton.style.display = "block"
     UpdateNotRentedInventory()
 });
 
@@ -110,9 +111,9 @@ document.getElementById("openCreateRentModalBtn").addEventListener("click", func
 
 document.getElementById("closeCreateRentModalBtn").addEventListener("click", function() {
       RentMainModalContainer.style.display = "none";
-      RentMainModalContainer.style.display = "none";
       InventoryInfoContainer.style.display = "none";
-      addItemButton.style.display = "none"
+      RentMainModal.style.display = "none";
+      NotRentedInventoryModal.style.display = "none";
       SelectedInventoryTable.innerHTML = "";
       ServiceList.innerHTML = "";
       FormClientSelect.value = null
@@ -129,14 +130,8 @@ document.getElementById("closeCreateRentModalBtn").addEventListener("click", fun
       deposit.disabled = false
     });
 const NotRentedInventoryTable = document.getElementById("NotRentedInventoryTable")
-const NotRentedInventoryModalContainer = document.getElementById("NotRentedInventoryModalContainer")
 const NotRentedInventoryModal = document.getElementById("NotRentedInventoryModal")
 
-// Модальное окно добавления инвентаря в аренду
-document.getElementById("addItemButton").addEventListener("click",function(){
-  NotRentedInventoryModalContainer.style.display = "flex";
-  NotRentedInventoryModal.style.display = "block";
-});
 
 var InventorySearchText = ""
 
@@ -377,10 +372,6 @@ async function GetInventoryData(id){
         console.error('There was a problem with the fetch operation:', error);
     });
 }
-document.getElementById("closeNotRentedInventoryModal").addEventListener("click",function(){
-  NotRentedInventoryModalContainer.style.display = "none";
-  NotRentedInventoryModal.style.display = "none";
-})
 
 //Модалка для добавления сервиса
 const serviceModalContainer = document.getElementById("serviceModalContainer");
@@ -480,6 +471,7 @@ document.getElementById("CreateRentBtn").addEventListener("click", function(){
       RentMainModalContainer.style.display = "none";
       RentMainModalContainer.style.display = "none";
       InventoryInfoContainer.style.display = "none";
+      NotRentedInventoryModal.style.display = "none";
       SelectedInventoryTable.innerHTML = "";
       ServiceList.innerHTML = "";
     })
@@ -534,7 +526,6 @@ function OpenRentInfo(id){
   RentId = id
   SaveRentBtn.style.display = 'block'
   CreateRentBtn.style.display = 'none'
-  addItemButton.style.display = "none"
   RentMainModalContainer.style.display = "flex";
   RentMainModal.style.display = "block";
   FormClientSelect.disabled = true
