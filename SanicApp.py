@@ -201,8 +201,11 @@ async def addRent(request):
         if not StartTime:
             StartTime = datetime.now().time().strftime("%H:%M")
         ReturnDate = request.json.get('Return_Date')
-
+        if not ReturnDate:
+            ReturnDate = datetime.now().date().strftime("%Y-%m-%d")
         ReturnTime = request.json.get('Return_Time')
+        if not ReturnTime:
+            ReturnTime = datetime.now().time().strftime("%H:%M")
         StartItems = request.json.get('StartItems')
         ReturnedItems = request.json.get('ReturnedItems')
         ClientId = request.json.get('Client')

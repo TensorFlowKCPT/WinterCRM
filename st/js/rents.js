@@ -169,9 +169,10 @@ function UpdateNotRentedInventory(){
 
     //Фильтрация по Поиску
     data = data.filter(function(item) {
+      itemID = item.ID
       item = JSON.stringify(item)
       
-      return item.includes(InventorySearchText) || InventorySearchText === "";
+      return (item.includes(InventorySearchText) || InventorySearchText === "") && !SelectedInventoryTable.innerHTML.includes('data-id="'+itemID+'"');
     });
 
     data.forEach(function(dataRow) {
@@ -288,34 +289,7 @@ function AddInventoryToList(id){
 }
 
 function DeleteSelectedInventory(id){
-  fetch('/getInventoryData?ID='+id)
-  .then(response => {
-      if (!response.ok) {
-          throw new Error('Network response was not ok');
-      }
-      return response.json();
-  })
-  .then(dataRow => {
-    //console.log(dataRow)
-    var tr = document.createElement('tr');
-    var Name = document.createElement('td');
-    Name.textContent = dataRow.Name
-    tr.appendChild(Name);
-    var Size = document.createElement('td');
-    Size.textContent = dataRow.Size
-    tr.appendChild(Size);
-    var Type = document.createElement('td');
-    Type.textContent = dataRow.Type
-    tr.appendChild(Type);
-    tr.onclick = function(){AddInventoryToList(dataRow.ID), NotRentedInventoryTable.removeChild(tr)}
-    tr.classList.add('table-row')
-    Array.from(tr.children).forEach(row => row.classList.add('colone'))
-    NotRentedInventoryTable.appendChild(tr)
-    InventoryInfoContainer.style.display="None"
-  })
-  .catch(error => {
-      console.error('There was a problem with the fetch operation:', error);
-  });
+  UpdateNotRentedInventory()
 }
 const SelectedItemName = document.getElementById("SelectedItemName");
 const SelectedItemSize = document.getElementById("SelectedItemSize");
