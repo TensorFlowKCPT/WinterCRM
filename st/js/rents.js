@@ -307,6 +307,9 @@ function DeleteSelectedInventory(id){
     var Type = document.createElement('td');
     Type.textContent = dataRow.Type
     tr.appendChild(Type);
+    var Rented = document.createElement('td');
+    Rented.textContent = dataRow.Rented
+    tr.appendChild(Rented);
     tr.onclick = function(){AddInventoryToList(dataRow.ID), NotRentedInventoryTable.removeChild(tr)}
     tr.classList.add('table-row')
     Array.from(tr.children).forEach(row => row.classList.add('colone'))
