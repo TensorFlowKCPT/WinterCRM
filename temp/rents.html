@@ -348,6 +348,7 @@
                 </div>
               </div>
               <div class="modal_pay__wrapper">
+                <label for="clientDropdown">Выберите клиента</label>
                 <select
                   class="dropdownPayment"
                   name="clientDropdown"
@@ -355,23 +356,20 @@
                   onchange="ClientChanged()"
                   required
                 >
-                  <option value="" disabled selected hidden>
-                    Выберите клиента
-                  </option>
+                  <option value="" disabled selected hidden></option>
                   {%for client in data['Clients']%}
                   <option value="{{ client['ID'] }}">{{client['FIO']}}</option>
                   {%endfor%}
                 </select>
 
+                <label for="paymentMethod">Выберите способ оплаты</label>
                 <select
                   name="paymentMethod"
                   required
                   class="dropdownPayment"
                   id="FormPaymentMethodSelect"
                 >
-                  <option value="" disabled selected hidden>
-                    Выберите способ оплаты
-                  </option>
+                <option value="" disabled selected hidden></option>
                   <option value="creditCard">Банковская карта</option>
                   <option value="cash">Наличные</option>
                   <option value="bankTransfer">Банковский перевод</option>
@@ -444,7 +442,7 @@
               <div class="modal-container" id="RentMainModalContainer">
                 <div class="modal2" id="NotRentedInventoryModal">
                   <div class="modal2__wrapper">
-                    <div class="rents__search">
+                    <div class="rents__search rents__search2">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
