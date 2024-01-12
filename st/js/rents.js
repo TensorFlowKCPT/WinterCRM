@@ -19,6 +19,8 @@ function SearchBoxChanged(){
 }
 const RentsMainTable = document.getElementById("RentsMainTable")
 const SaveRentBtn = document.getElementById("SaveRentBtn")
+const NotRentedInventoryModalWindow = document.getElementById("NotRentedInventoryModalWindow")
+NotRentedInventoryModalWindow.style.display = "none";
 //Обновление главной таблицы
 function UpdateRents(){
   
@@ -99,8 +101,9 @@ const CreateRentBtn = document.getElementById("CreateRentBtn")
 document.getElementById("openCreateRentModalBtn").addEventListener("click", function() {
     SaveRentBtn.style.display = 'none'
     CreateRentBtn.style.display = 'block'
+    NotRentedInventoryModalWindow.style.display = "block";
 
-  NotRentedInventoryModal.style.display = "block";
+    NotRentedInventoryModal.style.display = "block";
     clients = null
     RentMainModalContainer.style.display = "flex";
     RentMainModal.style.display = "block";
@@ -112,6 +115,7 @@ document.getElementById("openCreateRentModalBtn").addEventListener("click", func
 document.getElementById("closeCreateRentModalBtn").addEventListener("click", function() {
       RentMainModalContainer.style.display = "none";
       InventoryInfoContainer.style.display = "none";
+      NotRentedInventoryModalWindow.style.display = "none";
       RentMainModal.style.display = "none";
       NotRentedInventoryModal.style.display = "none";
       SelectedInventoryTable.innerHTML = "";
@@ -329,6 +333,7 @@ function ShowOldInventoryData(data){
     
     
     InventoryInfoContainer.style.display="flex"
+    
  
 }
 async function GetInventoryData(id){
@@ -443,8 +448,9 @@ document.getElementById("CreateRentBtn").addEventListener("click", function(){
       UpdateRents();
       UpdateNotRentedInventory();
       RentMainModalContainer.style.display = "none";
-      RentMainModalContainer.style.display = "none";
+      RentMainModal.style.display = "none";
       InventoryInfoContainer.style.display = "none";
+      NotRentedInventoryModalWindow.style.display = "none";
       NotRentedInventoryModal.style.display = "none";
       SelectedInventoryTable.innerHTML = "";
       ServiceList.innerHTML = "";
